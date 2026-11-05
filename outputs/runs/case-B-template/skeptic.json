@@ -1,0 +1,123 @@
+{
+  "rule_hypotheses": [
+    {
+      "hypothesis": "측정 방식이 바뀌어 숫자만 달라졌다",
+      "check": "C0 데이터 품질",
+      "status": "반론 기각",
+      "detail": "단절 없음",
+      "source": "판정 규칙"
+    },
+    {
+      "hypothesis": "정책 전부터 이미 변하고 있었다(기존 추세)",
+      "check": "C1 사전추세",
+      "status": "미검증",
+      "detail": "사전 기간이 짧아 검정 불가",
+      "source": "판정 규칙"
+    },
+    {
+      "hypothesis": "해마다 이맘때 생기는 변화다(방학·계절·명절)",
+      "check": "계절 차분 + C2a 시점 위약",
+      "status": "반론 성립",
+      "detail": "가짜 시행일 40개 중 순위 p=0.317",
+      "source": "판정 규칙"
+    },
+    {
+      "hypothesis": "대조 집단 쪽에 다른 일이 생겼다",
+      "check": "C2b 공간 위약",
+      "status": "반론 기각",
+      "detail": "실제 -4.9% vs 가짜 처치 법인_가능 +5.6%",
+      "source": "판정 규칙"
+    },
+    {
+      "hypothesis": "분석 기간·대조 선택에 따라 달라지는 우연이다",
+      "check": "C3 민감도",
+      "status": "반론 기각",
+      "detail": "3개 중 0개 같은 방향·유의 (같은 방향 3개)",
+      "source": "판정 규칙"
+    }
+  ],
+  "hypotheses": [
+    {
+      "hypothesis": "같은 시기의 다른 사건 때문이다: 코로나19 1차·2차 확산",
+      "why_plausible": "영향: 전체 이동·소비 (출처: 공지 사실)",
+      "check_ids": [],
+      "source": "사건 달력",
+      "results": [],
+      "rule_results": [],
+      "status": "미검증"
+    },
+    {
+      "hypothesis": "같은 시기의 다른 사건 때문이다: 등교 연기·온라인 개학(전국)",
+      "why_plausible": "영향: 청소년·어린이 이동 (출처: 교육부 발표(2020))",
+      "check_ids": [],
+      "source": "사건 달력",
+      "results": [],
+      "rule_results": [],
+      "status": "미검증"
+    },
+    {
+      "hypothesis": "같은 시기의 다른 사건 때문이다: 2020 황금연휴 국내 관광 반등",
+      "why_plausible": "영향: 관광객 지출, 음식·숙박 업종 (출처: findings F5)",
+      "check_ids": [
+        "X1"
+      ],
+      "source": "사건 달력",
+      "results": [
+        {
+          "id": "X1",
+          "kind": "exclude_period",
+          "label": "2020-04-30~2020-05-05 제외",
+          "reason": "2020 황금연휴 국내 관광 반등",
+          "effect": -0.07643700658613761,
+          "pct": -0.07358872974066387,
+          "ci": [
+            -0.19465324607013862,
+            0.04177923289786341
+          ],
+          "p": 0.14705563560791152,
+          "significant": false,
+          "main_effect": -0.04990124174998678,
+          "status": "반론 기각"
+        }
+      ],
+      "rule_results": [],
+      "status": "반론 기각"
+    },
+    {
+      "hypothesis": "같은 시기의 다른 사건 때문이다: 국제유가 급락",
+      "why_plausible": "영향: 주유소·가스충전 업종 금액 (출처: findings F5)",
+      "check_ids": [],
+      "source": "사건 달력",
+      "results": [],
+      "rule_results": [],
+      "status": "미검증"
+    }
+  ],
+  "extra_checks": [
+    {
+      "id": "X1",
+      "kind": "exclude_period",
+      "label": "2020-04-30~2020-05-05 제외",
+      "reason": "2020 황금연휴 국내 관광 반등",
+      "effect": -0.07643700658613761,
+      "pct": -0.07358872974066387,
+      "ci": [
+        -0.19465324607013862,
+        0.04177923289786341
+      ],
+      "p": 0.14705563560791152,
+      "significant": false,
+      "main_effect": -0.04990124174998678,
+      "status": "반론 기각"
+    }
+  ],
+  "standing": [],
+  "downgraded": null,
+  "rule_standing": [
+    "해마다 이맘때 생기는 변화다(방학·계절·명절)"
+  ],
+  "final_level": "판정 보류",
+  "final_label": "판정 보류",
+  "light": "🔴",
+  "summary": ""
+}

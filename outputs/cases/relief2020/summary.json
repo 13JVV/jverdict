@@ -1,0 +1,123 @@
+{
+  "resident_did": [
+    {
+      "control": "대형종합+유흥",
+      "baseline_months": 1,
+      "actual": 0.06181178452081401,
+      "n_placebo": 60,
+      "p_rank": 0.21311475409836064,
+      "placebo_p95": 0.16293048653091913,
+      "placebo_max": 0.20000277453185655
+    },
+    {
+      "control": "대형종합+유흥",
+      "baseline_months": 2,
+      "actual": 0.055077739493949535,
+      "n_placebo": 60,
+      "p_rank": 0.21311475409836064,
+      "placebo_p95": 0.1546579999253186,
+      "placebo_max": 0.19490854521585554
+    },
+    {
+      "control": "대형종합+유흥",
+      "baseline_months": 3,
+      "actual": 0.029706052751280576,
+      "n_placebo": 60,
+      "p_rank": 0.29508196721311475,
+      "placebo_p95": 0.16182991946616898,
+      "placebo_max": 0.18631010018921287
+    },
+    {
+      "control": "대형종합만",
+      "baseline_months": 1,
+      "actual": 0.07912925854013209,
+      "n_placebo": 60,
+      "p_rank": 0.13114754098360656,
+      "placebo_p95": 0.12442170817136307,
+      "placebo_max": 0.2565503743939832
+    },
+    {
+      "control": "대형종합만",
+      "baseline_months": 2,
+      "actual": 0.07904910327076248,
+      "n_placebo": 60,
+      "p_rank": 0.14754098360655737,
+      "placebo_p95": 0.14619780359981246,
+      "placebo_max": 0.20651547630421752
+    },
+    {
+      "control": "대형종합만",
+      "baseline_months": 3,
+      "actual": 0.03657960803285523,
+      "n_placebo": 60,
+      "p_rank": 0.2786885245901639,
+      "placebo_p95": 0.14391060432053257,
+      "placebo_max": 0.20253544405993373
+    },
+    {
+      "control": "대형종합+유흥+면세",
+      "baseline_months": 1,
+      "actual": 0.05013101834008202,
+      "n_placebo": 60,
+      "p_rank": 0.2459016393442623,
+      "placebo_p95": 0.1605320001072005,
+      "placebo_max": 0.2332463353195123
+    },
+    {
+      "control": "대형종합+유흥+면세",
+      "baseline_months": 2,
+      "actual": 0.03218389430508145,
+      "n_placebo": 60,
+      "p_rank": 0.3442622950819672,
+      "placebo_p95": 0.17509161466663845,
+      "placebo_max": 0.22402360296556761
+    },
+    {
+      "control": "대형종합+유흥+면세",
+      "baseline_months": 3,
+      "actual": 0.012799979573970388,
+      "n_placebo": 60,
+      "p_rank": 0.4098360655737705,
+      "placebo_p95": 0.17526651413167474,
+      "placebo_max": 0.21931916891608455
+    }
+  ],
+  "sector_sign_test": {
+    "n_sectors": 22,
+    "share_positive_may": 0.8636363636363636,
+    "placebo_mean": 0.5121212121212122,
+    "placebo_p95": 0.9090909090909091,
+    "p_rank": 0.11475409836065574
+  },
+  "policy": "1차 긴급재난지원금 (2020-05 지급, 사용기한 2020-08-31)",
+  "data": "제주데이터허브 '업종별 성별 카드 이용 정보' (비씨카드 실적, 2018-01~2025-06)",
+  "design": "삼중차분(도민·관광객 × 사용가능·불가 업종), 전년동월비 로그 증가율, 직전 3개월 기준 점프",
+  "n_treat_sectors": 24,
+  "control_sectors": [
+    "기타 대형 종합 소매업",
+    "일반유흥 주점업"
+  ],
+  "unclassified_sectors": [],
+  "main": {
+    "actual": -0.18734568575142596,
+    "n_placebo": 60,
+    "p_rank": 0.9344262295081968,
+    "placebo_p95": 0.27755115101172134,
+    "placebo_max": 0.43671736947645634,
+    "effect_pct": -17.084294094288545,
+    "june_J3": -0.3024558683539673,
+    "june_effect_pct": -26.099889912568376
+  },
+  "double_compute": {
+    "pandas": 0.0018141549058304507,
+    "sql": 0.0018141549058304507,
+    "match": true
+  },
+  "heterogeneity_weighted_mean_J3": {
+    "음식·대면서비스": -0.16100043064103609,
+    "필수재·소매": -0.09028034202474915
+  },
+  "sensitivity_all_positive": false,
+  "sensitivity_p_below_0.05": 0,
+  "n_sensitivity": 7
+}

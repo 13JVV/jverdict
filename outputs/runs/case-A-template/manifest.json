@@ -1,0 +1,83 @@
+{
+  "run_id": "case-A-template",
+  "created": "2026-11-06T00:55:21+0900",
+  "calendar_as_of": "2026-11-06",
+  "mode": "template",
+  "rules_version": "v2",
+  "seed": 20261104,
+  "question_input": "청소년 버스 무료화(2025-08-01)로 청소년의 버스 이용이 늘었는가?",
+  "question": "청소년 버스 무료화(2025-08-01)로 청소년의 버스 이용이 늘었는가?",
+  "card": {
+    "policy": "청소년 버스 무료(어린이 무료 확대)",
+    "question": "청소년 버스 무료화(2025-08-01)로 청소년의 버스 이용이 늘었는가?",
+    "start_date": "2025-08-01",
+    "end_date": null,
+    "treated": "청소년(만 13~18세), 어린이 무료 확대 동시 시행",
+    "outcome": "이용자 유형별 일 단위 버스 이용 인원",
+    "expected": "increase",
+    "region": "제주도 전역",
+    "source": "제주도 발표",
+    "reference_effect": 0.1,
+    "needed_hint": [
+      "교통복지카드(무료) 승차 기록이 포함된 이용자 유형별 승차 자료",
+      "2025-08-01 전후 이용자 유형 분류 기준 변경 이력(데이터 제공처 확인)"
+    ],
+    "prereg": null,
+    "library_case": "A",
+    "assumptions": []
+  },
+  "data": {
+    "dataset": "bus_station",
+    "source": "이용자유형별버스정류소이용인원현황.csv",
+    "bytes": 624092571,
+    "sha256": "0eac15877892a93fd6a3235befcfb5c8e8351f6185cec8b6f04e23d98623547b"
+  },
+  "prereg": {
+    "sha256": "0714f40efa9832c777e1232c6df766959e708d1516b86ac086ee275ecd5baf85",
+    "locked_at": "2026-11-06T00:55:18+0900",
+    "existing": null,
+    "amendments": []
+  },
+  "code_sha256": "f2f375c291cf0ef535650a6a2b14abc832dbdb761440f7ae4fe2b03d92890f20",
+  "versions": {
+    "python": "3.14.3",
+    "platform": "Darwin arm64",
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "scipy": "1.18.1",
+    "duckdb": "2.0.0",
+    "statsmodels": "0.15.0",
+    "anthropic": "2.3.0"
+  },
+  "numbers": {
+    "verdict": "판정 보류",
+    "effect": -1.471025,
+    "se": 0.093625,
+    "ci_lo": -1.702882,
+    "ci_hi": -1.239169,
+    "p": 0.004785,
+    "mde_pct": 0.299913
+  },
+  "final_verdict": "판정 보류",
+  "llm": {
+    "calls": 0,
+    "cost_usd": 0.0,
+    "mode": "template"
+  },
+  "fallbacks": [],
+  "files": [
+    "analysis.json",
+    "card.json",
+    "design.json",
+    "events.jsonl",
+    "facts.txt",
+    "llm_cache.json",
+    "naive.json",
+    "prereg.lock.json",
+    "prereg.md",
+    "report.json",
+    "report.md",
+    "scout.json",
+    "skeptic.json"
+  ]
+}

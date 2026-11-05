@@ -1,0 +1,431 @@
+[
+  {
+    "role": "parser",
+    "key": "8109a9e0a5b124e11948b4184c2e17557abe928e41f751c34039484382a9d2c1",
+    "model": "claude-sonnet-5-5",
+    "response": {
+      "id": "msg_011Cgg8AHZDDQBgZKMdooc2W",
+      "container": null,
+      "content": [
+        {
+          "text": "{\"policy\":\"중국 단체관광 재개\",\"question\":\"중국 단체관광 재개(2023-08-10) 이후 제주의 중국인 카드 소비가 다른 외국인 대비 늘었는가?\",\"start_date\":\"2023-08-01\",\"end_date\":null,\"treated\":\"중국인 방문객(카드 이용 구분: 중국)\",\"outcome\":\"업종별 월 카드 이용 금액(card_sector, 비씨카드 실적). 비교군은 일본·동남아·기타외국\",\"expected\":\"increase\",\"region\":\"제주도\",\"source\":\"중국 문화여유부 발표(2023-08-10)\",\"reference_effect\":0.1,\"assumptions\":[\"등록된 사례 D(중국 단체관광 재개)와 같은 정책으로 보고, 시행일을 사례의 2023-08-01(월 단위 분석이므로 그 달 1일)로 둠. 질문의 발표일 2023-08-10과 차이가 있어 실제 재개일은 확인 필요.\",\"대상은 중국인 방문객이며 분석 데이터는 card_sector(월 단위, 2018-01~2025-06) 사용. 종료일은 지정되지 않아 데이터 끝까지로 둠(확인 필요).\",\"비교군은 다른 외국인(일본·동남아·기타외국)으로 가정. 이들 집단도 같은 시기 회복 추세나 항공편 변화의 영향을 받았을 가능성이 있어 확인 필요.\",\"사례 D의 결과 지표는 2019 같은 달 대비이나, 이번 질문은 다른 외국인 대비 비교이므로 지표 정의 확인 필요.\",\"BC카드 실적만 포함하므로 중국인 전체 소비를 대표하는지는 의심. 다른 정책이나 항공편 확대, 환율 등 동시 요인은 확인 필요.\",\"의미 있는 최소 효과 비율은 기본값 0.10 적용.\"]}",
+          "type": "text"
+        }
+      ],
+      "diagnostics": null,
+      "model": "claude-sonnet-5-5",
+      "role": "assistant",
+      "stop_details": null,
+      "stop_reason": "end_turn",
+      "stop_sequence": null,
+      "type": "message",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 2219
+        },
+        "cache_creation_input_tokens": 2219,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 4,
+        "output_tokens": 667,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "speed": "standard"
+      }
+    },
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 2219
+      },
+      "cache_creation_input_tokens": 2219,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 4,
+      "output_tokens": 667,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "cost_usd": 0.0122255,
+    "key_norm": "8109a9e0a5b124e11948b4184c2e17557abe928e41f751c34039484382a9d2c1"
+  },
+  {
+    "role": "scout",
+    "key": "dca4b68899b5cf8205e780df245619881a1e813b4f5be456c51a76116c43fd47",
+    "model": "claude-sonnet-5-5",
+    "response": {
+      "id": "msg_011Cgg8AiFGJUACGcLWmGJ6S",
+      "container": null,
+      "content": [
+        {
+          "id": "toolu_01Veq472RPuUMagc96EdjeXu",
+          "caller": {
+            "type": "direct"
+          },
+          "input": {
+            "query": "card_sector"
+          },
+          "name": "catalog_search",
+          "type": "tool_use"
+        },
+        {
+          "id": "toolu_01PDGKdmHykkTsvHjAPT4ULW",
+          "caller": {
+            "type": "direct"
+          },
+          "input": {
+            "dataset": "card_sector"
+          },
+          "name": "dataset_profile",
+          "type": "tool_use"
+        },
+        {
+          "id": "toolu_01SEq9jAaiLNJjAup5fdQ86h",
+          "caller": {
+            "type": "direct"
+          },
+          "input": {},
+          "name": "official_stats",
+          "type": "tool_use"
+        }
+      ],
+      "diagnostics": null,
+      "model": "claude-sonnet-5-5",
+      "role": "assistant",
+      "stop_details": null,
+      "stop_reason": "tool_use",
+      "stop_sequence": null,
+      "type": "message",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 3348
+        },
+        "cache_creation_input_tokens": 3348,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 4,
+        "output_tokens": 128,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "speed": "standard"
+      }
+    },
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 3348
+      },
+      "cache_creation_input_tokens": 3348,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 4,
+      "output_tokens": 128,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "cost_usd": 0.009658,
+    "key_norm": "dca4b68899b5cf8205e780df245619881a1e813b4f5be456c51a76116c43fd47"
+  },
+  {
+    "role": "scout",
+    "key": "6bd4fbe04fbee205ccc2a62256e279a75ea1ca1ab8e5d2c0d32480cecded6e07",
+    "model": "claude-sonnet-5-5",
+    "response": {
+      "id": "msg_011Cgg8AuRDwvqhxhEfpZs2j",
+      "container": null,
+      "content": [
+        {
+          "text": " {\"dataset\":\"card_sector\",\"series\":[{\"name\":\"중국\",\"groups\":[\"중국\"],\"units_tier\":null,\"units_list\":[]},{\"name\":\"기타외국\",\"groups\":[\"기타외국\"],\"units_tier\":null,\"units_list\":[]},{\"name\":\"동남아\",\"groups\":[\"동남아\"],\"units_tier\":null,\"units_list\":[]},{\"name\":\"일본\",\"groups\":[\"일본\"],\"units_tier\":null,\"units_list\":[]}],\"target\":\"중국\",\"reference_candidates\":[\"기타외국\",\"동남아\",\"일본\"],\"official_stats\":[],\"notes\":[\"아직 quality_check를 실행하지 않았습니다. 실행 후 단절과 커버리지 결과를 반영해야 합니다.\",\"등록된 공식 수치(youth_free_483)는 청소년·어린이 무료 이용에 관한 것입니다. 기간(2025-08~2026-02)과 집단이 이 정책과 달라 대조에 쓰지 않았습니다.\",\"정책 대상이 아니고 규모가 큰 집단을 우선하면 기타외국이 1순위 후보입니다. 사전 기간 월평균은 기타외국 약 6.6억 원, 동남아 약 3.3억 원, 일본 약 1.3억 원입니다. 중국은 약 5.3억 원입니다.\",\"중국·일본·동남아·기타외국은 사전 기간에 65개월만 관측되어 결측월이 있습니다. 코로나 시기 공백일 가능성이 있으나 확인이 필요합니다.\",\"시행일은 2023-08-01로 둡니다. 실제 재개일(발표일 2023-08-10)은 확인이 필요합니다.\",\"비교군 외국인 집단도 같은 시기의 회복 추세나 항공편 변화 영향을 받았을 수 있어 의심됩니다.\",\"BC카드 실적만 포함하므로 중국인 전체 소비를 대표하는지는 의심됩니다.\",\"업종 구성이 집단마다 다릅니다(중국 40개, 동남아 35개, 일본 36개, 기타외국 41개). 업종 구성 차이가 결과에 영향을 줄 가능성이 있습니다.\"]}",
+          "type": "text"
+        }
+      ],
+      "diagnostics": null,
+      "model": "claude-sonnet-5-5",
+      "role": "assistant",
+      "stop_details": null,
+      "stop_reason": "end_turn",
+      "stop_sequence": null,
+      "type": "message",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 1316
+        },
+        "cache_creation_input_tokens": 1316,
+        "cache_read_input_tokens": 3348,
+        "inference_geo": "global",
+        "input_tokens": 2,
+        "output_tokens": 750,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "speed": "standard"
+      }
+    },
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 1316
+      },
+      "cache_creation_input_tokens": 1316,
+      "cache_read_input_tokens": 3348,
+      "inference_geo": "global",
+      "input_tokens": 2,
+      "output_tokens": 750,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "cost_usd": 0.011463600000000001,
+    "key_norm": "6bd4fbe04fbee205ccc2a62256e279a75ea1ca1ab8e5d2c0d32480cecded6e07"
+  },
+  {
+    "role": "skeptic",
+    "key": "c8b2dd36a3ec131f990e6fbd540cf9d1a82f239cfde52d8cd55b5a8317fd132a",
+    "model": "claude-sonnet-5-5",
+    "response": {
+      "id": "msg_011Cgg8BNvCojjdzhXZ7siB5",
+      "container": null,
+      "content": [
+        {
+          "signature": "CAQSvQkKEAgTGAI4AUIIdGhpbmtpbmcSDHl2+cjArx5IM44A8xoMADIx2yvH9gmeZlJZIjAWkrig7NuA90d+rNXGHSEMyzldxm3RnM7hcFRutofuq8ecENCw3e5SWmgchRDffxIq2gj8hmKRQ02ZDjKZY1RiPWi7abZtGtB8VUGkxwj5WhXs2I5TfZV1w3ow6yv9Y9XhFuYMjDw6dG9sVLb3AwIrZDLEDsgnh/lIWTZtjbmPLQ+d7/WZYzHijMtrwWSsIBQq+6swvL7ryVUuRMAi4+TCXk3Oz+9e5kd1PyzyM9xQIOCTwl0jzD4EEnKzOkRV4XF6mKncJAD0iZ5kKho1tuJRnWDk8yBKlhk/U5xKLjBf8bXws9kV88xlV/t2a/uIdwhXo8rDHH3rEE25vSGdOtIsw5Ex9ASpJjhJo7VGr66b4kdLffYMQOgAiDdXcEkm0Ju55j3mIvpsiTo5dOzCMlT85lFXa3hKPgs7GXqny27DT8nNzLk2VI3YSlLwMZ4oyS+1CkwGU+ZRxvpfwXorkRBI8Fhf3EQ9zSfAtmd7McBJANYhLwWB6IkV3F5Eid+omgtDj24Zvl9JbAK2wU3i5dKT79mpIqdYiRYRtJ/Hplr+It/zXb6bGVqMIkFddVuM16qdMqiVYBMl0k4iaU2vblV8a5EGsQ8/wTX6xjISAJ0W+mxks5K43Mqpi9qJsP+pGtu1KpvEyJfsjiVCr9rREzw4FzJP/n6NEaVPV/tvkBVnnoMb702gf1nXAIvj/5OVT/+VdoZG1F7IqBhPHFfA/gOgizG6sCiSb4kKzOl/5c4J7vO6yPW7jOO9qUHFE5WgapBMiQTZ1VQ4yMbLgVF+3OgYnA/Z16SKMfMucr11Pgl7Ug9OlQj2LjpcfieQRM4U+0V4lulwdGcHf0aoUZa6cnqTHh7u1WSwhI6OkHaTusOYsW07hMr2HqcmonVlEa9KZO2WTNaem9Iejr6gK6geg2VIMT2sUGXx4/uxGUX5iFrMTwVTSb9D7yKzajMh4WTXNCEUddWn8vCktRH9VqTl2v0TLHDTefYWTI47PYAgcje73CVSYPWOrSl+ngqk6eMdQMJKPUFPEXO/xSnNtI4qIQzCVJRnqr4M6mmdhawf5eHWcCc4CL+8QLMc34JYCTstFx1JMSG1QlJ0jycG6i9DQOaPPUEw56kH+pYKiIOF+LK1b2zJdUzgfqVIpJFc4G/Ts6clwbnxR1vs3tazsE9K2a0nvZ744CFvCdBiuJuddk126FGYKtIIxikSNmr0NHi4o9rUXJ1T8hlrSh5U2tCAsQDRDBsRV+3T4Guw+6QnQ+9qpwXEfTtO3SsNcWgy6cf/f6uQgPRLXbxzKnRDAKLQEzQdDMJ+XNghBt8+Nj3RPiwpgc5LSdmis/GQJON/T7rW3W13XHV/fWGbjCiQwwL19scnnJNlAXoPukiLrHrwNxAOm6fJI+smJoKZf3a3tzIY10MI13HkBxXMfjLUo3HbrxhA7NUs5PveR0IcddSWTwmDlU2jFMjdjw+qJDKav1OfU3G3oQn6SATT96q2yw52Jqc+4UNCkY2fAoU14onTNEhGwAYh/0UvvWumFhBIQIbMC+dj/caDy9UvbyoWmfmEGAE=",
+          "thinking": "",
+          "type": "thinking"
+        },
+        {
+          "id": "toolu_01G3cWNyiF5LyXMYmmmF4iJc",
+          "caller": {
+            "type": "direct"
+          },
+          "input": {
+            "start": "2022-01-01",
+            "end": "2025-06-30"
+          },
+          "name": "event_calendar",
+          "type": "tool_use"
+        },
+        {
+          "id": "toolu_01MuZun18DKxoQe4uqizQVDQ",
+          "caller": {
+            "type": "direct"
+          },
+          "input": {
+            "kind": "alt_window",
+            "reference": [],
+            "placebo_target": null,
+            "post": 3,
+            "start": null,
+            "end": null,
+            "reason": "회복 기저효과가 길게 누적된 효과인지, 재개 직후 단기 효과만 보면 어떤지 확인"
+          },
+          "name": "extra_check",
+          "type": "tool_use"
+        },
+        {
+          "id": "toolu_011Sj3vymL8QDEHkMoD4pK7D",
+          "caller": {
+            "type": "direct"
+          },
+          "input": {
+            "kind": "alt_reference",
+            "reference": [
+              "일본"
+            ],
+            "placebo_target": null,
+            "post": null,
+            "start": null,
+            "end": null,
+            "reason": "비교군을 일본 단독으로 바꿔 동남아·기타외국의 회복 추세 영향 확인"
+          },
+          "name": "extra_check",
+          "type": "tool_use"
+        },
+        {
+          "id": "toolu_013YRsm3XdeJmJtvE1qP6XJr",
+          "caller": {
+            "type": "direct"
+          },
+          "input": {
+            "kind": "exclude_period",
+            "reference": [],
+            "placebo_target": null,
+            "post": null,
+            "start": "2023-03-01",
+            "end": "2023-07-01",
+            "reason": "사전기간 말 중국 입국 규제 완화 직후 회복기를 제외하고 사전추세 영향 확인"
+          },
+          "name": "extra_check",
+          "type": "tool_use"
+        }
+      ],
+      "diagnostics": null,
+      "model": "claude-sonnet-5-5",
+      "role": "assistant",
+      "stop_details": null,
+      "stop_reason": "tool_use",
+      "stop_sequence": null,
+      "type": "message",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 3235
+        },
+        "cache_creation_input_tokens": 3235,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 4,
+        "output_tokens": 1011,
+        "output_tokens_details": {
+          "thinking_tokens": 246
+        },
+        "service_tier": "standard",
+        "speed": "standard"
+      }
+    },
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 3235
+      },
+      "cache_creation_input_tokens": 3235,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 4,
+      "output_tokens": 1011,
+      "output_tokens_details": {
+        "thinking_tokens": 246
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "cost_usd": 0.0182055,
+    "key_norm": "1675607d19ffa11a755a581dbc33a5b89ca5e9afe521af4f2ba390c76477414d"
+  },
+  {
+    "role": "skeptic",
+    "key": "eddfad82f6de68937c6ef3a89c5a1b0bd55e76e509de1a2399d567ed1d75721b",
+    "model": "claude-sonnet-5-5",
+    "response": {
+      "id": "msg_011Cgg8Bu8PX8BZ8UmWArqPS",
+      "container": null,
+      "content": [
+        {
+          "text": "{\"hypotheses\":[{\"hypothesis\":\"추정된 증가는 정책 효과가 아니라 중국인 입국 규제가 풀리면서 나타난 회복 추세일 수 있다. 2023년 초 비자 발급 중단 해제 이후 이어진 회복이 단체관광 재개 이전부터 진행 중이었다는 뜻이다.\",\"why_plausible\":\"사전추세 검정이 실패했다(p=9.92e-07). 사전 추세를 연장하면 효과의 242%가 설명된다. event_calendar에 따르면 2023-01-02~02-10에 중국인 단기비자 발급이 중단됐다. 그 뒤 회복이 사전기간(2023-03~)에 섞였을 수 있다. 이 가설은 기존 검증 C1로 충분히 다뤘다. 이 검증에서는 사전추세 가정이 깨졌으므로 이 가설은 반박되지 않고 남는다.\",\"check_ids\":[\"C1\"]},{\"hypothesis\":\"2023-05~06월 카드 파일의 외국인 4개 집단 결측과 단체관광 재개 시점 전후의 크루즈 재입항(2023-08-31~09-30), 추석 연휴(2023-09-29), 여름방학이 효과 추정치를 왜곡했을 수 있다.\",\"why_plausible\":\"event_calendar에 2023-05-01~06-30 결측이 기록되어 있다. 이 기간은 분석 창(2023-03~2024-01)의 사전 구간 중간에 있다. 사전 구간이 짧고 결측까지 있으면 추세 추정이 불안정해진다. 크루즈와 명절은 중국인에게만 해당하는 동시 충격이다. 다만 C0은 측정 단절 증거가 없다고 봤다. 별도 제외 검증은 도구 오류로 실행하지 못해 성립 여부를 판정하지 못했다.\",\"check_ids\":[\"C0\"]},{\"hypothesis\":\"비교군(일본·동남아·기타외국)이 부적절해 효과 크기가 과대 또는 과소 추정됐을 수 있다. 비교군들도 같은 시기에 회복 중이었거나 항공편 변화의 영향을 받았을 수 있다.\",\"why_plausible\":\"공간 위약검정(C2b)에서는 실제 +170.9%인 데 비해 가짜 처치는 기타외국 +27.3%, 동남아 -13.3%, 일본 -14.6%였다. 따라서 중국만 두드러지게 움직인 것으로 보여 이 반론은 일부 기각된다. 하지만 민감도(C3)는 3개 중 1개만 같은 방향이면서 유의했다. 방향은 3개가 같았다. 비교군을 일본 단독으로 바꾼 검증은 도구 오류로 실행하지 못했다.\",\"check_ids\":[\"C2b\",\"C3\"]},{\"hypothesis\":\"효과 크기(+170.9%, 주 추정치 1.71)는 BC카드 실적 기준이어서 중국인 전체 소비를 대표하지 못할 수 있다. 낮은 기저에서 출발한 비율 증가라 과장됐을 수도 있다.\",\"why_plausible\":\"신뢰구간이 매우 넓다(0.02~6.19). 효과 비율이 기저에 민감하다는 뜻이다. 카드 데이터가 BC카드만 포함한다는 점은 가정에 적혀 있다. 이 부분은 추가 검증 없이 해석상의 한계로 남는다.\",\"check_ids\":[]}],\"summary\":\"반론 검증 도구 3건(alt_window, alt_reference, exclude_period)은 모두 'its 설계만 지원'이라는 오류가 나서 실행하지 못했다. 그래서 새로 얻은 결과는 없고, 기존 C0~C4와 event_calendar만 근거로 삼았다. 사전추세 위반(C1 실패, 사전 추세 연장 242%)과 민감도 실패(C3)는 반박되지 않고 남았다. 중국의 증가는 비교군과 뚜렷하게 달랐다(C2b 통과). 그래도 비자 중단 해제 이후의 회복, 데이터 결측, 크루즈·연휴 같은 동시 충격과 분리되지 않아 원인을 정책 효과로 단정할 수 없다. 판정 보류가 타당해 보인다. 실제 재개일(발표일 2023-08-10)과 지표 정의는 확인이 필요하다.\"}",
+          "type": "text"
+        }
+      ],
+      "diagnostics": null,
+      "model": "claude-sonnet-5-5",
+      "role": "assistant",
+      "stop_details": null,
+      "stop_reason": "end_turn",
+      "stop_sequence": null,
+      "type": "message",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 2655
+        },
+        "cache_creation_input_tokens": 2655,
+        "cache_read_input_tokens": 3235,
+        "inference_geo": "global",
+        "input_tokens": 2,
+        "output_tokens": 1579,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "speed": "standard"
+      }
+    },
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 2655
+      },
+      "cache_creation_input_tokens": 2655,
+      "cache_read_input_tokens": 3235,
+      "inference_geo": "global",
+      "input_tokens": 2,
+      "output_tokens": 1579,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "cost_usd": 0.0230785,
+    "key_norm": "ea7d12292506b03ae8ad8c13af8022c85bab0ed85058d7f67f9a9f0b9663fb2d"
+  },
+  {
+    "role": "reporter",
+    "key": "77a96ee8ee02c8b288e315fc1d6da981bc18e06ea253c71da3f033bff8085506",
+    "model": "claude-sonnet-5-5",
+    "response": {
+      "id": "msg_011Cgg8CrwCu8GMiG1HkqEKf",
+      "container": null,
+      "content": [
+        {
+          "text": "{\"headline\":\"중국 단체관광 재개 이후 제주의 중국인 카드 소비가 늘었는지는 현재 자료로 판단할 수 없어 '판정 보류'입니다.\",\"summary\":\"단순 비교에서는 중국인 카드 소비가 다른 외국인 대비 +170.9%(판정 구간 +2.0% ~ +619.4%) 늘어난 것으로 나왔습니다. 그러나 정책 전부터 이미 변하던 흐름(사전추세)이 크게 깨져 있어 정책 효과와 기존 추세를 구분할 수 없습니다. 추세를 보정하면 추정치는 -75.8%(95% 구간 -86.8% ~ -55.4%)로 방향이 달라져, 결과가 분석 방법에 따라 크게 흔들립니다. 따라서 이 숫자를 정책 성과로 쓰기보다 보류로 두고 추가 자료로 다시 확인하는 것이 적절합니다.\",\"evidence\":[\"사전추세 검증 실패: 정책 이전 추세 검정 p=9.92e-07(심각 기준 p<0.01), 사전 추세 연장으로 설명되는 몫 242%(기준 50% 이상이면 실패).\",\"추세 보정 추정이 -75.8%(95% 구간 -86.8% ~ -55.4%)로, 기본 추정(+170.9%)과 방향이 반대입니다.\",\"민감도 검증 실패: 3개 분석 중 1개만 같은 방향이면서 통계적으로 유의했습니다(같은 방향은 3개).\",\"공간 위약검정은 통과: 실제 +170.9% 대비 가짜 처치 집단은 기타외국 +27.3%, 동남아 -13.3%, 일본 -14.6%였습니다.\",\"데이터 품질(C0)은 통과했고 측정 방식 변경 증거는 없었습니다. 이중 계산(C4)도 pandas·SQL 값이 0.937972354로 일치했습니다.\",\"검정력이 낮습니다: 현재 구분 가능한 최소 효과가 ±218.1%로, 기준 효과 10%를 가려내기에 부족합니다.\"],\"limits\":[\"사전 153 · 사후 306 관측, 분석 기간 2023-03-01 ~ 2024-01-01로 사후 기간이 6개월에 그칩니다.\",\"'해마다 이맘때 생기는 변화(계절·방학·명절)' 가능성은 가짜 시행일이 0개(19개 미만)라 검증하지 못했습니다.\",\"입국 규제 해제 이후의 회복 추세일 수 있다는 반론과, 비교군(일본·동남아·기타외국)이 부적절했을 수 있다는 반론은 규칙 검증에서 성립했습니다.\",\"효과 크기가 BC카드 실적 기준이고 낮은 기저에서 출발한 비율 증가라 과장되었을 수 있다는 점은 검증하지 못했습니다(미검증).\",\"2023-05~06월 카드 파일의 외국인 4개 집단 결측 의심과 크루즈 재입항, 추석 연휴 영향은 규칙 검증에서 기각됐으나 일부 왜곡 가능성은 남습니다.\",\"정책 시행일은 사실 목록에 2023-08-01과 2023-08-10이 함께 나오므로 정확한 기준일 확인 필요합니다.\"],\"cannot_say\":[\"단체관광 재개가 중국인 카드 소비를 늘렸다고도, 늘리지 않았다고도 말할 수 없습니다.\",\"+170.9%를 정책의 순수한 효과로 해석할 수 없습니다.\",\"BC카드 기준 결과가 중국인 전체 소비나 제주 전체 관광 소비를 대표한다고 말할 수 없습니다.\"],\"needed_data\":[\"정책 시행 이전 더 긴 기간(전년도 같은 시기 포함)의 월별·일별 중국인 카드 소비 자료\",\"전체 카드사 또는 더 세밀한 단위(일 단위) 자료로 낮은 기저와 대표성 문제 점검\",\"중국인 입국자 수, 항공편·크루즈 운항 등 입국 규제 해제와 회복 추세를 구분할 자료\",\"비교군(일본·동남아·기타외국)의 같은 시기 회복·항공편 변화 자료\",\"정책 시행일(2023-08-01과 2023-08-10)의 정확한 기준 확인\",\"더 긴 사후 관측 기간(현재 6개월)\"]}",
+          "type": "text"
+        }
+      ],
+      "diagnostics": null,
+      "model": "claude-sonnet-5-5",
+      "role": "assistant",
+      "stop_details": null,
+      "stop_reason": "end_turn",
+      "stop_sequence": null,
+      "type": "message",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 2502
+        },
+        "cache_creation_input_tokens": 2502,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 4,
+        "output_tokens": 1585,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "service_tier": "standard",
+        "speed": "standard"
+      }
+    },
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 2502
+      },
+      "cache_creation_input_tokens": 2502,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 4,
+      "output_tokens": 1585,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "cost_usd": 0.022113,
+    "key_norm": "77a96ee8ee02c8b288e315fc1d6da981bc18e06ea253c71da3f033bff8085506"
+  }
+]

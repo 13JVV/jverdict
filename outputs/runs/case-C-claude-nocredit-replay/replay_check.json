@@ -1,0 +1,10 @@
+{
+  "original": "case-C-claude",
+  "replay": "case-C-claude-nocredit-replay",
+  "numbers_equal": true,
+  "verdict_equal": true,
+  "report_equal": true,
+  "data_equal": true,
+  "code_equal": false,
+  "reproduced": true
+}

@@ -1,0 +1,85 @@
+{
+  "dataset": "card_sector",
+  "series": [
+    {
+      "name": "도민_주점",
+      "groups": [
+        "제주도민"
+      ],
+      "units_tier": null,
+      "units_list": [
+        "일반유흥 주점업",
+        "기타 주점업"
+      ]
+    },
+    {
+      "name": "도민_식료품",
+      "groups": [
+        "제주도민"
+      ],
+      "units_tier": null,
+      "units_list": [
+        "슈퍼마켓",
+        "기타음식료품위주종합소매업",
+        "과실 및 채소 소매업",
+        "수산물 소매업",
+        "육류 소매업"
+      ]
+    },
+    {
+      "name": "도민_대형종합",
+      "groups": [
+        "제주도민"
+      ],
+      "units_tier": null,
+      "units_list": [
+        "기타 대형 종합 소매업"
+      ]
+    },
+    {
+      "name": "도민_편의점",
+      "groups": [
+        "제주도민"
+      ],
+      "units_tier": null,
+      "units_list": [
+        "체인화 편의점"
+      ]
+    },
+    {
+      "name": "도민_화장품건강",
+      "groups": [
+        "제주도민"
+      ],
+      "units_tier": null,
+      "units_list": [
+        "화장품 및 방향제 소매업",
+        "건강보조식품 소매업"
+      ]
+    },
+    {
+      "name": "도민_잡화",
+      "groups": [
+        "제주도민"
+      ],
+      "units_tier": null,
+      "units_list": [
+        "그외 기타 종합 소매업"
+      ]
+    }
+  ],
+  "target": "도민_주점",
+  "reference_candidates": [
+    "도민_식료품",
+    "도민_화장품건강",
+    "도민_잡화"
+  ],
+  "official_stats": [],
+  "notes": [
+    "등록 사례의 기본 지표 사용"
+  ],
+  "method": "its",
+  "quality_verdict": "단절 없음",
+  "quality_cap": null,
+  "coverage_summary": "[집단 결측] 2023-05 ~ 2023-06 2개월 동안 기타외국, 동남아, 일본, 중국의 행이 없음 (같은 기간 내국인, 법인, 제주도민은 있음) (결측·부분 집계일은 분석에서 자동 제외)"
+}

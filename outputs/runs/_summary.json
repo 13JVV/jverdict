@@ -1,0 +1,155 @@
+[
+  {
+    "run": "case-A-claude",
+    "mode": "claude",
+    "verdict": "판정 보류",
+    "rule_verdict": "판정 보류",
+    "effect": -1.409968,
+    "reference": [
+      "경로"
+    ],
+    "llm_calls": 9,
+    "cost_usd": 0.12839,
+    "seconds": 71.0,
+    "reproduced": true,
+    "replay_error": null,
+    "fallbacks": 0,
+    "created": "2026-11-03T23:04:06+0900"
+  },
+  {
+    "run": "case-A-template",
+    "mode": "template",
+    "verdict": "판정 보류",
+    "rule_verdict": "판정 보류",
+    "effect": -1.471025,
+    "reference": [
+      "일반"
+    ],
+    "llm_calls": 0,
+    "cost_usd": 0.0,
+    "seconds": 15.0,
+    "reproduced": true,
+    "replay_error": null,
+    "fallbacks": 0,
+    "created": "2026-11-06T00:55:21+0900"
+  },
+  {
+    "run": "case-B-claude",
+    "mode": "claude",
+    "verdict": "판정 보류",
+    "rule_verdict": "판정 보류",
+    "effect": -0.049901,
+    "reference": [
+      "도민_불가"
+    ],
+    "llm_calls": 7,
+    "cost_usd": 0.08538,
+    "seconds": 40.0,
+    "reproduced": true,
+    "replay_error": null,
+    "fallbacks": 0,
+    "created": "2026-11-03T23:05:01+0900"
+  },
+  {
+    "run": "case-B-template",
+    "mode": "template",
+    "verdict": "판정 보류",
+    "rule_verdict": "판정 보류",
+    "effect": -0.049901,
+    "reference": [
+      "도민_불가"
+    ],
+    "llm_calls": 0,
+    "cost_usd": 0.0,
+    "seconds": 0.0,
+    "reproduced": true,
+    "replay_error": null,
+    "fallbacks": 0,
+    "created": "2026-11-06T00:55:30+0900"
+  },
+  {
+    "run": "case-C-claude-nocredit",
+    "mode": "claude",
+    "verdict": "효과 있음(증가)",
+    "rule_verdict": "효과 있음(증가)",
+    "effect": 0.179031,
+    "reference": [
+      "일반"
+    ],
+    "llm_calls": 0,
+    "cost_usd": 0.0,
+    "seconds": 3.0,
+    "reproduced": true,
+    "replay_error": null,
+    "fallbacks": 5,
+    "created": "2026-11-03T23:08:11+0900"
+  },
+  {
+    "run": "case-C-template",
+    "mode": "template",
+    "verdict": "효과 있음(증가)",
+    "rule_verdict": "효과 있음(증가)",
+    "effect": 0.179031,
+    "reference": [
+      "일반"
+    ],
+    "llm_calls": 0,
+    "cost_usd": 0.0,
+    "seconds": 0.0,
+    "reproduced": true,
+    "replay_error": null,
+    "fallbacks": 0,
+    "created": "2026-11-06T00:55:32+0900"
+  },
+  {
+    "run": "case-D-claude",
+    "mode": "claude",
+    "verdict": "판정 보류",
+    "rule_verdict": "판정 보류",
+    "effect": 0.996504,
+    "reference": [
+      "패널"
+    ],
+    "llm_calls": 6,
+    "cost_usd": 0.09674,
+    "seconds": 47.0,
+    "reproduced": true,
+    "replay_error": null,
+    "fallbacks": 0,
+    "created": "2026-11-03T23:07:43+0900"
+  },
+  {
+    "run": "case-D-template",
+    "mode": "template",
+    "verdict": "판정 보류",
+    "rule_verdict": "판정 보류",
+    "effect": 0.996504,
+    "reference": [
+      "패널"
+    ],
+    "llm_calls": 0,
+    "cost_usd": 0.0,
+    "seconds": 0.0,
+    "reproduced": true,
+    "replay_error": null,
+    "fallbacks": 0,
+    "created": "2026-11-06T00:55:33+0900"
+  },
+  {
+    "run": "case-E-template",
+    "mode": "template",
+    "verdict": "판정 보류",
+    "rule_verdict": "판정 보류",
+    "effect": 1.102712,
+    "reference": [
+      "도민_식료품"
+    ],
+    "llm_calls": 0,
+    "cost_usd": 0.0,
+    "seconds": 0.0,
+    "reproduced": true,
+    "replay_error": null,
+    "fallbacks": 0,
+    "created": "2026-11-06T00:55:35+0900"
+  }
+]

@@ -1,0 +1,111 @@
+{
+  "dataset": "card_sector",
+  "method": "its",
+  "series": [
+    {
+      "name": "도민_가능",
+      "groups": [
+        "제주도민"
+      ],
+      "units_tier": "tier:가능",
+      "units_list": []
+    },
+    {
+      "name": "도민_불가",
+      "groups": [
+        "제주도민"
+      ],
+      "units_tier": "tier:불가",
+      "units_list": []
+    },
+    {
+      "name": "도민_대형종합",
+      "groups": [
+        "제주도민"
+      ],
+      "units_tier": null,
+      "units_list": [
+        "기타 대형 종합 소매업"
+      ]
+    },
+    {
+      "name": "도민_불가면세",
+      "groups": [
+        "제주도민"
+      ],
+      "units_tier": null,
+      "units_list": [
+        "기타 대형 종합 소매업",
+        "일반유흥 주점업",
+        "면세점"
+      ]
+    },
+    {
+      "name": "법인_가능",
+      "groups": [
+        "법인"
+      ],
+      "units_tier": "tier:가능",
+      "units_list": []
+    },
+    {
+      "name": "법인_불가",
+      "groups": [
+        "법인"
+      ],
+      "units_tier": "tier:불가",
+      "units_list": []
+    }
+  ],
+  "target": "도민_가능",
+  "reference": [
+    "도민_불가"
+  ],
+  "placebo": [
+    {
+      "target": "법인_가능",
+      "reference": [
+        "법인_불가"
+      ]
+    }
+  ],
+  "alt_references": [
+    {
+      "label": "대형종합만",
+      "reference": [
+        "도민_대형종합"
+      ]
+    },
+    {
+      "label": "대형종합+유흥+면세",
+      "reference": [
+        "도민_불가면세"
+      ]
+    }
+  ],
+  "pre": 3,
+  "post": 4,
+  "season_years": 1,
+  "exclude": [
+    {
+      "start": "2021-09-01",
+      "end": "2021-12-01",
+      "reason": "상생 국민지원금"
+    },
+    {
+      "start": "2022-09-01",
+      "end": "2022-12-01",
+      "reason": "상생 국민지원금의 1년 뒤 메아리"
+    }
+  ],
+  "reference_effect": 0.1,
+  "expected": "increase",
+  "official_stats": [],
+  "panel": null,
+  "choices": [
+    {
+      "decision": "사전 등록 문서 사용",
+      "reason": "docs/prereg/case_relief2020_engine.md (잠금 해시 확인)"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "dataset": "card_sector",
+  "series": [],
+  "target": "중국",
+  "reference_candidates": [],
+  "official_stats": [],
+  "notes": [
+    "등록 사례의 기본 지표 사용"
+  ],
+  "method": "did_panel",
+  "quality_verdict": "패널 설계: 시점별 결측 점검만 수행",
+  "quality_cap": null,
+  "coverage_summary": "[집단 결측] 2023-05 ~ 2023-06 2개월 동안 기타외국, 동남아, 일본, 중국의 행이 없음 (같은 기간 내국인, 법인, 제주도민은 있음) (결측·부분 집계일은 분석에서 자동 제외)"
+}

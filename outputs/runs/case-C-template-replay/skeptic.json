@@ -1,0 +1,48 @@
+{
+  "rule_hypotheses": [
+    {
+      "hypothesis": "측정 방식이 바뀌어 숫자만 달라졌다",
+      "check": "C0 데이터 품질",
+      "status": "반론 기각",
+      "detail": "측정 단절 증거 없음",
+      "source": "판정 규칙"
+    },
+    {
+      "hypothesis": "정책 전부터 이미 변하고 있었다(기존 추세)",
+      "check": "C1 사전추세",
+      "status": "반론 기각",
+      "detail": "사전 추세 검정 p=0.958, 사전 추세 연장으로 설명되는 몫 -1%",
+      "source": "판정 규칙"
+    },
+    {
+      "hypothesis": "해마다 이맘때 생기는 변화다(방학·계절·명절)",
+      "check": "계절 차분 + C2a 시점 위약",
+      "status": "반론 기각",
+      "detail": "가짜 시행일 35개 중 순위 p=0.028",
+      "source": "판정 규칙"
+    },
+    {
+      "hypothesis": "대조 집단 쪽에 다른 일이 생겼다",
+      "check": "C2b 공간 위약",
+      "status": "반론 기각",
+      "detail": "실제 +19.6% vs 가짜 처치 경로 -1.6%, 어린이 -0.9%",
+      "source": "판정 규칙"
+    },
+    {
+      "hypothesis": "분석 기간·대조 선택에 따라 달라지는 우연이다",
+      "check": "C3 민감도",
+      "status": "반론 기각",
+      "detail": "3개 중 3개 같은 방향·유의 (같은 방향 3개)",
+      "source": "판정 규칙"
+    }
+  ],
+  "hypotheses": [],
+  "extra_checks": [],
+  "standing": [],
+  "downgraded": null,
+  "rule_standing": [],
+  "final_level": "효과 있음",
+  "final_label": "효과 있음(증가)",
+  "light": "🟢",
+  "summary": ""
+}

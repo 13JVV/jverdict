@@ -1,0 +1,16 @@
+# 정책 판정관 화면 설정 (프로젝트 폴더에서 streamlit run 할 때 적용)
+[server]
+address = "localhost"        # 이 PC 안에서만 접속
+headless = false
+showEmailPrompt = false     # 처음 실행 때 터미널에서 이메일을 묻고 멈추지 않게
+
+[browser]
+gatherUsageStats = false     # 사용 통계 전송 안 함
+
+[client]
+showErrorDetails = "type"    # 오류 상세(경로·값)를 화면에 노출하지 않음
+toolbarMode = "minimal"
+
+[theme]
+base = "light"
+primaryColor = "#0b3d5c"

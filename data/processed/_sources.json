@@ -1,0 +1,24 @@
+{
+  "note": "원본 CSV 지문과, 그 원본에서 만든 가공 파일 지문의 짝. jverdict.data.sources 참고",
+  "created": "2026-11-05T00:57:11+0900",
+  "sources": {
+    "이용자유형별버스정류소이용인원현황.csv": {
+      "bytes": 624092571,
+      "sha256": "0eac15877892a93fd6a3235befcfb5c8e8351f6185cec8b6f04e23d98623547b",
+      "processed": {
+        "file": "bus_station_usertype_daily.parquet",
+        "bytes": 38108833,
+        "sha256": "247381788924fd0e338a4cbef04ff3adaeb44a786f18d4434ae64a6de687e67c"
+      }
+    },
+    "일별버스승차인원수현황.csv": {
+      "bytes": 498447214,
+      "sha256": "7941dce63a51e92313225cf2a5fb517c8b8058e0dda299b36c0b8ae17a7d381d",
+      "processed": {
+        "file": "bus_route_usertype_daily.parquet",
+        "bytes": 27257539,
+        "sha256": "365b7b3b883b195678d363b86b2b4406804088eda5d8fdf3db09d0ea5e44a7f6"
+      }
+    }
+  }
+}

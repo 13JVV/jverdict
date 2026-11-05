@@ -1,0 +1,16 @@
+{
+  "policy": "(시연) 청소년 버스 요금 할인 — 합성데이터",
+  "question": "(시연) 2024-03-04 청소년 요금 할인으로 청소년 버스 이용이 늘었는가?",
+  "start_date": "2024-03-04",
+  "end_date": null,
+  "treated": "청소년",
+  "outcome": "이용자 유형별 일 단위 버스 이용 인원",
+  "expected": "increase",
+  "region": "가상",
+  "source": "합성데이터(정답 공개는 판정 뒤)",
+  "reference_effect": 0.1,
+  "needed_hint": [],
+  "prereg": null,
+  "library_case": "C",
+  "assumptions": []
+}

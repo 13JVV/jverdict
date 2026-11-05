@@ -1,0 +1,25 @@
+{"t": "23:04:21", "stage": "parse", "msg": "실행 시작: 모드 claude, 판정 규칙 v2"}
+{"t": "23:04:21", "stage": "parse", "msg": "단계 시작: parse"}
+{"t": "23:04:26", "stage": "confirm", "msg": "단계 시작: confirm"}
+{"t": "23:04:26", "stage": "confirm", "msg": "정책 카드 확인 완료", "data": {"policy": "1차 긴급재난지원금", "start_date": "2020-05-01", "treated": "제주도민(지원금 수령), 사용 가능 업종", "outcome": "업종별 월 카드 이용 금액"}}
+{"t": "23:04:26", "stage": "scout", "msg": "단계 시작: scout"}
+{"t": "23:04:28", "stage": "scout", "msg": "툴 catalog_search", "data": {"args": {"query": "card"}, "error": false}}
+{"t": "23:04:28", "stage": "scout", "msg": "툴 dataset_profile", "data": {"args": {"dataset": "card_sector"}, "error": false}}
+{"t": "23:04:28", "stage": "scout", "msg": "툴 official_stats", "data": {"args": {}, "error": false}}
+{"t": "23:04:31", "stage": "scout", "msg": "툴 quality_check", "data": {"args": {"dataset": "card_sector", "series": [{"name": "도민_가능", "groups": ["제주도민"], "units_tier": "tier:가능", "units_list": []}, {"name": "도민_불가", "groups": ["제주도민"], "units_tier": "tier:불가", "units_list": []}, {"name": "내국인_가능", "groups": ["내국인"], "units_tier": "tier:가능", "units_list": []}, {"name": "법인_가능", "groups": ["법인"], "units_tier": "tier:가능", "units_list": []}], "target": "도민_가능", "reference": ["내국인_가능", "법인_가능", "도민_불가"], "official_stats": []}, "error": false}}
+{"t": "23:04:38", "stage": "scout", "msg": "데이터 점검: 확인 필요", "data": {"dataset": "card_sector", "cap": "조건부", "coverage": "[집단 결측] 2023-05 ~ 2023-06 2개월 동안 기타외국, 동남아, 일본, 중국의 행이 없음 (같은 기간 내국인, 법인, 제주도민은 있음) (결측·부분 집계일은 분석에서 자동 제외)"}}
+{"t": "23:04:38", "stage": "design", "msg": "단계 시작: design"}
+{"t": "23:04:38", "stage": "design", "msg": "기존 사전 등록 문서 사용: docs/prereg/case_relief2020_engine.md (지문 확인)"}
+{"t": "23:04:38", "stage": "lock", "msg": "단계 시작: lock"}
+{"t": "23:04:38", "stage": "lock", "msg": "설계 잠금 SHA-256 d65e12b39c79944f…"}
+{"t": "23:04:38", "stage": "execute", "msg": "단계 시작: execute"}
+{"t": "23:04:38", "stage": "execute", "msg": "판정 규칙 결과: 판정 보류", "data": {"verdict": "판정 보류", "effect": -0.049901, "se": 0.052885, "ci_lo": -0.185847, "ci_hi": 0.086044, "p": 0.388711, "mde_pct": 0.159701}}
+{"t": "23:04:38", "stage": "skeptic", "msg": "단계 시작: skeptic"}
+{"t": "23:04:43", "stage": "skeptic", "msg": "툴 event_calendar", "data": {"args": {"start": "2020-02-01", "end": "2020-12-31"}, "error": false}}
+{"t": "23:04:43", "stage": "skeptic", "msg": "툴 extra_check", "data": {"args": {"kind": "alt_window", "reference": [], "placebo_target": null, "post": 2, "start": null, "end": null, "reason": "지원금 효과가 지급 직후 단기에 집중됐다면 post 4개월은 희석됐을 수 있음"}, "error": false}}
+{"t": "23:04:43", "stage": "skeptic", "msg": "툴 extra_check", "data": {"args": {"kind": "exclude_period", "reference": [], "placebo_target": null, "post": null, "start": "2020-02-01", "end": "2020-03-01", "reason": "코로나19 1차 확산기(2~3월)가 사전 기준선을 왜곡했을 가능성"}, "error": true}}
+{"t": "23:04:51", "stage": "skeptic", "msg": "반론 8개 검증: 판정 규칙이 이미 반영한 성립 1개, 추가 반론 성립 0개 → 최종 판정 보류"}
+{"t": "23:04:51", "stage": "report", "msg": "단계 시작: report"}
+{"t": "23:05:01", "stage": "report", "msg": "판정서 작성 완료"}
+{"t": "23:05:01", "stage": "manifest", "msg": "단계 시작: manifest"}
+{"t": "23:05:01", "stage": "manifest", "msg": "재실행 기록 저장"}

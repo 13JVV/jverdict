@@ -1,0 +1,16 @@
+{
+  "policy": "중국 단체관광 재개",
+  "question": "중국 단체관광 재개(2023-08-10) 이후 제주의 중국인 카드 소비가 다른 외국인 대비 늘었는가?",
+  "start_date": "2023-08-01",
+  "end_date": null,
+  "treated": "중국인 방문객",
+  "outcome": "업종별 월 카드 이용 금액(2019 같은 달 대비)",
+  "expected": "increase",
+  "region": "제주도",
+  "source": "중국 문화여유부 발표(2023-08-10)",
+  "reference_effect": 0.2,
+  "needed_hint": [],
+  "prereg": "docs/prereg/case_china_group_tour_2023.md",
+  "library_case": "D",
+  "assumptions": []
+}

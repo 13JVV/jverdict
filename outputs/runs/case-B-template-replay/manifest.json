@@ -1,0 +1,84 @@
+{
+  "run_id": "case-B-template-replay",
+  "created": "2026-11-06T00:55:30+0900",
+  "calendar_as_of": "2026-11-06",
+  "mode": "template",
+  "rules_version": "v2",
+  "seed": 20261104,
+  "question_input": "1차 긴급재난지원금(2020-05)이 사용 가능 업종의 제주도민 카드 소비를 늘렸는가?",
+  "question": "1차 긴급재난지원금(2020-05)이 사용 가능 업종의 제주도민 카드 소비를 늘렸는가?",
+  "card": {
+    "policy": "1차 긴급재난지원금",
+    "question": "1차 긴급재난지원금(2020-05)이 사용 가능 업종의 제주도민 카드 소비를 늘렸는가?",
+    "start_date": "2020-05-01",
+    "end_date": "2020-08-31",
+    "treated": "제주도민(지원금 수령), 사용 가능 업종",
+    "outcome": "업종별 월 카드 이용 금액",
+    "expected": "increase",
+    "region": "제주도",
+    "source": "행정안전부·제주도 발표(2020)",
+    "reference_effect": 0.1,
+    "needed_hint": [],
+    "prereg": "docs/prereg/case_relief2020_engine.md",
+    "library_case": "B",
+    "assumptions": []
+  },
+  "data": {
+    "dataset": "card_sector",
+    "source": "업종별성별카드이용정보.csv",
+    "bytes": 1998040,
+    "sha256": "518cd18e78141ede90cc5ee7639099282eae4c1557236e4eda6bd295b66e368d"
+  },
+  "prereg": {
+    "sha256": "32cddf2f9a993e6ee055501b66cb7ae250c1c1ff316edd2ce3565f0809c708ee",
+    "locked_at": "2026-11-06T00:55:30+0900",
+    "existing": {
+      "file": "docs/prereg/case_relief2020_engine.md",
+      "sha256": "38b009dbd65b762996d134d1888d02da023e497edf03ca93e7012b99ebec080d",
+      "locked_at": "2026-11-03T22:18:03+0900"
+    },
+    "amendments": []
+  },
+  "code_sha256": "f2f375c291cf0ef535650a6a2b14abc832dbdb761440f7ae4fe2b03d92890f20",
+  "versions": {
+    "python": "3.14.3",
+    "platform": "Darwin arm64",
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "scipy": "1.18.1",
+    "duckdb": "2.0.0",
+    "statsmodels": "0.15.0",
+    "anthropic": "2.3.0"
+  },
+  "numbers": {
+    "verdict": "판정 보류",
+    "effect": -0.049901,
+    "se": 0.052885,
+    "ci_lo": -0.185847,
+    "ci_hi": 0.086044,
+    "p": 0.388711,
+    "mde_pct": 0.159701
+  },
+  "final_verdict": "판정 보류",
+  "llm": {
+    "calls": 0,
+    "cost_usd": 0.0,
+    "mode": "template"
+  },
+  "fallbacks": [],
+  "files": [
+    "analysis.json",
+    "card.json",
+    "design.json",
+    "events.jsonl",
+    "facts.txt",
+    "llm_cache.json",
+    "naive.json",
+    "prereg.lock.json",
+    "prereg.md",
+    "report.json",
+    "report.md",
+    "scout.json",
+    "skeptic.json"
+  ]
+}

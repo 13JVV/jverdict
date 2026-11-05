@@ -1,0 +1,19 @@
+{
+  "policy": "청소년 버스 무료(어린이 무료 확대)",
+  "question": "청소년 버스 무료화(2025-08-01)로 청소년의 버스 이용이 늘었는가?",
+  "start_date": "2025-08-01",
+  "end_date": null,
+  "treated": "청소년(만 13~18세), 어린이 무료 확대 동시 시행",
+  "outcome": "이용자 유형별 일 단위 버스 이용 인원",
+  "expected": "increase",
+  "region": "제주도 전역",
+  "source": "제주도 발표",
+  "reference_effect": 0.1,
+  "needed_hint": [
+    "교통복지카드(무료) 승차 기록이 포함된 이용자 유형별 승차 자료",
+    "2025-08-01 전후 이용자 유형 분류 기준 변경 이력(데이터 제공처 확인)"
+  ],
+  "prereg": null,
+  "library_case": "A",
+  "assumptions": []
+}

@@ -1,0 +1,14 @@
+.env
+.venv/
+.venv.nosync/
+__pycache__/
+*.pyc
+.DS_Store
+data/raw/
+data/processed/*.parquet
+data/processed/bus_stations.csv
+runtime/
+dist/
+outputs/doctor/
+outputs/runs/_*/
+outputs/runs/2*/

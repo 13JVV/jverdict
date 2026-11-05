@@ -1,0 +1,72 @@
+{
+  "dataset": "card_sector",
+  "series": [
+    {
+      "name": "도민_가능",
+      "groups": [
+        "제주도민"
+      ],
+      "units_tier": "tier:가능",
+      "units_list": []
+    },
+    {
+      "name": "도민_불가",
+      "groups": [
+        "제주도민"
+      ],
+      "units_tier": "tier:불가",
+      "units_list": []
+    },
+    {
+      "name": "도민_대형종합",
+      "groups": [
+        "제주도민"
+      ],
+      "units_tier": null,
+      "units_list": [
+        "기타 대형 종합 소매업"
+      ]
+    },
+    {
+      "name": "도민_불가면세",
+      "groups": [
+        "제주도민"
+      ],
+      "units_tier": null,
+      "units_list": [
+        "기타 대형 종합 소매업",
+        "일반유흥 주점업",
+        "면세점"
+      ]
+    },
+    {
+      "name": "법인_가능",
+      "groups": [
+        "법인"
+      ],
+      "units_tier": "tier:가능",
+      "units_list": []
+    },
+    {
+      "name": "법인_불가",
+      "groups": [
+        "법인"
+      ],
+      "units_tier": "tier:불가",
+      "units_list": []
+    }
+  ],
+  "target": "도민_가능",
+  "reference_candidates": [
+    "도민_불가",
+    "법인_가능"
+  ],
+  "official_stats": [],
+  "notes": [
+    "등록 사례의 기본 지표 사용"
+  ],
+  "method": "its",
+  "quality_verdict": "단절 없음",
+  "quality_cap": null,
+  "coverage_summary": "[집단 결측] 2023-05 ~ 2023-06 2개월 동안 기타외국, 동남아, 일본, 중국의 행이 없음 (같은 기간 내국인, 법인, 제주도민은 있음) (결측·부분 집계일은 분석에서 자동 제외)"
+}

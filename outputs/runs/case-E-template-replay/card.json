@@ -1,0 +1,16 @@
+{
+  "policy": "사회적 거리두기 전면 해제",
+  "question": "사회적 거리두기 전면 해제(2022-04-18)로 제주도민의 주점 소비가 늘었는가?",
+  "start_date": "2022-04-01",
+  "end_date": null,
+  "treated": "영업시간·모임 제한을 받던 주점(일반유흥 주점업, 기타 주점업). 시행 4-18이라 4월은 절반만 처치(월 단위)",
+  "outcome": "업종별 월 카드 이용 금액(제주도민)",
+  "expected": "increase",
+  "region": "제주도(전국 동시 시행)",
+  "source": "중앙재난안전대책본부 발표(2022-04-15)",
+  "reference_effect": 0.1,
+  "needed_hint": [],
+  "prereg": "docs/prereg/case_distancing_2022.md",
+  "library_case": "E",
+  "assumptions": []
+}

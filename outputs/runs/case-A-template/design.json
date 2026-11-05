@@ -1,0 +1,93 @@
+{
+  "dataset": "bus_station",
+  "method": "its",
+  "series": [
+    {
+      "name": "청소년",
+      "groups": [
+        "청소년"
+      ],
+      "units_tier": null,
+      "units_list": []
+    },
+    {
+      "name": "어린이",
+      "groups": [
+        "어린이"
+      ],
+      "units_tier": null,
+      "units_list": []
+    },
+    {
+      "name": "일반",
+      "groups": [
+        "일반"
+      ],
+      "units_tier": null,
+      "units_list": []
+    },
+    {
+      "name": "경로",
+      "groups": [
+        "경로"
+      ],
+      "units_tier": null,
+      "units_list": []
+    },
+    {
+      "name": "장애 일반",
+      "groups": [
+        "장애 일반"
+      ],
+      "units_tier": null,
+      "units_list": []
+    }
+  ],
+  "target": "청소년",
+  "reference": [
+    "일반"
+  ],
+  "placebo": [
+    {
+      "target": "경로",
+      "reference": [
+        "일반"
+      ]
+    },
+    {
+      "target": "장애 일반",
+      "reference": [
+        "일반"
+      ]
+    }
+  ],
+  "alt_references": [],
+  "pre": null,
+  "post": null,
+  "season_years": 3,
+  "exclude": [],
+  "reference_effect": 0.1,
+  "expected": "increase",
+  "official_stats": [
+    "youth_free_483"
+  ],
+  "panel": null,
+  "choices": [
+    {
+      "decision": "대조 집단: 일반",
+      "reason": "정책 대상이 아니고 규모가 가장 커 날씨·관광 등 공통 변화를 가장 잘 반영"
+    },
+    {
+      "decision": "공간 위약: 경로·장애 일반",
+      "reason": "정책 대상이 아닌 다른 할인 유형. 같은 때 변하면 대조 쪽 사건을 의심"
+    },
+    {
+      "decision": "계절 차분 3년",
+      "reason": "시행일(8월)이 방학과 겹쳐 같은 요일·같은 시기 과거 값과 비교"
+    },
+    {
+      "decision": "공식 통계 대조: 도 발표 483만 건",
+      "reason": "공개 데이터 집계와 공식 실적의 규모 확인"
+    }
+  ]
+}

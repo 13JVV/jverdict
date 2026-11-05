@@ -1,0 +1,66 @@
+<!doctype html><html lang="ko" style="--fs:8.6pt"><head><meta charset="utf-8">
+<title>판정서 case-B-claude</title><style>
+@page { size: A4; margin: 11mm 12mm 10mm 12mm; }
+* { box-sizing: border-box; }
+html { font-size: var(--fs, 9pt); }
+body { font-family: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif; color: #0b0b0b;
+       background: #fff; margin: 0; line-height: 1.45; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.top { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1.6pt solid #0b3d5c;
+       padding-bottom: 2pt; margin-bottom: 5pt; }
+.brand { font-weight: 800; color: #0b3d5c; font-size: 1.05rem; letter-spacing: .02em; }
+.meta { color: #52514e; font-size: .85rem; }
+h1 { font-size: 1.55rem; margin: 0 0 1pt; line-height: 1.25; }
+.q { color: #52514e; margin: 0 0 5pt; }
+.verdict { display: flex; gap: 8pt; align-items: stretch; margin: 0 0 5pt; }
+.badge { flex: 0 0 auto; border-radius: 5pt; padding: 5pt 10pt; display: flex; align-items: center; gap: 6pt;
+         font-weight: 800; font-size: 1.45rem; white-space: nowrap; }
+.badge .ic { display: inline-flex; width: 1.25em; height: 1.25em; border-radius: 50%; align-items: center;
+             justify-content: center; font-size: .8em; border: 1.4pt solid currentColor; }
+.vtext { flex: 1; border: .6pt solid #c3c2b7; border-radius: 5pt; padding: 4pt 7pt; }
+.vtext b { display: block; font-size: 1.02rem; line-height: 1.35; }
+.vtext span { color: #52514e; font-size: .88rem; }
+.summary { margin: 0 0 4pt; }
+.naive { display: flex; gap: 6pt; align-items: stretch; margin: 2pt 0 5pt; font-size: .95em; }
+.naive > div { flex: 1; border: 1px solid #d6d5cc; border-radius: 4pt; padding: 3pt 6pt; }
+.naive .nv { background: #f6f6f3; }
+.naive .nv b, .naive .jv b { display: block; font-size: .85em; color: #52514e; }
+.naive .arrow { flex: 0 0 auto; border: 0; padding: 0; align-self: center; color: #52514e; }
+figure { margin: 0 0 4pt; border: .6pt solid #e1e0d9; border-radius: 4pt; padding: 3pt 4pt 1pt; background: #fcfcfb; }
+figcaption { color: #52514e; font-size: .8rem; margin: 0 2pt 2pt; }
+h2 { font-size: 1.02rem; color: #0b3d5c; margin: 5pt 0 2pt; border-bottom: .8pt solid #c3c2b7; padding-bottom: 1pt; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 10pt; }
+table { border-collapse: collapse; width: 100%; font-size: .86rem; }
+th, td { border-bottom: .5pt solid #e1e0d9; padding: 1.6pt 3pt; text-align: left; vertical-align: top; }
+th { color: #52514e; font-weight: 600; }
+td.st, td.nm { white-space: nowrap; font-weight: 700; }
+td.nm { font-weight: 600; }
+.ok { color: #006300; } .bad { color: #b42323; } .na { color: #898781; } .open { color: #8a5a00; }
+ul { margin: 1pt 0 2pt; padding-left: 12pt; } li { margin: 0 0 1pt; }
+.truth { border: 1pt dashed #2a78d6; border-radius: 4pt; padding: 3pt 6pt; margin: 4pt 0; font-size: .9rem; }
+.foot { margin-top: 5pt; border-top: .6pt solid #c3c2b7; padding-top: 2pt; color: #52514e; font-size: .74rem;
+        line-height: 1.4; word-break: break-all; }
+code { font-family: "Menlo", "Consolas", monospace; font-size: .95em; }
+</style></head>
+<body>
+<div class="top"><span class="brand">정책 판정관 J-Verdict · 판정서</span>
+<span class="meta">제주도 · 데이터 업종별 성별 카드 이용 정보</span></div>
+<h1>1차 긴급재난지원금</h1>
+<p class="q">질문: 1차 긴급재난지원금(2020-05)이 사용 가능 업종의 제주도민 카드 소비를 늘렸는가? · 시행 2020-05-01 · 대상 제주도민(지원금 수령), 사용 가능 업종</p>
+<div class="verdict">
+ <div class="badge" style="background:#d03b3b;color:#ffffff"><span class="ic">?</span>판정 보류</div>
+ <div class="vtext"><b>1차 긴급재난지원금이 사용 가능 업종의 제주도민 카드 소비를 늘렸는지는 현재 자료로 판단할 수 없어 &#x27;판정 보류&#x27;합니다.</b><span>현재 자료로는 효과가 있다고도 없다고도 말할 수 없습니다. &#x27;판정에 필요한 데이터&#x27;를 확보하면 다시 판정할 수 있습니다.</span></div>
+</div>
+<p class="summary">사후 4개월 평균은 -4.9%였으나 판정 구간이 -17.0%~+9.0%로 넓어 늘었다고도 줄었다고도 말하기 어렵습니다. 현재 자료로 구분 가능한 최소 효과는 ±16.0%로, 기준 효과 10%를 가려내기에는 검정력이 부족합니다. 시점 위약검정에서 가짜 시행일 40개 중 순위 p=0.317로 실패해, 계절·같은 시기 충격으로 나온 변화일 가능성을 배제하지 못했습니다. 따라서 이 결과를 정책 효과의 증거로 쓰기보다 추가 자료 확보 후 다시 판정하는 것이 적절합니다.</p>
+<div class="naive"><div class="nv"><b>단순 전후 비교였다면</b>&#x27;도민_가능&#x27;의 시행 후 4개월 평균이 직전 4개월보다 +5.1%: 늘어남 → &#x27;효과 있음&#x27;으로 보였을 것</div><div class="arrow">→</div><div class="jv"><b>판정관</b>판정 보류. 판정관은 같은 숫자를 그대로 믿지 않고 &#x27;판정 보류&#x27;로 판정했습니다. 이유는 아래 근거와 검증 결과에 있습니다.</div></div>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 230" width="100%" role="img" aria-label="대상과 대조 집단의 차이 변화(정책 전 평균 = 0%)" font-family="inherit" font-size="10.5"><line x1="52" x2="570" y1="173.4" y2="173.4" stroke="#e1e0d9" stroke-width="0.6"/><text x="46" y="176.9" text-anchor="end" fill="#898781">-15%</text><line x1="52" x2="570" y1="139.7" y2="139.7" stroke="#e1e0d9" stroke-width="0.6"/><text x="46" y="143.2" text-anchor="end" fill="#898781">-10%</text><line x1="52" x2="570" y1="107.8" y2="107.8" stroke="#e1e0d9" stroke-width="0.6"/><text x="46" y="111.3" text-anchor="end" fill="#898781">-5%</text><line x1="52" x2="570" y1="77.6" y2="77.6" stroke="#c3c2b7" stroke-width="1.2"/><text x="46" y="81.1" text-anchor="end" fill="#898781">0%</text><line x1="52" x2="570" y1="48.8" y2="48.8" stroke="#e1e0d9" stroke-width="0.6"/><text x="46" y="52.3" text-anchor="end" fill="#898781">+5%</text><line x1="52" x2="570" y1="21.4" y2="21.4" stroke="#e1e0d9" stroke-width="0.6"/><text x="46" y="24.9" text-anchor="end" fill="#898781">+10%</text><text x="52.0" y="216" text-anchor="middle" fill="#898781">2020-02</text><text x="138.3" y="216" text-anchor="middle" fill="#898781">2020-03</text><text x="224.7" y="216" text-anchor="middle" fill="#898781">2020-04</text><text x="311.0" y="216" text-anchor="middle" fill="#898781">2020-05</text><text x="397.3" y="216" text-anchor="middle" fill="#898781">2020-06</text><text x="483.7" y="216" text-anchor="middle" fill="#898781">2020-07</text><text x="570.0" y="216" text-anchor="middle" fill="#898781">2020-08</text><line x1="311.0" x2="311.0" y1="14" y2="200" stroke="#52514e" stroke-width="1" stroke-dasharray="3 3"/><text x="307.0" y="24" text-anchor="end" fill="#52514e">시행 2020-05</text><rect x="311.0" y="26.8" width="259.0" height="160.3" fill="#eb6834" fill-opacity="0.14"/><polyline points="52.0,47.6 138.3,88.6 224.7,96.5 311.0,60.1 397.3,130.4 483.7,101.0 570.0,136.6" fill="none" stroke="#2a78d6" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/><line x1="311.0" x2="570.0" y1="77.6" y2="77.6" stroke="#52514e" stroke-width="1.5" stroke-dasharray="5 3"/><line x1="311.0" x2="570.0" y1="107.0" y2="107.0" stroke="#eb6834" stroke-width="2.5" stroke-linecap="round"/><text x="578.0" y="111.0" fill="#0b0b0b" font-weight="700">정책 후 평균 -4.9%</text><text x="578.0" y="123.0" fill="#52514e" font-size="9.5">판정 구간 -17.0~+9.0%</text><text x="578.0" y="81.6" fill="#52514e">정책이 없었다면(0%)</text><text x="56" y="194" fill="#2a78d6" font-weight="700">관측: 도민_가능 − 도민_불가</text><text x="52" y="228" fill="#898781" font-size="9">대상과 대조 집단의 차이 변화(정책 전 평균 = 0%)</text></svg><figcaption>계절(작년 같은 때)을 뺀 값. 0% 선은 &#x27;정책이 없었다면&#x27;의 기준, 굵은 선은 정책 후 평균(추정 효과), 띠는 판정 구간.</figcaption></figure>
+
+<div class="cols">
+ <div><h2>검증 결과</h2><table><tr><th>항목</th><th>결과</th><th>내용</th></tr><tr><td class="nm">C0 데이터 품질</td><td class="st ok">✓ 통과</td><td>단절 없음</td></tr><tr><td class="nm">C1 사전추세</td><td class="st na">– 해당 없음</td><td>사전 기간이 짧아 검정 불가</td></tr><tr><td class="nm">C2a 시점 위약검정</td><td class="st bad">✗ 실패</td><td>가짜 시행일 40개 중 순위 p=0.317</td></tr><tr><td class="nm">C2b 공간 위약검정</td><td class="st ok">✓ 통과</td><td>실제 -4.9% vs 가짜 처치 법인_가능 +5.6%</td></tr><tr><td class="nm">C3 민감도</td><td class="st na"> 참고</td><td>3개 중 0개 같은 방향·유의 (같은 방향 3개)</td></tr><tr><td class="nm">C4 이중 계산</td><td class="st ok">✓ 통과</td><td>사후 평균 − 사전 평균(계절 차분 격차): pandas -0.049901242 / SQL -0.049901242</td></tr></table></div>
+ <div><h2>반론 검증</h2><table><tr><th>반론</th><th>결과</th></tr><tr><td>측정 방식이 바뀌어 숫자만 달라졌다</td><td class="st ok">반론 기각</td></tr><tr><td>정책 전부터 이미 변하고 있었다(기존 추세)</td><td class="st open">미검증</td></tr><tr><td>해마다 이맘때 생기는 변화다(방학·계절·명절)</td><td class="st bad">반론 성립</td></tr><tr><td>대조 집단 쪽에 다른 일이 생겼다</td><td class="st ok">반론 기각</td></tr><tr><td>분석 기간·대조 선택에 따라 달라지는 우연이다</td><td class="st ok">반론 기각</td></tr><tr><td>효과가 지급 직후 1~2개월에 집중돼 사후 4개월 창에서 희석됐다.</td><td class="st ok">반론 기각</td></tr><tr><td>코로나19 확산기(2020-02~03)가 사전 기준선을 낮추거나 왜곡해 효과 추정이 편향됐다.</td><td class="st open">미검증</td></tr><tr><td>황금연휴 관광 반등(2020-04-30~05-05), 유가 급락, 여름방학 같은 같은 시기의 업종별 충격이 처치 업종과 비교 업종에 다르게 작용했다.</td><td class="st bad">규칙 검증: 성립</td></tr></table></div>
+</div>
+<div class="cols">
+ <div><h2>이 분석이 말할 수 없는 것</h2><ul><li>지급금이 카드 소비를 늘렸다고도, 늘리지 않았다고도 말할 수 없음.</li><li>-4.9%가 정책 때문에 생긴 감소라고 원인을 단정할 수 없음.</li><li>정책의 전체 경제효과나 지역경제 파급효과는 이 분석으로 말할 수 없음.</li></ul><h2>한계</h2><ul><li>사전 기간이 3개월로 짧아 정책 전부터의 기존 추세(C1)는 검정하지 못했음(미검증).</li><li>코로나19 확산기(2020-02~03)가 사전 기준선을 왜곡했을 가능성은 검증하지 못했음(미검증).</li><li>사용한 자료는 &#x27;업종별 성별 카드 이용 정보&#x27;로, 전체 소비를 대표하는지는 확인 필요.</li><li>사후 4개월은 효과를 가려내기에 짧음.</li></ul></div>
+ <div><h2>판정에 필요한 데이터</h2><ul><li>사후 약 10개월의 관측 자료(정책이 계속되는 경우).</li><li>더 세밀한 단위의 자료(일 단위, 전체 카드사 등, 정책이 끝난 경우).</li><li>코로나19 확산기 이전의 더 긴 사전 기간 자료(기존 추세 검정용).</li><li>같은 시기 업종별 충격을 가려낼 수 있는 비교 업종·관광 관련 자료(시행일·대상 업종 세부는 확인 필요).</li></ul><h2>검정력</h2><p>구분 가능한 최소 효과 ±16.0% (의미 있는 최소 효과 기준 10%)</p></div>
+</div>
+<div class="foot">재현 정보 · 실행 <code>case-B-claude</code> · 모드 Claude · 판정 규칙 v2 · 재실행 일치 확인됨 · 생성 2026-11-03 23:05<br>사전 등록 지문 <code>d65e12b39c79944fc434c87d…</code> (잠금 2026-11-03 23:04) · 기존 등록 문서 docs/prereg/case_relief2020_engine.md 지문 확인 · 데이터 <code>업종별성별카드이용정보.csv</code> 지문 <code>518cd18e78141ede…</code> · 코드 지문 <code>1c525ebc377933e5…</code> · LLM 호출 7회 $0.085<br>같은 판정 다시 만들기: <code>python -m jverdict.agent --replay outputs/runs/case-B-claude</code> · 이 판정서는 판정 규칙에 따라 자동 작성되었고, 숫자는 모두 분석 결과에서 옮겼습니다.</div>
+</body></html>

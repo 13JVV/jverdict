@@ -1,0 +1,265 @@
+{
+  "meta": {
+    "runs": 200,
+    "seed0": 20261103,
+    "seconds": 41.38800406455994,
+    "finished": "2026-11-03 20:54",
+    "python": "3.14.3"
+  },
+  "headline": {
+    "측정 단절 탐지율(강한 단절)": 1.0,
+    "측정 단절 탐지율(약한 단절 + 공식 통계)": 0.98,
+    "분류 변경 탐지율(새 분류)": 1.0,
+    "분류 변경 탐지율(기존 분류로 이동, '확인 필요' 포함)": 0.67,
+    "전체 집계 이상 탐지율": 0.995,
+    "오탐률(실제 효과를 측정 단절로)": 0.00125,
+    "오탐률(아무 일 없음)": 0.0,
+    "효과 크기 95% 구간 포함률": 0.9533333333333334,
+    "단절 시점 탐색 적중률(측정 단절, 전환 기간 안)": 0.939,
+    "전체 결측 구간 정확 일치율": 1.0,
+    "집단 결측 정확 일치율": 1.0,
+    "부분 집계일 재현율": 0.9974764957264958
+  },
+  "summary": {
+    "null": {
+      "title": "아무 일도 없음",
+      "label": "none",
+      "runs": 200,
+      "verdicts": {
+        "단절 없음": 190,
+        "확인 필요": 6,
+        "측정 단절 증거 없음": 4
+      },
+      "ideal_rate": 0.97,
+      "acceptable_rate": 1.0,
+      "suspected_rate": 0.0,
+      "scan_hit_rate": 0.005,
+      "scan_hit_span_rate": 0.005,
+      "scan_top1_rate": 0.005,
+      "scan_candidates_mean": 0.125,
+      "scan_date_error_median": 1.0,
+      "coverage_false_rate": 0.0
+    },
+    "effect_step": {
+      "title": "실제 효과(즉시, +16~42%)",
+      "label": "effect",
+      "runs": 200,
+      "verdicts": {
+        "측정 단절 증거 없음": 193,
+        "단절 없음": 7
+      },
+      "ideal_rate": 0.965,
+      "acceptable_rate": 0.965,
+      "suspected_rate": 0.0,
+      "scan_hit_rate": 0.61,
+      "scan_hit_span_rate": 0.61,
+      "scan_top1_rate": 0.605,
+      "scan_candidates_mean": 0.86,
+      "scan_date_error_median": 1.0,
+      "coverage_false_rate": 0.0,
+      "ci_coverage": 0.92,
+      "bias_log": -0.0002782627044569545,
+      "rmse_log": 0.05795199829486772
+    },
+    "effect_ramp": {
+      "title": "실제 효과(1~3개월에 걸쳐)",
+      "label": "effect",
+      "runs": 200,
+      "verdicts": {
+        "단절 없음": 104,
+        "측정 단절 증거 없음": 95,
+        "측정 단절 의심": 1
+      },
+      "ideal_rate": 0.995,
+      "acceptable_rate": 0.995,
+      "suspected_rate": 0.005,
+      "scan_hit_rate": 0.035,
+      "scan_hit_span_rate": 0.035,
+      "scan_top1_rate": 0.035,
+      "scan_candidates_mean": 0.405,
+      "scan_date_error_median": 3.0,
+      "coverage_false_rate": 0.0
+    },
+    "effect_ext": {
+      "title": "실제 효과 + 공식 통계 대조",
+      "label": "effect",
+      "runs": 200,
+      "verdicts": {
+        "측정 단절 증거 없음": 193,
+        "단절 없음": 7
+      },
+      "ideal_rate": 0.965,
+      "acceptable_rate": 0.965,
+      "suspected_rate": 0.0,
+      "scan_hit_rate": 0.61,
+      "scan_hit_span_rate": 0.61,
+      "scan_top1_rate": 0.605,
+      "scan_candidates_mean": 0.775,
+      "scan_date_error_median": 1.0,
+      "coverage_false_rate": 0.0,
+      "ci_coverage": 0.97,
+      "bias_log": -0.008702884151859016,
+      "rmse_log": 0.05189231415190932
+    },
+    "backfire": {
+      "title": "실제 역효과(−14~−30%)",
+      "label": "effect",
+      "runs": 200,
+      "verdicts": {
+        "확인 필요": 193,
+        "단절 없음": 7
+      },
+      "ideal_rate": 0.965,
+      "acceptable_rate": 0.965,
+      "suspected_rate": 0.0,
+      "scan_hit_rate": 0.57,
+      "scan_hit_span_rate": 0.57,
+      "scan_top1_rate": 0.57,
+      "scan_candidates_mean": 0.76,
+      "scan_date_error_median": 1.0,
+      "coverage_false_rate": 0.0,
+      "ci_coverage": 0.97,
+      "bias_log": -0.0016616589118809044,
+      "rmse_log": 0.0521586576063694
+    },
+    "mbreak": {
+      "title": "측정 단절(60~90% 누락)",
+      "label": "mbreak",
+      "runs": 200,
+      "verdicts": {
+        "측정 단절 의심": 200
+      },
+      "ideal_rate": 1.0,
+      "acceptable_rate": 1.0,
+      "suspected_rate": 1.0,
+      "scan_hit_rate": 0.79,
+      "scan_hit_span_rate": 0.985,
+      "scan_top1_rate": 0.985,
+      "scan_candidates_mean": 1.045,
+      "scan_date_error_median": 4.0,
+      "coverage_false_rate": 0.0
+    },
+    "mbreak_mild": {
+      "title": "약한 측정 단절(25~45% 누락)",
+      "label": "mbreak",
+      "runs": 200,
+      "verdicts": {
+        "확인 필요": 199,
+        "측정 단절 의심": 1
+      },
+      "ideal_rate": 0.005,
+      "acceptable_rate": 1.0,
+      "suspected_rate": 0.005,
+      "scan_hit_rate": 0.85,
+      "scan_hit_span_rate": 0.945,
+      "scan_top1_rate": 0.945,
+      "scan_candidates_mean": 1.045,
+      "scan_date_error_median": 3.0,
+      "coverage_false_rate": 0.0
+    },
+    "mbreak_mild_ext": {
+      "title": "약한 측정 단절 + 공식 통계 대조",
+      "label": "mbreak",
+      "runs": 200,
+      "verdicts": {
+        "측정 단절 의심(강)": 196,
+        "확인 필요": 4
+      },
+      "ideal_rate": 0.98,
+      "acceptable_rate": 1.0,
+      "suspected_rate": 0.98,
+      "scan_hit_rate": 0.835,
+      "scan_hit_span_rate": 0.94,
+      "scan_top1_rate": 0.94,
+      "scan_candidates_mean": 1.06,
+      "scan_date_error_median": 3.0,
+      "coverage_false_rate": 0.0
+    },
+    "reclass": {
+      "title": "분류 변경(새 분류로 이동, 정책 정보 없음)",
+      "label": "mbreak",
+      "runs": 200,
+      "verdicts": {
+        "측정 단절 의심(강)": 142,
+        "측정 단절 의심": 58
+      },
+      "ideal_rate": 1.0,
+      "acceptable_rate": 1.0,
+      "suspected_rate": 1.0,
+      "scan_hit_rate": 0.91,
+      "scan_hit_span_rate": 0.91,
+      "scan_top1_rate": 0.91,
+      "scan_candidates_mean": 1.0,
+      "scan_date_error_median": 2.0,
+      "coverage_false_rate": 0.0,
+      "scan_reclass_rate": 0.91,
+      "new_category_rate": 1.0
+    },
+    "reclass_existing": {
+      "title": "분류 변경(기존 분류로 이동, 정책 정보 없음)",
+      "label": "mbreak",
+      "runs": 200,
+      "verdicts": {
+        "확인 필요": 112,
+        "측정 단절 증거 없음": 66,
+        "측정 단절 의심(강)": 16,
+        "측정 단절 의심": 6
+      },
+      "ideal_rate": 0.11,
+      "acceptable_rate": 0.67,
+      "suspected_rate": 0.11,
+      "scan_hit_rate": 0.915,
+      "scan_hit_span_rate": 0.915,
+      "scan_top1_rate": 0.915,
+      "scan_candidates_mean": 0.975,
+      "scan_date_error_median": 2.0,
+      "coverage_false_rate": 0.0
+    },
+    "outage": {
+      "title": "전체 집계 이상",
+      "label": "outage",
+      "runs": 200,
+      "verdicts": {
+        "전체 집계 이상": 199,
+        "점검 불가": 1
+      },
+      "ideal_rate": 0.995,
+      "acceptable_rate": 0.995,
+      "suspected_rate": 0.995,
+      "scan_hit_rate": 0.0,
+      "scan_hit_span_rate": 0.0,
+      "scan_top1_rate": 0.0,
+      "scan_candidates_mean": 0.12,
+      "scan_date_error_median": null,
+      "coverage_false_rate": 0.64
+    },
+    "gap_partial": {
+      "title": "전체 결측 + 부분 집계",
+      "label": "coverage",
+      "runs": 200,
+      "gap_exact_rate": 1.0,
+      "gap_found_rate": 1.0,
+      "other_false_rate": 0.0,
+      "partial_recall_mean": 0.9974764957264958,
+      "partial_false_days_mean": 0.0
+    },
+    "group_missing": {
+      "title": "외국인 집단만 2개월 결측(월 단위)",
+      "label": "coverage",
+      "runs": 200,
+      "gap_exact_rate": 1.0,
+      "gap_found_rate": 1.0,
+      "other_false_rate": 0.0,
+      "partial_recall_mean": NaN,
+      "partial_false_days_mean": NaN
+    }
+  },
+  "notes": [
+    "- '올바른 진단'은 시나리오마다 미리 정한 정답 판정이고, '허용'은 틀리지는 않았지만 보수적인 판정(예: 실제 효과를 '확인 필요'로 둠)이다.",
+    "- 측정 단절이 정책이 기대한 방향과 같고(예: 기록이 부풀려짐) 공식 통계도 없으면, 이 툴은 원리상 실제 효과와 구별할 수 없다. 공식 통계 대조가 그 빈틈을 메운다.",
+    "- 시점 탐색은 대상 ÷ 대조 비율을 보므로, 모든 집단이 함께 줄어드는 전체 집계 이상은 시점 탐색이 아니라 대조 집단 자체 점검과 커버리지 점검이 잡는다. 서서히 생기는 실제 효과(1~3개월)도 '단절'이 아니므로 탐색 대상에서 뺐다.",
+    "- 2~3주에 걸쳐 서서히 빠지는 측정 단절은 누락이 15% 안팎 진행된 시점부터 데이터에 드러난다. 그래서 추정 시작일이 실제보다 1~10일 늦을 수 있고, 엄격 기준(±7일)과 '전환 기간 안' 기준을 함께 보고한다.",
+    "- 기존 분류 사이의 이동(예: 어린이 일부가 청소년으로 집계)은 '두 분류의 합계가 그대로인가'로 확인한다. 합계 보존이 확인되면 강한 근거, 반대로 움직이기만 했으면 우연일 수 있어 보통 근거로만 쓴다.",
+    "- 실제 역효과는 '방향 모순' 근거 하나만 충족해 '확인 필요'가 된다. 측정 단절로 단정하지 않도록 근거 1개로는 '의심'을 내지 않게 설계했다."
+  ]
+}

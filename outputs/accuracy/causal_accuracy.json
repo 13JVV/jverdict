@@ -1,0 +1,326 @@
+{
+  "generated": "2026-11-03 22:24",
+  "rules_version": "v2",
+  "platform": "Darwin arm64, 작업자 9",
+  "seconds": 91.50937509536743,
+  "seed0": 20261104,
+  "runs_per_scenario": 200,
+  "headline": {
+    "runs": 2400,
+    "acceptable_all": 0.9570833333333333,
+    "ideal_all": 0.72375,
+    "false_effect_rate_no_effect_scenarios": 0.023571428571428573,
+    "false_null_rate_effect_scenarios": 0.001,
+    "wrong_sign_rate": 0.0,
+    "effect_detect_series": 0.83,
+    "effect_detect_panel": 0.745
+  },
+  "scenarios": {
+    "null": {
+      "title": "아무 일도 없음",
+      "kind": "series",
+      "runs": 200,
+      "verdicts": {
+        "효과 없음": 184,
+        "조건부(증가)": 6,
+        "판정 보류": 5,
+        "조건부(감소)": 2,
+        "효과 있음(감소)": 2,
+        "효과 있음(증가)": 1
+      },
+      "ideal": 0.92,
+      "acceptable": 0.945,
+      "false_effect": 0.015,
+      "false_null": 0.0,
+      "wrong_sign": 0.0,
+      "seconds_mean": 0.05156000000000001,
+      "bias": -0.003185286015333444,
+      "rmse": 0.0204338468098874,
+      "cover_analytic": 0.935,
+      "cover_used": 0.935,
+      "placebo_available": 0.76
+    },
+    "effect": {
+      "title": "실제 효과(즉시, +11~42%)",
+      "kind": "series",
+      "runs": 200,
+      "verdicts": {
+        "효과 있음(증가)": 166,
+        "조건부(증가)": 32,
+        "판정 보류": 2
+      },
+      "ideal": 0.83,
+      "acceptable": 0.99,
+      "false_effect": 0.0,
+      "false_null": 0.0,
+      "wrong_sign": 0.0,
+      "seconds_mean": 0.05394,
+      "bias": -0.0007921717067152097,
+      "rmse": 0.017871171041088724,
+      "cover_analytic": 0.945,
+      "cover_used": 0.95,
+      "placebo_available": 0.785
+    },
+    "ramp": {
+      "title": "실제 효과(1~3개월에 걸쳐 나타남)",
+      "kind": "series",
+      "runs": 200,
+      "verdicts": {
+        "효과 있음(증가)": 172,
+        "조건부(증가)": 27,
+        "효과 없음": 1
+      },
+      "ideal": 0.86,
+      "acceptable": 0.995,
+      "false_effect": 0.0,
+      "false_null": 0.005,
+      "wrong_sign": 0.0,
+      "seconds_mean": 0.053525,
+      "bias": -0.0006051534585945096,
+      "rmse": 0.01718671378154682,
+      "cover_analytic": 0.995,
+      "cover_used": 0.995,
+      "placebo_available": 0.845
+    },
+    "backfire": {
+      "title": "실제 역효과(−10~−30%, 기대와 반대)",
+      "kind": "series",
+      "runs": 200,
+      "verdicts": {
+        "조건부(감소)": 170,
+        "효과 있음(감소)": 29,
+        "판정 보류": 1
+      },
+      "ideal": 0.995,
+      "acceptable": 0.995,
+      "false_effect": 0.0,
+      "false_null": 0.0,
+      "wrong_sign": 0.0,
+      "seconds_mean": 0.054580000000000004,
+      "bias": 0.0012526875211650754,
+      "rmse": 0.01899109715392121,
+      "cover_analytic": 0.965,
+      "cover_used": 0.97,
+      "placebo_available": 0.76
+    },
+    "effect_dirty": {
+      "title": "실제 효과 + 결측·부분 집계",
+      "kind": "series",
+      "runs": 200,
+      "verdicts": {
+        "효과 있음(증가)": 171,
+        "조건부(증가)": 28,
+        "판정 보류": 1
+      },
+      "ideal": 0.855,
+      "acceptable": 0.995,
+      "false_effect": 0.0,
+      "false_null": 0.0,
+      "wrong_sign": 0.0,
+      "seconds_mean": 0.070085,
+      "bias": 0.0002925218988929229,
+      "rmse": 0.019272395736966833,
+      "cover_analytic": 0.955,
+      "cover_used": 0.955,
+      "placebo_available": 0.965
+    },
+    "pretrend": {
+      "title": "효과 없음 + 정책 6~12개월 전 시작된 추세",
+      "kind": "series",
+      "runs": 200,
+      "verdicts": {
+        "조건부(감소)": 69,
+        "조건부(증가)": 64,
+        "판정 보류": 57,
+        "효과 있음(감소)": 6,
+        "효과 있음(증가)": 4
+      },
+      "ideal": 0.285,
+      "acceptable": 0.95,
+      "false_effect": 0.05,
+      "false_null": 0.0,
+      "wrong_sign": 0.0,
+      "seconds_mean": 0.06731,
+      "bias": -0.010981046497340463,
+      "rmse": 0.18232529277666892,
+      "placebo_available": 0.825
+    },
+    "shock_ref": {
+      "title": "효과 없음 + 대조 집단에만 생긴 사건",
+      "kind": "series",
+      "runs": 200,
+      "verdicts": {
+        "판정 보류": 141,
+        "조건부(증가)": 56,
+        "효과 없음": 3
+      },
+      "ideal": 0.705,
+      "acceptable": 1.0,
+      "false_effect": 0.0,
+      "false_null": 0.0,
+      "wrong_sign": 0.0,
+      "seconds_mean": 0.06515,
+      "bias": 0.13319023258183618,
+      "rmse": 0.14075677300752534,
+      "placebo_available": 0.745
+    },
+    "mbreak": {
+      "title": "효과 없음 + 측정 단절(40~90% 누락)",
+      "kind": "series",
+      "runs": 200,
+      "verdicts": {
+        "판정 보류": 166,
+        "조건부(감소)": 34
+      },
+      "ideal": 0.83,
+      "acceptable": 0.83,
+      "false_effect": 0.0,
+      "false_null": 0.0,
+      "wrong_sign": 0.0,
+      "seconds_mean": 0.06332,
+      "bias": -1.1245218183320271,
+      "rmse": 1.2098254986845924,
+      "placebo_available": 0.82
+    },
+    "outage": {
+      "title": "효과 없음 + 전체 집계 이상",
+      "kind": "series",
+      "runs": 200,
+      "verdicts": {
+        "판정 보류": 199,
+        "조건부(감소)": 1
+      },
+      "ideal": 0.995,
+      "acceptable": 0.995,
+      "false_effect": 0.0,
+      "false_null": 0.0,
+      "wrong_sign": 0.0,
+      "seconds_mean": 0.061810000000000004,
+      "bias": 0.00022328838190742897,
+      "rmse": 0.019748904064850505,
+      "placebo_available": 0.76
+    },
+    "panel_null": {
+      "title": "패널: 아무 일도 없음",
+      "kind": "panel",
+      "runs": 200,
+      "verdicts": {
+        "판정 보류": 187,
+        "조건부(감소)": 6,
+        "조건부(증가)": 5,
+        "효과 있음(감소)": 2
+      },
+      "ideal": 0.0,
+      "acceptable": 0.935,
+      "false_effect": 0.01,
+      "false_null": 0.0,
+      "wrong_sign": 0.0,
+      "seconds_mean": 1.0955000000000001,
+      "bias": -0.01743651344930369,
+      "rmse": 0.12815480473346255,
+      "cover_analytic": 0.945,
+      "cover_used": 0.955,
+      "cover_cr1": 0.245,
+      "placebo_available": 1.0
+    },
+    "panel_effect": {
+      "title": "패널: 실제 효과(+49~123%)",
+      "kind": "panel",
+      "runs": 200,
+      "verdicts": {
+        "효과 있음(증가)": 149,
+        "조건부(증가)": 40,
+        "판정 보류": 11
+      },
+      "ideal": 0.745,
+      "acceptable": 0.945,
+      "false_effect": 0.0,
+      "false_null": 0.0,
+      "wrong_sign": 0.0,
+      "seconds_mean": 1.017215,
+      "bias": 0.004804244671177435,
+      "rmse": 0.14887667777937527,
+      "cover_analytic": 0.92,
+      "cover_used": 0.92,
+      "cover_cr1": 0.235,
+      "placebo_available": 1.0
+    },
+    "panel_pretrend": {
+      "title": "패널: 효과 없음 + 처치 집단만 회복 추세",
+      "kind": "panel",
+      "runs": 200,
+      "verdicts": {
+        "판정 보류": 133,
+        "조건부(증가)": 49,
+        "효과 있음(증가)": 18
+      },
+      "ideal": 0.665,
+      "acceptable": 0.91,
+      "false_effect": 0.09,
+      "false_null": 0.0,
+      "wrong_sign": 0.0,
+      "seconds_mean": 0.97415,
+      "bias": 0.6035241454420112,
+      "rmse": 0.6424414025754127,
+      "placebo_available": 1.0
+    }
+  },
+  "power": [
+    {
+      "size": 0.0,
+      "runs": 200,
+      "detect": 0.0,
+      "detect_any": 0.015,
+      "null": 0.94,
+      "mde": 0.05208641308172053
+    },
+    {
+      "size": 0.025,
+      "runs": 200,
+      "detect": 0.075,
+      "detect_any": 0.235,
+      "null": 0.715,
+      "mde": 0.052057080984616914
+    },
+    {
+      "size": 0.05,
+      "runs": 200,
+      "detect": 0.415,
+      "detect_any": 0.685,
+      "null": 0.28,
+      "mde": 0.05195660782975718
+    },
+    {
+      "size": 0.075,
+      "runs": 200,
+      "detect": 0.7,
+      "detect_any": 0.95,
+      "null": 0.02,
+      "mde": 0.05234230962905148
+    },
+    {
+      "size": 0.1,
+      "runs": 200,
+      "detect": 0.79,
+      "detect_any": 0.985,
+      "null": 0.0,
+      "mde": 0.052619729770083674
+    },
+    {
+      "size": 0.15,
+      "runs": 200,
+      "detect": 0.84,
+      "detect_any": 0.995,
+      "null": 0.0,
+      "mde": 0.05274440865978143
+    },
+    {
+      "size": 0.2,
+      "runs": 200,
+      "detect": 0.86,
+      "detect_any": 0.995,
+      "null": 0.0,
+      "mde": 0.05357323210267955
+    }
+  ]
+}

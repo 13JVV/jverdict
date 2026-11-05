@@ -1,0 +1,69 @@
+{
+  "dataset": "card_sector",
+  "method": "did_panel",
+  "series": [],
+  "target": "중국",
+  "reference": [],
+  "placebo": [],
+  "alt_references": [],
+  "pre": null,
+  "post": null,
+  "season_years": 1,
+  "exclude": [],
+  "reference_effect": 0.2,
+  "expected": "increase",
+  "official_stats": [],
+  "panel": {
+    "groups": [
+      "중국",
+      "일본",
+      "동남아",
+      "기타외국"
+    ],
+    "treated": "중국",
+    "months": [
+      "2023-03-01",
+      "2023-04-01",
+      "2023-07-01",
+      "2023-08-01",
+      "2023-09-01",
+      "2023-10-01",
+      "2023-11-01",
+      "2023-12-01",
+      "2024-01-01"
+    ],
+    "base_year": 2019,
+    "sector_month_fe": true,
+    "ref": "2023-07-01",
+    "sens": [
+      {
+        "label": "S1 사후 2023-09부터(8월 제외)",
+        "drop_months": [
+          "2023-08-01"
+        ],
+        "drop_biz": [],
+        "weighted": false
+      },
+      {
+        "label": "S2 2019 연간 금액 가중",
+        "drop_months": [],
+        "drop_biz": [],
+        "weighted": true
+      },
+      {
+        "label": "S3 면세점 제외",
+        "drop_months": [],
+        "drop_biz": [
+          "면세점"
+        ],
+        "weighted": false
+      }
+    ]
+  },
+  "choices": [
+    {
+      "decision": "사전 등록 문서 사용(수정 1)",
+      "reason": "docs/prereg/case_china_group_tour_2023.md (잠금 해시 확인)"
+    }
+  ]
+}

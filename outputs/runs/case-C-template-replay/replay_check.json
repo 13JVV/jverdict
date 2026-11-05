@@ -1,0 +1,10 @@
+{
+  "original": "case-C-template",
+  "replay": "case-C-template-replay",
+  "numbers_equal": true,
+  "verdict_equal": true,
+  "report_equal": true,
+  "data_equal": true,
+  "code_equal": true,
+  "reproduced": true
+}

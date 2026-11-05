@@ -1,0 +1,10 @@
+{
+  "sha256": "32cddf2f9a993e6ee055501b66cb7ae250c1c1ff316edd2ce3565f0809c708ee",
+  "locked_at": "2026-11-06T00:55:30+0900",
+  "existing_prereg": {
+    "file": "docs/prereg/case_relief2020_engine.md",
+    "sha256": "38b009dbd65b762996d134d1888d02da023e497edf03ca93e7012b99ebec080d",
+    "locked_at": "2026-11-03T22:18:03+0900"
+  },
+  "amendments": []
+}

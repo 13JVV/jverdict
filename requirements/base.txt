@@ -1,0 +1,11 @@
+# 정책 판정관 호환 버전 목록(pyproject.toml과 같음). 고정 버전은 lock-win-cp314.txt
+duckdb>=1.1
+pandas>=2.2
+numpy>=1.26
+scipy>=1.12
+statsmodels>=0.14
+anthropic>=0.40
+streamlit>=1.38
+plotly>=5.22
+jinja2>=3.1
+pytest>=8

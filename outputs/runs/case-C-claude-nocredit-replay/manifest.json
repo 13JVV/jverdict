@@ -1,0 +1,78 @@
+{
+  "run_id": "case-C-claude-nocredit-replay",
+  "created": "2026-11-06T00:56:02+0900",
+  "calendar_as_of": "2026-11-03",
+  "mode": "replay",
+  "rules_version": "v2",
+  "seed": 20261104,
+  "question_input": "(시연) 2024-03-04 청소년 요금 할인으로 청소년 버스 이용이 늘었는가?",
+  "question": "(시연) 2024-03-04 청소년 요금 할인으로 청소년 버스 이용이 늘었는가?",
+  "card": {
+    "policy": "(시연) 청소년 버스 요금 할인 — 합성데이터",
+    "question": "(시연) 2024-03-04 청소년 요금 할인으로 청소년 버스 이용이 늘었는가?",
+    "start_date": "2024-03-04",
+    "end_date": null,
+    "treated": "청소년",
+    "outcome": "이용자 유형별 일 단위 버스 이용 인원",
+    "expected": "increase",
+    "region": "가상",
+    "source": "합성데이터(정답 공개는 판정 뒤)",
+    "reference_effect": 0.1,
+    "needed_hint": [],
+    "prereg": null,
+    "library_case": "C",
+    "assumptions": []
+  },
+  "data": {
+    "dataset": "synthetic_bus",
+    "source": "jverdict.synth 생성기"
+  },
+  "prereg": {
+    "sha256": "2b0e4878cadd758affe2ac18400ed91d7b6f228c4fbd9245b3477ffe490b707b",
+    "locked_at": "2026-11-06T00:56:02+0900",
+    "existing": null,
+    "amendments": []
+  },
+  "code_sha256": "f2f375c291cf0ef535650a6a2b14abc832dbdb761440f7ae4fe2b03d92890f20",
+  "versions": {
+    "python": "3.14.3",
+    "platform": "Darwin arm64",
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "scipy": "1.18.1",
+    "duckdb": "2.0.0",
+    "statsmodels": "0.15.0",
+    "anthropic": "2.3.0"
+  },
+  "numbers": {
+    "verdict": "효과 있음(증가)",
+    "effect": 0.179031,
+    "se": 0.01559,
+    "ci_lo": 0.144879,
+    "ci_hi": 0.225118,
+    "p": 0.027778,
+    "mde_pct": 0.059991
+  },
+  "final_verdict": "효과 있음(증가)",
+  "llm": {
+    "calls": 0,
+    "cost_usd": 0.0,
+    "mode": "replay"
+  },
+  "fallbacks": [],
+  "files": [
+    "analysis.json",
+    "card.json",
+    "design.json",
+    "events.jsonl",
+    "facts.txt",
+    "llm_cache.json",
+    "naive.json",
+    "prereg.lock.json",
+    "prereg.md",
+    "report.json",
+    "report.md",
+    "scout.json",
+    "skeptic.json"
+  ]
+}

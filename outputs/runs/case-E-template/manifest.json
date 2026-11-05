@@ -1,0 +1,84 @@
+{
+  "run_id": "case-E-template",
+  "created": "2026-11-06T00:55:35+0900",
+  "calendar_as_of": "2026-11-06",
+  "mode": "template",
+  "rules_version": "v2",
+  "seed": 20261104,
+  "question_input": "사회적 거리두기 전면 해제(2022-04-18)로 제주도민의 주점 소비가 늘었는가?",
+  "question": "사회적 거리두기 전면 해제(2022-04-18)로 제주도민의 주점 소비가 늘었는가?",
+  "card": {
+    "policy": "사회적 거리두기 전면 해제",
+    "question": "사회적 거리두기 전면 해제(2022-04-18)로 제주도민의 주점 소비가 늘었는가?",
+    "start_date": "2022-04-01",
+    "end_date": null,
+    "treated": "영업시간·모임 제한을 받던 주점(일반유흥 주점업, 기타 주점업). 시행 4-18이라 4월은 절반만 처치(월 단위)",
+    "outcome": "업종별 월 카드 이용 금액(제주도민)",
+    "expected": "increase",
+    "region": "제주도(전국 동시 시행)",
+    "source": "중앙재난안전대책본부 발표(2022-04-15)",
+    "reference_effect": 0.1,
+    "needed_hint": [],
+    "prereg": "docs/prereg/case_distancing_2022.md",
+    "library_case": "E",
+    "assumptions": []
+  },
+  "data": {
+    "dataset": "card_sector",
+    "source": "업종별성별카드이용정보.csv",
+    "bytes": 1998040,
+    "sha256": "518cd18e78141ede90cc5ee7639099282eae4c1557236e4eda6bd295b66e368d"
+  },
+  "prereg": {
+    "sha256": "3c4dcd624faf6a3e6bc06146f5c076f4cf08527f577eee67f363c9108e3dcaa2",
+    "locked_at": "2026-11-06T00:55:35+0900",
+    "existing": {
+      "file": "docs/prereg/case_distancing_2022.md",
+      "sha256": "f1dc11cb8ed78b6ec1d82b4c5b65b6f14c2dac1115a0e44f8054c07e65fbcf66",
+      "locked_at": "2026-11-06T00:30:25+0900"
+    },
+    "amendments": []
+  },
+  "code_sha256": "f2f375c291cf0ef535650a6a2b14abc832dbdb761440f7ae4fe2b03d92890f20",
+  "versions": {
+    "python": "3.14.3",
+    "platform": "Darwin arm64",
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "scipy": "1.18.1",
+    "duckdb": "2.0.0",
+    "statsmodels": "0.15.0",
+    "anthropic": "2.3.0"
+  },
+  "numbers": {
+    "verdict": "판정 보류",
+    "effect": 1.102712,
+    "se": 1.032165,
+    "ci_lo": -1.08538,
+    "ci_hi": 3.290804,
+    "p": 0.301218,
+    "mde_pct": 17.023881
+  },
+  "final_verdict": "판정 보류",
+  "llm": {
+    "calls": 0,
+    "cost_usd": 0.0,
+    "mode": "template"
+  },
+  "fallbacks": [],
+  "files": [
+    "analysis.json",
+    "card.json",
+    "design.json",
+    "events.jsonl",
+    "facts.txt",
+    "llm_cache.json",
+    "naive.json",
+    "prereg.lock.json",
+    "prereg.md",
+    "report.json",
+    "report.md",
+    "scout.json",
+    "skeptic.json"
+  ]
+}

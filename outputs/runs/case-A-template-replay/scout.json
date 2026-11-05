@@ -1,0 +1,61 @@
+{
+  "dataset": "bus_station",
+  "series": [
+    {
+      "name": "청소년",
+      "groups": [
+        "청소년"
+      ],
+      "units_tier": null,
+      "units_list": []
+    },
+    {
+      "name": "어린이",
+      "groups": [
+        "어린이"
+      ],
+      "units_tier": null,
+      "units_list": []
+    },
+    {
+      "name": "일반",
+      "groups": [
+        "일반"
+      ],
+      "units_tier": null,
+      "units_list": []
+    },
+    {
+      "name": "경로",
+      "groups": [
+        "경로"
+      ],
+      "units_tier": null,
+      "units_list": []
+    },
+    {
+      "name": "장애 일반",
+      "groups": [
+        "장애 일반"
+      ],
+      "units_tier": null,
+      "units_list": []
+    }
+  ],
+  "target": "청소년",
+  "reference_candidates": [
+    "일반",
+    "경로",
+    "장애 일반"
+  ],
+  "official_stats": [
+    "youth_free_483"
+  ],
+  "notes": [
+    "등록 사례의 기본 지표 사용"
+  ],
+  "method": "its",
+  "quality_verdict": "측정 단절 의심(강)",
+  "quality_cap": "판정 보류",
+  "coverage_summary": "[전체 결측] 2022-08-12 ~ 2022-11-23 104일 동안 모든 집단의 행이 없음 / [전체 결측] 2022-11-26 ~ 2022-11-26 1일 동안 모든 집단의 행이 없음 / [부분 집계] 2022-11-27 ~ 2022-11-30 4일: 합계가 평소의 0~41% 수준 / [부분 집계] 2022-12-05 ~ 2022-12-07 3일: 합계가 평소의 1~38% 수준 / [부분 집계] 2024-07-07 ~ 2024-07-09 3일: 합계가 평소의 3~40% 수준 / [부분 집계] 짧은 부분 집계 117건(126일): 합계가 평소의 0~50%. 해당 일은 분석에서 빼거나 가중치를 낮춰야 함 외 4건 (결측·부분 집계일은 분석에서 자동 제외)"
+}
