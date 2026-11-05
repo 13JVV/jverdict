@@ -1,27 +1,27 @@
-{"t": "00:55:36", "stage": "parse", "msg": "실행 시작: 모드 replay, 판정 규칙 v2"}
-{"t": "00:55:36", "stage": "parse", "msg": "단계 시작: parse"}
-{"t": "00:55:36", "stage": "confirm", "msg": "단계 시작: confirm"}
-{"t": "00:55:36", "stage": "confirm", "msg": "정책 카드 확인 완료", "data": {"policy": "청소년 버스 무료(어린이 무료 확대)", "start_date": "2025-08-01", "treated": "청소년(만 13~18세), 어린이 무료 확대 동시 시행", "outcome": "이용자 유형별 일 단위 버스 이용 인원"}}
-{"t": "00:55:36", "stage": "scout", "msg": "단계 시작: scout"}
-{"t": "00:55:36", "stage": "scout", "msg": "툴 catalog_search", "data": {"args": {"query": "버스 이용자 유형"}, "error": false}}
-{"t": "00:55:43", "stage": "scout", "msg": "툴 dataset_profile", "data": {"args": {"dataset": "bus_station"}, "error": false}}
-{"t": "00:55:43", "stage": "scout", "msg": "툴 official_stats", "data": {"args": {}, "error": false}}
-{"t": "00:55:46", "stage": "scout", "msg": "툴 quality_check", "data": {"args": {"dataset": "bus_station", "series": [{"name": "청소년", "groups": ["청소년"], "units_tier": null, "units_list": []}, {"name": "일반", "groups": ["일반"], "units_tier": null, "units_list": []}, {"name": "경로", "groups": ["경로"], "units_tier": null, "units_list": []}, {"name": "어린이", "groups": ["어린이"], "units_tier": null, "units_list": []}], "target": "청소년", "reference": ["일반", "경로"], "official_stats": ["youth_free_483"]}, "error": false}}
-{"t": "00:55:46", "stage": "scout", "msg": "데이터 점검: 측정 단절 의심(강)", "data": {"dataset": "bus_station", "cap": "판정 보류", "coverage": "[전체 결측] 2022-08-12 ~ 2022-11-23 104일 동안 모든 집단의 행이 없음 / [전체 결측] 2022-11-26 ~ 2022-11-26 1일 동안 모든 집단의 행이 없음 / [부분 집계] 2022-11-27 ~ 2022-11-30 4일: 합계가 평소의 0~41% 수준 / [부분 집계] 2022-12-05 ~ 2022-12-07 3일: 합계가 평소의 1~38% 수준 / [부분 집계] 2024-07-07 ~ 2024-07-09 3일: 합계가 평소의 3~40% 수준 / [부분 집계] 짧은 부분 집계 117건(126일): 합계가 평소의 0~50%. 해당 일은 분석에서 빼거나 가중치를 낮춰야 함 외 4건 (결측·부분 집계일은 분석에서 자동 제외)"}}
-{"t": "00:55:46", "stage": "scout", "msg": "측정 단절 의심 → 판정 상한 '판정 보류'로 고정"}
-{"t": "00:55:46", "stage": "design", "msg": "단계 시작: design"}
-{"t": "00:55:49", "stage": "design", "msg": "툴 pick_controls", "data": {"args": {"dataset": "bus_station", "series": [{"name": "청소년", "groups": ["청소년"], "units_tier": null, "units_list": []}, {"name": "일반", "groups": ["일반"], "units_tier": null, "units_list": []}, {"name": "경로", "groups": ["경로"], "units_tier": null, "units_list": []}, {"name": "어린이", "groups": ["어린이"], "units_tier": null, "units_list": []}], "target": "청소년", "candidates": ["일반", "경로"]}, "error": false}}
-{"t": "00:55:49", "stage": "design", "msg": "툴 event_calendar", "data": {"args": {"start": "2023-01-01", "end": "2025-10-25"}, "error": false}}
-{"t": "00:55:51", "stage": "lock", "msg": "단계 시작: lock"}
-{"t": "00:55:51", "stage": "lock", "msg": "설계 잠금 SHA-256 02e8ce55af81b7c1…"}
-{"t": "00:55:51", "stage": "execute", "msg": "단계 시작: execute"}
-{"t": "00:55:53", "stage": "execute", "msg": "판정 규칙 결과: 판정 보류", "data": {"verdict": "판정 보류", "effect": -1.409968, "se": 0.086735, "ci_lo": -1.692713, "ci_hi": -1.195173, "p": 0.005495, "mde_pct": 0.348013}}
-{"t": "00:55:53", "stage": "skeptic", "msg": "단계 시작: skeptic"}
-{"t": "00:55:53", "stage": "skeptic", "msg": "툴 event_calendar", "data": {"args": {"start": "2025-06-01", "end": "2025-10-25"}, "error": false}}
-{"t": "00:55:54", "stage": "skeptic", "msg": "툴 extra_check", "data": {"args": {"kind": "alt_window", "reference": ["경로"], "placebo_target": null, "post": 30, "start": null, "end": null, "reason": "시행 직후 30일만 보면 방학·계절성이 아닌 단절적 변화인지 확인"}, "error": false}}
-{"t": "00:55:56", "stage": "skeptic", "msg": "툴 extra_check", "data": {"args": {"kind": "exclude_period", "reference": ["경로"], "placebo_target": null, "post": null, "start": "2025-07-20", "end": "2025-08-31", "reason": "여름방학·개학 전환기를 제외해도 효과가 유지되는지 확인"}, "error": false}}
-{"t": "00:55:56", "stage": "skeptic", "msg": "반론 9개 검증: 판정 규칙이 이미 반영한 성립 2개, 추가 반론 성립 0개 → 최종 판정 보류"}
-{"t": "00:55:56", "stage": "report", "msg": "단계 시작: report"}
-{"t": "00:55:57", "stage": "report", "msg": "판정서 작성 완료"}
-{"t": "00:55:57", "stage": "manifest", "msg": "단계 시작: manifest"}
-{"t": "00:55:57", "stage": "manifest", "msg": "재실행 기록 저장"}
+{"t": "01:27:25", "stage": "parse", "msg": "실행 시작: 모드 replay, 판정 규칙 v2"}
+{"t": "01:27:25", "stage": "parse", "msg": "단계 시작: parse"}
+{"t": "01:27:25", "stage": "confirm", "msg": "단계 시작: confirm"}
+{"t": "01:27:25", "stage": "confirm", "msg": "정책 카드 확인 완료", "data": {"policy": "청소년 버스 무료(어린이 무료 확대)", "start_date": "2025-08-01", "treated": "청소년(만 13~18세), 어린이 무료 확대 동시 시행", "outcome": "이용자 유형별 일 단위 버스 이용 인원"}}
+{"t": "01:27:25", "stage": "scout", "msg": "단계 시작: scout"}
+{"t": "01:27:25", "stage": "scout", "msg": "툴 catalog_search", "data": {"args": {"query": "버스 이용자 유형"}, "error": false}}
+{"t": "01:27:32", "stage": "scout", "msg": "툴 dataset_profile", "data": {"args": {"dataset": "bus_station"}, "error": false}}
+{"t": "01:27:32", "stage": "scout", "msg": "툴 official_stats", "data": {"args": {}, "error": false}}
+{"t": "01:27:35", "stage": "scout", "msg": "툴 quality_check", "data": {"args": {"dataset": "bus_station", "series": [{"name": "청소년", "groups": ["청소년"], "units_tier": null, "units_list": []}, {"name": "일반", "groups": ["일반"], "units_tier": null, "units_list": []}, {"name": "경로", "groups": ["경로"], "units_tier": null, "units_list": []}, {"name": "어린이", "groups": ["어린이"], "units_tier": null, "units_list": []}], "target": "청소년", "reference": ["일반", "경로"], "official_stats": ["youth_free_483"]}, "error": false}}
+{"t": "01:27:35", "stage": "scout", "msg": "데이터 점검: 측정 단절 의심(강)", "data": {"dataset": "bus_station", "cap": "판정 보류", "coverage": "[전체 결측] 2022-08-12 ~ 2022-11-23 104일 동안 모든 집단의 행이 없음 / [전체 결측] 2022-11-26 ~ 2022-11-26 1일 동안 모든 집단의 행이 없음 / [부분 집계] 2022-11-27 ~ 2022-11-30 4일: 합계가 평소의 0~41% 수준 / [부분 집계] 2022-12-05 ~ 2022-12-07 3일: 합계가 평소의 1~38% 수준 / [부분 집계] 2024-07-07 ~ 2024-07-09 3일: 합계가 평소의 3~40% 수준 / [부분 집계] 짧은 부분 집계 117건(126일): 합계가 평소의 0~50%. 해당 일은 분석에서 빼거나 가중치를 낮춰야 함 외 4건 (결측·부분 집계일은 분석에서 자동 제외)"}}
+{"t": "01:27:35", "stage": "scout", "msg": "측정 단절 의심 → 판정 상한 '판정 보류'로 고정"}
+{"t": "01:27:35", "stage": "design", "msg": "단계 시작: design"}
+{"t": "01:27:37", "stage": "design", "msg": "툴 pick_controls", "data": {"args": {"dataset": "bus_station", "series": [{"name": "청소년", "groups": ["청소년"], "units_tier": null, "units_list": []}, {"name": "일반", "groups": ["일반"], "units_tier": null, "units_list": []}, {"name": "경로", "groups": ["경로"], "units_tier": null, "units_list": []}, {"name": "어린이", "groups": ["어린이"], "units_tier": null, "units_list": []}], "target": "청소년", "candidates": ["일반", "경로"]}, "error": false}}
+{"t": "01:27:37", "stage": "design", "msg": "툴 event_calendar", "data": {"args": {"start": "2023-01-01", "end": "2025-10-25"}, "error": false}}
+{"t": "01:27:39", "stage": "lock", "msg": "단계 시작: lock"}
+{"t": "01:27:39", "stage": "lock", "msg": "설계 잠금 SHA-256 02e8ce55af81b7c1…"}
+{"t": "01:27:39", "stage": "execute", "msg": "단계 시작: execute"}
+{"t": "01:27:41", "stage": "execute", "msg": "판정 규칙 결과: 판정 보류", "data": {"verdict": "판정 보류", "effect": -1.409968, "se": 0.086735, "ci_lo": -1.692713, "ci_hi": -1.195173, "p": 0.005495, "mde_pct": 0.348013}}
+{"t": "01:27:41", "stage": "skeptic", "msg": "단계 시작: skeptic"}
+{"t": "01:27:41", "stage": "skeptic", "msg": "툴 event_calendar", "data": {"args": {"start": "2025-06-01", "end": "2025-10-25"}, "error": false}}
+{"t": "01:27:43", "stage": "skeptic", "msg": "툴 extra_check", "data": {"args": {"kind": "alt_window", "reference": ["경로"], "placebo_target": null, "post": 30, "start": null, "end": null, "reason": "시행 직후 30일만 보면 방학·계절성이 아닌 단절적 변화인지 확인"}, "error": false}}
+{"t": "01:27:45", "stage": "skeptic", "msg": "툴 extra_check", "data": {"args": {"kind": "exclude_period", "reference": ["경로"], "placebo_target": null, "post": null, "start": "2025-07-20", "end": "2025-08-31", "reason": "여름방학·개학 전환기를 제외해도 효과가 유지되는지 확인"}, "error": false}}
+{"t": "01:27:45", "stage": "skeptic", "msg": "반론 9개 검증: 판정 규칙이 이미 반영한 성립 2개, 추가 반론 성립 0개 → 최종 판정 보류"}
+{"t": "01:27:45", "stage": "report", "msg": "단계 시작: report"}
+{"t": "01:27:46", "stage": "report", "msg": "판정서 작성 완료"}
+{"t": "01:27:46", "stage": "manifest", "msg": "단계 시작: manifest"}
+{"t": "01:27:46", "stage": "manifest", "msg": "재실행 기록 저장"}

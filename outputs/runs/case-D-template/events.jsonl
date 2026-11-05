@@ -1,18 +1,18 @@
-{"t": "00:55:33", "stage": "parse", "msg": "실행 시작: 모드 template, 판정 규칙 v2"}
-{"t": "00:55:33", "stage": "parse", "msg": "단계 시작: parse"}
-{"t": "00:55:33", "stage": "confirm", "msg": "단계 시작: confirm"}
-{"t": "00:55:33", "stage": "confirm", "msg": "정책 카드 확인 완료", "data": {"policy": "중국 단체관광 재개", "start_date": "2023-08-01", "treated": "중국인 방문객", "outcome": "업종별 월 카드 이용 금액(2019 같은 달 대비)"}}
-{"t": "00:55:33", "stage": "scout", "msg": "단계 시작: scout"}
-{"t": "00:55:33", "stage": "scout", "msg": "데이터 점검: 패널 설계: 시점별 결측 점검만 수행", "data": {"dataset": "card_sector", "cap": null, "coverage": "[집단 결측] 2023-05 ~ 2023-06 2개월 동안 기타외국, 동남아, 일본, 중국의 행이 없음 (같은 기간 내국인, 법인, 제주도민은 있음) (결측·부분 집계일은 분석에서 자동 제외)"}}
-{"t": "00:55:33", "stage": "design", "msg": "단계 시작: design"}
-{"t": "00:55:33", "stage": "design", "msg": "기존 사전 등록 문서 사용: docs/prereg/case_china_group_tour_2023.md (지문 확인)"}
-{"t": "00:55:33", "stage": "lock", "msg": "단계 시작: lock"}
-{"t": "00:55:33", "stage": "lock", "msg": "설계 잠금 SHA-256 a4a469ac825ba4a9…"}
-{"t": "00:55:33", "stage": "execute", "msg": "단계 시작: execute"}
-{"t": "00:55:33", "stage": "execute", "msg": "판정 규칙 결과: 판정 보류", "data": {"verdict": "판정 보류", "effect": 0.996504, "se": 0.413072, "ci_lo": 0.019743, "ci_hi": 1.973264, "p": 0.046608, "mde_pct": 2.181194}}
-{"t": "00:55:33", "stage": "skeptic", "msg": "단계 시작: skeptic"}
-{"t": "00:55:33", "stage": "skeptic", "msg": "반론 6개 검증: 판정 규칙이 이미 반영한 성립 2개, 추가 반론 성립 0개 → 최종 판정 보류"}
-{"t": "00:55:33", "stage": "report", "msg": "단계 시작: report"}
-{"t": "00:55:33", "stage": "report", "msg": "판정서 작성 완료"}
-{"t": "00:55:33", "stage": "manifest", "msg": "단계 시작: manifest"}
-{"t": "00:55:33", "stage": "manifest", "msg": "재실행 기록 저장"}
+{"t": "01:27:22", "stage": "parse", "msg": "실행 시작: 모드 template, 판정 규칙 v2"}
+{"t": "01:27:22", "stage": "parse", "msg": "단계 시작: parse"}
+{"t": "01:27:22", "stage": "confirm", "msg": "단계 시작: confirm"}
+{"t": "01:27:22", "stage": "confirm", "msg": "정책 카드 확인 완료", "data": {"policy": "중국 단체관광 재개", "start_date": "2023-08-01", "treated": "중국인 방문객", "outcome": "업종별 월 카드 이용 금액(2019 같은 달 대비)"}}
+{"t": "01:27:22", "stage": "scout", "msg": "단계 시작: scout"}
+{"t": "01:27:22", "stage": "scout", "msg": "데이터 점검: 패널 설계: 시점별 결측 점검만 수행", "data": {"dataset": "card_sector", "cap": null, "coverage": "[집단 결측] 2023-05 ~ 2023-06 2개월 동안 기타외국, 동남아, 일본, 중국의 행이 없음 (같은 기간 내국인, 법인, 제주도민은 있음) (결측·부분 집계일은 분석에서 자동 제외)"}}
+{"t": "01:27:22", "stage": "design", "msg": "단계 시작: design"}
+{"t": "01:27:22", "stage": "design", "msg": "기존 사전 등록 문서 사용: docs/prereg/case_china_group_tour_2023.md (지문 확인)"}
+{"t": "01:27:22", "stage": "lock", "msg": "단계 시작: lock"}
+{"t": "01:27:22", "stage": "lock", "msg": "설계 잠금 SHA-256 a4a469ac825ba4a9…"}
+{"t": "01:27:22", "stage": "execute", "msg": "단계 시작: execute"}
+{"t": "01:27:22", "stage": "execute", "msg": "판정 규칙 결과: 판정 보류", "data": {"verdict": "판정 보류", "effect": 0.996504, "se": 0.413072, "ci_lo": 0.019743, "ci_hi": 1.973264, "p": 0.046608, "mde_pct": 2.181194}}
+{"t": "01:27:22", "stage": "skeptic", "msg": "단계 시작: skeptic"}
+{"t": "01:27:22", "stage": "skeptic", "msg": "반론 6개 검증: 판정 규칙이 이미 반영한 성립 2개, 추가 반론 성립 0개 → 최종 판정 보류"}
+{"t": "01:27:22", "stage": "report", "msg": "단계 시작: report"}
+{"t": "01:27:22", "stage": "report", "msg": "판정서 작성 완료"}
+{"t": "01:27:22", "stage": "manifest", "msg": "단계 시작: manifest"}
+{"t": "01:27:22", "stage": "manifest", "msg": "재실행 기록 저장"}

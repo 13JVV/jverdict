@@ -1,6 +1,6 @@
 {
   "run_id": "case-B-claude-replay",
-  "created": "2026-11-06T00:56:01+0900",
+  "created": "2026-11-06T01:27:49+0900",
   "calendar_as_of": "2026-11-03",
   "mode": "replay",
   "rules_version": "v2",
@@ -38,7 +38,7 @@
   },
   "prereg": {
     "sha256": "d65e12b39c79944fc434c87d777cb482949d253765396fd6aac701e2a305728b",
-    "locked_at": "2026-11-06T00:56:01+0900",
+    "locked_at": "2026-11-06T01:27:49+0900",
     "existing": {
       "file": "docs/prereg/case_relief2020_engine.md",
       "sha256": "38b009dbd65b762996d134d1888d02da023e497edf03ca93e7012b99ebec080d",
@@ -46,7 +46,7 @@
     },
     "amendments": []
   },
-  "code_sha256": "f2f375c291cf0ef535650a6a2b14abc832dbdb761440f7ae4fe2b03d92890f20",
+  "code_sha256": "5a26f80c63952e2ee090d40c3334107a2b0363a94ec44eb79757a47068b4882f",
   "versions": {
     "python": "3.14.3",
     "platform": "Darwin arm64",

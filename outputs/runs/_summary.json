@@ -31,7 +31,7 @@
     "reproduced": true,
     "replay_error": null,
     "fallbacks": 0,
-    "created": "2026-11-06T00:55:21+0900"
+    "created": "2026-11-06T01:27:10+0900"
   },
   {
     "run": "case-B-claude",
@@ -61,11 +61,11 @@
     ],
     "llm_calls": 0,
     "cost_usd": 0.0,
-    "seconds": 0.0,
+    "seconds": 1.0,
     "reproduced": true,
     "replay_error": null,
     "fallbacks": 0,
-    "created": "2026-11-06T00:55:30+0900"
+    "created": "2026-11-06T01:27:20+0900"
   },
   {
     "run": "case-C-claude-nocredit",
@@ -99,7 +99,7 @@
     "reproduced": true,
     "replay_error": null,
     "fallbacks": 0,
-    "created": "2026-11-06T00:55:32+0900"
+    "created": "2026-11-06T01:27:21+0900"
   },
   {
     "run": "case-D-claude",
@@ -133,7 +133,7 @@
     "reproduced": true,
     "replay_error": null,
     "fallbacks": 0,
-    "created": "2026-11-06T00:55:33+0900"
+    "created": "2026-11-06T01:27:22+0900"
   },
   {
     "run": "case-E-template",
@@ -150,6 +150,6 @@
     "reproduced": true,
     "replay_error": null,
     "fallbacks": 0,
-    "created": "2026-11-06T00:55:35+0900"
+    "created": "2026-11-06T01:27:24+0900"
   }
 ]

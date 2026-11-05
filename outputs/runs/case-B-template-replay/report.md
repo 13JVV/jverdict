@@ -71,5 +71,5 @@
 ## 재현 정보
 
 - 실행 번호 `case-B-template-replay` · 모드 template · 판정 규칙 v2
-- 사전 등록 지문 `32cddf2f9a993e6ee055501b66cb7ae250c1c1ff316edd2ce3565f0809c708ee` (잠금 2026-11-06T00:55:30+0900)
+- 사전 등록 지문 `32cddf2f9a993e6ee055501b66cb7ae250c1c1ff316edd2ce3565f0809c708ee` (잠금 2026-11-06T01:27:20+0900)
 - 기존 사전 등록 `docs/prereg/case_relief2020_engine.md` 지문 확인 `38b009dbd65b7629…`

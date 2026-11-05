@@ -32,6 +32,15 @@ def options(dataset_id: str) -> dict:
             "period": (str(lo.date()), str(hi.date())), "start_range": (str(first.date()), str(last.date()))}
 
 
+def _josa(word: str, with_batchim: str, without: str) -> str:
+    """받침이 있으면 with_batchim(예: 이), 없으면 without(예: 가). 한글이 아니면 둘 다 보여 준다."""
+    w = word.rstrip(")] ")
+    c = w[-1] if w else ""
+    if "가" <= c <= "힣":
+        return with_batchim if (ord(c) - 0xAC00) % 28 else without
+    return f"{with_batchim}({without})"
+
+
 def _name(groups: list[str], units: list[str] | None) -> str:
     base = "+".join(groups)
     if units:
@@ -99,7 +108,8 @@ def build_card(dataset_id: str, policy: str, start_date: str, target_groups: lis
 
     verb = {"increase": "늘었는가", "decrease": "줄었는가"}.get(expected, "달라졌는가")
     what = f"{tgt['name']}의 {opt['value_label'].split('(')[0]}"
-    card = {"policy": policy, "question": f"{policy}({t0.date()})로 {what}이(가) {verb}?",
+    ro = "으로" if (policy[-1:] and "가" <= policy[-1] <= "힣" and (ord(policy[-1]) - 0xAC00) % 28 not in (0, 8)) else "로"
+    card = {"policy": policy, "question": f"{policy}({t0.date()}){ro} {what}{_josa(what, '이', '가')} {verb}?",
             "start_date": str(t0.date()), "end_date": None, "treated": tgt["name"],
             "outcome": f"{opt['title']}: {opt['value_label']}", "expected": expected, "region": "제주도",
             "source": "사용자 입력(정책 카드 직접 작성)", "reference_effect": float(reference_effect),

@@ -158,7 +158,7 @@ def check(out: Path) -> list[str]:
     personal = [s.encode() for s in {str(Path.home()), os.environ.get("USER", "") and f"/Users/{os.environ['USER']}"} if s]
     mail = re.compile(rb"[A-Za-z0-9._%+-]+@(naver|gmail|daum|hanmail|kakao)\.(com|net)")
     for p in out.rglob("*"):
-        if not p.is_file():
+        if not p.is_file() or ".git" in p.relative_to(out).parts:
             continue
         b = p.read_bytes()
         rel = p.relative_to(out).as_posix()
@@ -168,6 +168,11 @@ def check(out: Path) -> list[str]:
             errs.append(f"개인 이메일 모양: {rel}")
         if p.suffix in FORBIDDEN_SUFFIX or p.name in DATA_NAMES:
             errs.append(f"허브 자료 파일: {rel}")
+    if (out / ".git").exists():                    # 공개될 커밋의 작성자·커미터 이메일(로컬 reflog는 공개되지 않음)
+        r = subprocess.run(["git", "log", "--format=%ae%n%ce"], cwd=out, capture_output=True, text=True)
+        bad = {e for e in r.stdout.split() if e and not e.endswith("@users.noreply.github.com")}
+        if bad:
+            errs.append(f"커밋 이메일이 noreply가 아님: {len(bad)}개")
     return errs
 
 
