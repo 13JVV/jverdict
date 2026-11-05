@@ -102,9 +102,11 @@ def _builder():
 
 def collect(out: Path) -> int:
     B = _builder()
-    if out.exists():
-        shutil.rmtree(out)
-    out.mkdir(parents=True)
+    out.mkdir(parents=True, exist_ok=True)
+    for child in out.iterdir():                     # 공개 저장소 기록(.git)은 남기고 나머지를 새로 만든다
+        if child.name == ".git":
+            continue
+        shutil.rmtree(child) if child.is_dir() else child.unlink()
     n = 0
 
     def put(src: Path):
@@ -131,6 +133,11 @@ def collect(out: Path) -> int:
     for f in ("_summary.md", "_summary.json"):
         if (runs / f).exists():
             put(runs / f)
+    cfg = out / ".streamlit" / "config.toml"          # 웹 데모: localhost 고정·headless=false는 서버에서 못 씀
+    if cfg.exists():                                     # (로컬 실행기는 같은 값을 명령줄 인자로 따로 넘긴다)
+        keep = [ln for ln in cfg.read_text(encoding="utf-8").splitlines()
+                if not ln.strip().startswith(("address", "headless"))]
+        cfg.write_text("\n".join(keep) + "\n", encoding="utf-8")
     (out / "streamlit_app.py").write_text(STREAMLIT_APP, encoding="utf-8")
     (out / "requirements.txt").write_text((ROOT / "requirements" / "base.txt").read_text(encoding="utf-8"), encoding="utf-8")
     (out / ".gitignore").write_text(GITIGNORE, encoding="utf-8")
