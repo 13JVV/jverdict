@@ -1,17 +1,17 @@
-{"t": "01:27:21", "stage": "parse", "msg": "실행 시작: 모드 template, 판정 규칙 v2"}
-{"t": "01:27:21", "stage": "parse", "msg": "단계 시작: parse"}
-{"t": "01:27:21", "stage": "confirm", "msg": "단계 시작: confirm"}
-{"t": "01:27:21", "stage": "confirm", "msg": "정책 카드 확인 완료", "data": {"policy": "(시연) 청소년 버스 요금 할인 — 합성데이터", "start_date": "2024-03-04", "treated": "청소년", "outcome": "이용자 유형별 일 단위 버스 이용 인원"}}
-{"t": "01:27:21", "stage": "scout", "msg": "단계 시작: scout"}
-{"t": "01:27:21", "stage": "scout", "msg": "데이터 점검: 측정 단절 증거 없음", "data": {"dataset": "synthetic_bus", "cap": null, "coverage": "[부분 집계] 짧은 부분 집계 6건(6일): 합계가 평소의 7~15%. 해당 일은 분석에서 빼거나 가중치를 낮춰야 함 (결측·부분 집계일은 분석에서 자동 제외)"}}
-{"t": "01:27:21", "stage": "design", "msg": "단계 시작: design"}
-{"t": "01:27:21", "stage": "lock", "msg": "단계 시작: lock"}
-{"t": "01:27:21", "stage": "lock", "msg": "설계 잠금 SHA-256 2b0e4878cadd758a…"}
-{"t": "01:27:21", "stage": "execute", "msg": "단계 시작: execute"}
-{"t": "01:27:21", "stage": "execute", "msg": "판정 규칙 결과: 효과 있음(증가)", "data": {"verdict": "효과 있음(증가)", "effect": 0.179031, "se": 0.01559, "ci_lo": 0.144879, "ci_hi": 0.225118, "p": 0.027778, "mde_pct": 0.059991}}
-{"t": "01:27:21", "stage": "skeptic", "msg": "단계 시작: skeptic"}
-{"t": "01:27:21", "stage": "skeptic", "msg": "반론 5개 검증: 판정 규칙이 이미 반영한 성립 0개, 추가 반론 성립 0개 → 최종 효과 있음(증가)"}
-{"t": "01:27:21", "stage": "report", "msg": "단계 시작: report"}
-{"t": "01:27:21", "stage": "report", "msg": "판정서 작성 완료"}
-{"t": "01:27:21", "stage": "manifest", "msg": "단계 시작: manifest"}
-{"t": "01:27:21", "stage": "manifest", "msg": "재실행 기록 저장"}
+{"t": "17:09:52", "stage": "parse", "msg": "실행 시작: 모드 template, 판정 규칙 v2"}
+{"t": "17:09:52", "stage": "parse", "msg": "단계 시작: parse"}
+{"t": "17:09:52", "stage": "confirm", "msg": "단계 시작: confirm"}
+{"t": "17:09:52", "stage": "confirm", "msg": "정책 카드 확인 완료", "data": {"policy": "(시연) 청소년 버스 요금 할인 — 합성데이터", "start_date": "2024-03-04", "treated": "청소년", "outcome": "이용자 유형별 일 단위 버스 이용 인원"}}
+{"t": "17:09:52", "stage": "scout", "msg": "단계 시작: scout"}
+{"t": "17:09:52", "stage": "scout", "msg": "데이터 점검: 측정 단절 증거 없음", "data": {"dataset": "synthetic_bus", "cap": null, "coverage": "[부분 집계] 짧은 부분 집계 6건(6일): 합계가 평소의 7~15%. 해당 일은 분석에서 빼거나 가중치를 낮춰야 함 (결측·부분 집계일은 분석에서 자동 제외)"}}
+{"t": "17:09:52", "stage": "design", "msg": "단계 시작: design"}
+{"t": "17:09:52", "stage": "lock", "msg": "단계 시작: lock"}
+{"t": "17:09:52", "stage": "lock", "msg": "설계 잠금 SHA-256 2b0e4878cadd758a…"}
+{"t": "17:09:52", "stage": "execute", "msg": "단계 시작: execute"}
+{"t": "17:09:52", "stage": "execute", "msg": "판정 규칙 결과: 효과 있음(증가)", "data": {"verdict": "효과 있음(증가)", "effect": 0.179031, "se": 0.01559, "ci_lo": 0.144879, "ci_hi": 0.225118, "p": 0.027778, "mde_pct": 0.059991}}
+{"t": "17:09:52", "stage": "skeptic", "msg": "단계 시작: skeptic"}
+{"t": "17:09:52", "stage": "skeptic", "msg": "반론 5개 검증: 판정 규칙이 이미 반영한 성립 0개, 추가 반론 성립 0개 → 최종 효과 있음(증가)"}
+{"t": "17:09:52", "stage": "report", "msg": "단계 시작: report"}
+{"t": "17:09:52", "stage": "report", "msg": "판정서 작성 완료"}
+{"t": "17:09:52", "stage": "manifest", "msg": "단계 시작: manifest"}
+{"t": "17:09:52", "stage": "manifest", "msg": "재실행 기록 저장"}

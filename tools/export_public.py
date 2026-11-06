@@ -4,7 +4,7 @@
     .venv/bin/python tools/export_public.py --no-test
 
 싣지 않는 것 (이유)
-- 제주데이터허브 원자료(data/raw)와 가공 파일(data/processed/*.parquet, 정류소 목록): 허브의 재배포 조건을 확인하지 못함.
+- 제주데이터허브 원자료(data/*.csv)와 가공 파일(data/processed/*.parquet, 정류소 목록): 허브의 재배포 조건을 확인하지 못함.
   공개 저장소에는 지문 기록(_sources.json)과 적재 보고서만 싣고, 받는 방법을 data/README.md에 적는다.
 - 업종별 금액이 들어간 사례 파일(heterogeneity.csv): 원자료 금액에 가까움.
 - .env, 실행 환경(runtime), 가상환경, 점검 보고서(outputs/doctor), 내부 계획(ROADMAP), 센터 방문 준비물(docs/center-visit),
@@ -57,7 +57,7 @@ GITIGNORE = """.env
 __pycache__/
 *.pyc
 .DS_Store
-data/raw/
+data/*.csv
 data/processed/*.parquet
 data/processed/bus_stations.csv
 runtime/
@@ -70,7 +70,7 @@ outputs/runs/2*/
 DATA_README = """# 데이터 받는 방법
 
 이 저장소에는 제주데이터허브 원자료와 가공 파일을 싣지 않았습니다(허브의 재배포 조건을 확인하지 못함).
-아래 파일을 제주데이터허브(https://www.jejudatahub.net, 로그인 후 내려받기)에서 받아 `data/raw/`에 두면
+아래 파일을 제주데이터허브(https://www.jejudatahub.net, 로그인 후 내려받기)에서 받아 `data/` 폴더에 두면
 모든 사례를 이 PC에서 다시 판정할 수 있습니다.
 
 | 파일 | 허브 데이터명 |

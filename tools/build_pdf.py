@@ -59,6 +59,9 @@ hr { border: 0; border-top: 0.6pt solid #ccc; margin: 10pt 0; }
 .flow-src { font-size: 7.8pt; color: #445; text-align: center; border: 0.6pt dashed #9fb2c0;
             border-radius: 3pt; padding: 2pt; margin: 0 0 6pt; }
 .fig { margin: 4pt 0 6pt; break-inside: avoid; }
+figure.shot { margin: 4pt 0 8pt; break-inside: avoid; }
+figure.shot img { width: 100%; border: 0.6pt solid #c3c2b7; border-radius: 3pt; display: block; }
+figure.shot figcaption { font-size: 8pt; color: #52514e; margin-top: 2pt; }
 .fig svg { display: block; width: 100%; height: auto; }
 .band { font-size: 7.8pt; color: #fff; background: #0b3d5c; border-radius: 3pt; text-align: center;
         padding: 2pt; margin: 6pt 0 0; }
@@ -112,9 +115,28 @@ def include_svgs(md_text: str, base: Path) -> str:
     return SVG_INCLUDE.sub(rep, md_text)
 
 
+IMG_INCLUDE = re.compile(r"^<!--\s*img:\s*(\S+)(?:\s+(.*?))?\s*-->\s*$", re.M)
+
+
+def include_images(md_text: str, base: Path) -> str:
+    """`<!-- img: images/x.jpg 설명 -->` 줄을 base64 그림으로 바꾼다(PDF 한 파일에 그림이 들어가게)."""
+    import base64
+    import mimetypes
+
+    def rep(m):
+        f = (base / m.group(1)).resolve()
+        if not f.exists():
+            raise SystemExit(f"그림 파일 없음: {m.group(1)}")
+        mime = mimetypes.guess_type(f.name)[0] or "image/png"
+        data = base64.b64encode(f.read_bytes()).decode()
+        cap = f'<figcaption>{html.escape(m.group(2))}</figcaption>' if m.group(2) else ""
+        return f'<figure class="shot"><img src="data:{mime};base64,{data}">{cap}</figure>'
+    return IMG_INCLUDE.sub(rep, md_text)
+
+
 def to_html(md_text: str, title: str, base: Path | None = None) -> str:
     if base is not None:
-        md_text = include_svgs(md_text, base)
+        md_text = include_images(include_svgs(md_text, base), base)
     body = markdown.markdown(fix_lists(md_text), extensions=["tables", "fenced_code", "sane_lists"])
     return (f"<!doctype html><html lang='ko'><head><meta charset='utf-8'>"
             f"<title>{html.escape(title)}</title><style>{CSS}</style></head>"

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-03 20:54",
+  "generated": "2026-11-06 17:02",
   "policy_date": "2025-08-01",
   "files": [
     {
@@ -1494,6 +1494,438 @@
       }
     },
     {
+      "file": "일별 시간대별 버스 승차 인원 수 현황",
+      "coverage": {
+        "freq": "D",
+        "period": [
+          "2023-12-25",
+          "2025-10-26"
+        ],
+        "n_periods": 672,
+        "groups": [
+          "경로",
+          "기타",
+          "어린이",
+          "유공 동반",
+          "유공 일반",
+          "일반",
+          "장애 동반",
+          "장애 일반",
+          "청소년"
+        ],
+        "findings": [
+          {
+            "kind": "부분 집계",
+            "severity": "중간",
+            "groups": [],
+            "start": "2024-01-01",
+            "end": "2025-03-19",
+            "length": 7,
+            "message": "짧은 부분 집계 6건(7일): 합계가 평소의 3~29%. 해당 일은 분석에서 빼거나 가중치를 낮춰야 함",
+            "evidence": {
+              "periods": [
+                "2024-01-01",
+                "2024-02-18",
+                "2024-06-20",
+                "2024-07-07~2024-07-08",
+                "2024-07-12",
+                "2025-03-19"
+              ],
+              "n_runs": 6
+            }
+          },
+          {
+            "kind": "분류 신설",
+            "severity": "중간",
+            "groups": [
+              "기타"
+            ],
+            "start": "2025-01-01",
+            "end": "2025-01-01",
+            "length": 1,
+            "message": "'기타' 분류가 2025-01-01에 처음 나타남 (데이터 시작은 2023-12-25). 분류 체계 변경 여부 확인 필요",
+            "evidence": {
+              "first_window_median": 720.5
+            }
+          }
+        ]
+      },
+      "diagnoses": {
+        "청소년": {
+          "target": "청소년",
+          "reference": [
+            "일반"
+          ],
+          "date": "2025-08-01",
+          "freq": "D",
+          "verdict": "측정 단절 의심(강)",
+          "judgement_cap": "판정 보류",
+          "message": "2025-08-01부터 '청소년'가 -67% 바뀌었지만, 근거 3개가 정책 효과보다 집계 방식 변경을 가리킴",
+          "test": {
+            "date": "2025-08-01",
+            "step": -1.1033361033674014,
+            "pct": -0.668237558344703,
+            "ci": [
+              -1.1485,
+              -0.8901
+            ],
+            "p_rank": 0.005681818181818182,
+            "z": -27.867856915916423,
+            "n_placebo": 175,
+            "significant": true,
+            "seasonal_adjusted": true,
+            "onset": {
+              "days_to_50pct": 2,
+              "days_to_90pct": 16,
+              "progress_at_start": 0.475,
+              "shape": "점진 이탈",
+              "unit": "일"
+            },
+            "persistence": "알 수 없음(기간 부족)",
+            "note": ""
+          },
+          "reference_test": {
+            "date": "2025-08-01",
+            "step": 0.051447351395477625,
+            "pct": 0.05279375671086037,
+            "ci": [
+              -0.0252,
+              0.1143
+            ],
+            "p_rank": 0.1534090909090909,
+            "z": 2.232416846255297,
+            "n_placebo": 175,
+            "significant": false,
+            "seasonal_adjusted": true,
+            "onset": {},
+            "persistence": "해당 없음",
+            "note": ""
+          },
+          "evidence": [
+            {
+              "code": "E2",
+              "name": "방향 모순",
+              "strength": "보통",
+              "met": true,
+              "detail": "기대 방향은 증가, 관측은 감소 (-67%)"
+            },
+            {
+              "code": "E3",
+              "name": "비현실적 크기",
+              "strength": "보통",
+              "met": true,
+              "detail": "변화 -67% (기준: -50% ~ +100% 밖이면 해당)"
+            },
+            {
+              "code": "E4",
+              "name": "외부 통계 불일치",
+              "strength": "강함",
+              "met": true,
+              "detail": "어린이·청소년 무료 이용 누적 483만 건(도 발표, 2025-08~2026-02): 공식 일평균 22,783 vs 데이터 일평균 2,304 (공식이 데이터의 9.89배, 허용 0.50~2.00배). 기간이 달라 일평균으로 비교(데이터 2025-08-01~2025-10-26)"
+            },
+            {
+              "code": "E5",
+              "name": "분류 변경",
+              "strength": "강함",
+              "met": false,
+              "detail": "같은 때 새로 생기거나 감소분을 흡수한 분류 없음"
+            }
+          ],
+          "external": [
+            {
+              "label": "어린이·청소년 무료 이용 누적 483만 건(도 발표, 2025-08~2026-02)",
+              "source": "트위그뉴스 2026-04-08 (제주도 발표 인용)",
+              "official_per_period": 22783.02,
+              "data_per_period": 2304.17,
+              "ratio": 9.888,
+              "contradiction": true,
+              "data_window": [
+                "2025-08-01",
+                "2025-10-26"
+              ],
+              "official_window": [
+                "2025-08-01",
+                "2026-02-28"
+              ],
+              "period_mismatch": true,
+              "message": "어린이·청소년 무료 이용 누적 483만 건(도 발표, 2025-08~2026-02): 공식 일평균 22,783 vs 데이터 일평균 2,304 (공식이 데이터의 9.89배, 허용 0.50~2.00배). 기간이 달라 일평균으로 비교(데이터 2025-08-01~2025-10-26)"
+            }
+          ],
+          "reclass": [],
+          "needed_data": [
+            "교통복지카드(무료) 승차 기록이 포함된 이용자 유형별 승차 자료",
+            "2025-08-01 전후 이용자 유형 분류 기준 변경 이력(데이터 제공처 확인)"
+          ],
+          "suspected": true
+        },
+        "어린이": {
+          "target": "어린이",
+          "reference": [
+            "일반"
+          ],
+          "date": "2025-08-01",
+          "freq": "D",
+          "verdict": "측정 단절 의심(강)",
+          "judgement_cap": "판정 보류",
+          "message": "2025-08-01부터 '어린이'가 -57% 바뀌었지만, 근거 3개가 정책 효과보다 집계 방식 변경을 가리킴",
+          "test": {
+            "date": "2025-08-01",
+            "step": -0.8512503408233045,
+            "pct": -0.5731191484283499,
+            "ci": [
+              -0.9266,
+              -0.5798
+            ],
+            "p_rank": 0.005681818181818182,
+            "z": -13.311173102412406,
+            "n_placebo": 175,
+            "significant": true,
+            "seasonal_adjusted": true,
+            "onset": {
+              "days_to_50pct": 3,
+              "days_to_90pct": 22,
+              "progress_at_start": 0.261,
+              "shape": "점진 이탈",
+              "unit": "일"
+            },
+            "persistence": "알 수 없음(기간 부족)",
+            "note": ""
+          },
+          "reference_test": {
+            "date": "2025-08-01",
+            "step": 0.051447351395477625,
+            "pct": 0.05279375671086037,
+            "ci": [
+              -0.0252,
+              0.1143
+            ],
+            "p_rank": 0.1534090909090909,
+            "z": 2.232416846255297,
+            "n_placebo": 175,
+            "significant": false,
+            "seasonal_adjusted": true,
+            "onset": {},
+            "persistence": "해당 없음",
+            "note": ""
+          },
+          "evidence": [
+            {
+              "code": "E2",
+              "name": "방향 모순",
+              "strength": "보통",
+              "met": true,
+              "detail": "기대 방향은 증가, 관측은 감소 (-57%)"
+            },
+            {
+              "code": "E3",
+              "name": "비현실적 크기",
+              "strength": "보통",
+              "met": true,
+              "detail": "변화 -57% (기준: -50% ~ +100% 밖이면 해당)"
+            },
+            {
+              "code": "E4",
+              "name": "외부 통계 불일치",
+              "strength": "강함",
+              "met": true,
+              "detail": "어린이·청소년 무료 이용 누적 483만 건(도 발표, 2025-08~2026-02): 공식 일평균 22,783 vs 데이터 일평균 2,304 (공식이 데이터의 9.89배, 허용 0.50~2.00배). 기간이 달라 일평균으로 비교(데이터 2025-08-01~2025-10-26)"
+            },
+            {
+              "code": "E5",
+              "name": "분류 변경",
+              "strength": "강함",
+              "met": false,
+              "detail": "같은 때 새로 생기거나 감소분을 흡수한 분류 없음"
+            }
+          ],
+          "external": [
+            {
+              "label": "어린이·청소년 무료 이용 누적 483만 건(도 발표, 2025-08~2026-02)",
+              "source": "트위그뉴스 2026-04-08 (제주도 발표 인용)",
+              "official_per_period": 22783.02,
+              "data_per_period": 2304.17,
+              "ratio": 9.888,
+              "contradiction": true,
+              "data_window": [
+                "2025-08-01",
+                "2025-10-26"
+              ],
+              "official_window": [
+                "2025-08-01",
+                "2026-02-28"
+              ],
+              "period_mismatch": true,
+              "message": "어린이·청소년 무료 이용 누적 483만 건(도 발표, 2025-08~2026-02): 공식 일평균 22,783 vs 데이터 일평균 2,304 (공식이 데이터의 9.89배, 허용 0.50~2.00배). 기간이 달라 일평균으로 비교(데이터 2025-08-01~2025-10-26)"
+            }
+          ],
+          "reclass": [],
+          "needed_data": [
+            "교통복지카드(무료) 승차 기록이 포함된 이용자 유형별 승차 자료",
+            "2025-08-01 전후 이용자 유형 분류 기준 변경 이력(데이터 제공처 확인)"
+          ],
+          "suspected": true
+        },
+        "경로": {
+          "target": "경로",
+          "reference": [
+            "일반"
+          ],
+          "date": "2025-08-01",
+          "freq": "D",
+          "verdict": "단절 없음",
+          "judgement_cap": null,
+          "message": "2025-08-01에 '경로'의 뚜렷한 단절이 없음. 측정 체계 변경의 신호 없음",
+          "test": {
+            "date": "2025-08-01",
+            "step": 0.01729145227593598,
+            "pct": 0.01744181484900172,
+            "ci": [
+              -0.0276,
+              0.0718
+            ],
+            "p_rank": 0.6647727272727273,
+            "z": 0.7653706924334372,
+            "n_placebo": 175,
+            "significant": false,
+            "seasonal_adjusted": true,
+            "onset": {},
+            "persistence": "해당 없음",
+            "note": ""
+          },
+          "reference_test": {
+            "date": "2025-08-01",
+            "step": 0.051447351395477625,
+            "pct": 0.05279375671086037,
+            "ci": [
+              -0.0252,
+              0.1143
+            ],
+            "p_rank": 0.1534090909090909,
+            "z": 2.232416846255297,
+            "n_placebo": 175,
+            "significant": false,
+            "seasonal_adjusted": true,
+            "onset": {},
+            "persistence": "해당 없음",
+            "note": ""
+          },
+          "evidence": [
+            {
+              "code": "E2",
+              "name": "방향 모순",
+              "strength": "보통",
+              "met": null,
+              "detail": "기대 방향 정보 없음"
+            },
+            {
+              "code": "E3",
+              "name": "비현실적 크기",
+              "strength": "보통",
+              "met": null,
+              "detail": "정책 시점 단절이 유의하지 않음"
+            },
+            {
+              "code": "E4",
+              "name": "외부 통계 불일치",
+              "strength": "강함",
+              "met": null,
+              "detail": "대조할 공식 통계 없음"
+            },
+            {
+              "code": "E5",
+              "name": "분류 변경",
+              "strength": "강함",
+              "met": null,
+              "detail": "정책 시점 단절이 유의하지 않음"
+            }
+          ],
+          "external": [],
+          "reclass": [],
+          "needed_data": [],
+          "suspected": false
+        },
+        "장애 일반": {
+          "target": "장애 일반",
+          "reference": [
+            "일반"
+          ],
+          "date": "2025-08-01",
+          "freq": "D",
+          "verdict": "단절 없음",
+          "judgement_cap": null,
+          "message": "2025-08-01에 '장애 일반'의 뚜렷한 단절이 없음. 측정 체계 변경의 신호 없음",
+          "test": {
+            "date": "2025-08-01",
+            "step": 0.0005435112613203508,
+            "pct": 0.0005436589903288561,
+            "ci": [
+              -0.0742,
+              0.1078
+            ],
+            "p_rank": 0.9772727272727273,
+            "z": -0.018941850349248085,
+            "n_placebo": 175,
+            "significant": false,
+            "seasonal_adjusted": true,
+            "onset": {},
+            "persistence": "해당 없음",
+            "note": ""
+          },
+          "reference_test": {
+            "date": "2025-08-01",
+            "step": 0.051447351395477625,
+            "pct": 0.05279375671086037,
+            "ci": [
+              -0.0252,
+              0.1143
+            ],
+            "p_rank": 0.1534090909090909,
+            "z": 2.232416846255297,
+            "n_placebo": 175,
+            "significant": false,
+            "seasonal_adjusted": true,
+            "onset": {},
+            "persistence": "해당 없음",
+            "note": ""
+          },
+          "evidence": [
+            {
+              "code": "E2",
+              "name": "방향 모순",
+              "strength": "보통",
+              "met": null,
+              "detail": "기대 방향 정보 없음"
+            },
+            {
+              "code": "E3",
+              "name": "비현실적 크기",
+              "strength": "보통",
+              "met": null,
+              "detail": "정책 시점 단절이 유의하지 않음"
+            },
+            {
+              "code": "E4",
+              "name": "외부 통계 불일치",
+              "strength": "강함",
+              "met": null,
+              "detail": "대조할 공식 통계 없음"
+            },
+            {
+              "code": "E5",
+              "name": "분류 변경",
+              "strength": "강함",
+              "met": null,
+              "detail": "정책 시점 단절이 유의하지 않음"
+            }
+          ],
+          "external": [],
+          "reclass": [],
+          "needed_data": [],
+          "suspected": false
+        }
+      }
+    },
+    {
       "file": "월별 버스 이용자 유형별 패널티 현황",
       "coverage": {
         "freq": "MS",
@@ -2142,5 +2574,49 @@
       }
     ]
   },
-  "seconds": 10.3
+  "teen_by_hour": [
+    {
+      "hour": "01시-06시",
+      "teen_change": -0.8017,
+      "general_change": -0.0272,
+      "teen_vs_general": -0.7961
+    },
+    {
+      "hour": "07시-09시",
+      "teen_change": -0.6988,
+      "general_change": -0.0284,
+      "teen_vs_general": -0.69
+    },
+    {
+      "hour": "10시-12시",
+      "teen_change": -0.6152,
+      "general_change": -0.0415,
+      "teen_vs_general": -0.5986
+    },
+    {
+      "hour": "13시-15시",
+      "teen_change": -0.6453,
+      "general_change": -0.0367,
+      "teen_vs_general": -0.6318
+    },
+    {
+      "hour": "16시-18시",
+      "teen_change": -0.6774,
+      "general_change": -0.0211,
+      "teen_vs_general": -0.6705
+    },
+    {
+      "hour": "19시-21시",
+      "teen_change": -0.7069,
+      "general_change": -0.025,
+      "teen_vs_general": -0.6994
+    },
+    {
+      "hour": "22시-24시",
+      "teen_change": -0.7097,
+      "general_change": -0.0667,
+      "teen_vs_general": -0.6889
+    }
+  ],
+  "seconds": 8.1
 }

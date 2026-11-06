@@ -1,5 +1,5 @@
 # 정책 판정관 Windows 설치 묶음 잠금 파일 (Python 3.14.3, win_amd64). tools/build_bundle.py가 만듦
-# 이 버전들은 개발 PC(판정 기록을 만든 환경)와 같다. 생성 2026-11-05T00:57:16+0900
+# 이 버전들은 개발 PC(판정 기록을 만든 환경)와 같다. 생성 2026-11-06T17:11:29+0900
 altair==6.3.0
 annotated-types==0.8.0
 anthropic==2.3.0

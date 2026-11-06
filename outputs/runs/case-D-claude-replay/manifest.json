@@ -1,6 +1,6 @@
 {
   "run_id": "case-D-claude-replay",
-  "created": "2026-11-06T01:27:51+0900",
+  "created": "2026-11-06T17:10:33+0900",
   "calendar_as_of": "2026-11-03",
   "mode": "replay",
   "rules_version": "v2",
@@ -38,7 +38,7 @@
   },
   "prereg": {
     "sha256": "6f2a5a4ef1c489f4f78fe52812073bd1ee48f92447ac59ac48654f73f0fc718d",
-    "locked_at": "2026-11-06T01:27:51+0900",
+    "locked_at": "2026-11-06T17:10:33+0900",
     "existing": {
       "file": "docs/prereg/case_china_group_tour_2023.md",
       "sha256": "f9cfc845c1a8c2d3913be905694bf98a454c919e6d12ca69c473a693bf31be29",
@@ -46,7 +46,7 @@
     },
     "amendments": []
   },
-  "code_sha256": "5a26f80c63952e2ee090d40c3334107a2b0363a94ec44eb79757a47068b4882f",
+  "code_sha256": "f4d9aa289a3ecae9b95e820f710bc71996d7709681a0ece04dd570c1271d57ef",
   "versions": {
     "python": "3.14.3",
     "platform": "Darwin arm64",
