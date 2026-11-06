@@ -92,20 +92,24 @@ def test_job_reports_unknown_question_offline(tmp_path, monkeypatch):
     assert job.wait(30) and job.status == "error" and "등록된 정책 카드" in job.error
 
 
+def _text(at) -> str:
+    return " ".join(m.value for m in at.markdown) + " ".join(t.value for t in at.title)
+
+
 def test_app_start_and_verdict_pages(c_run, monkeypatch):
     st_testing = pytest.importorskip("streamlit.testing.v1")
     monkeypatch.setattr(O, "RUNS", c_run.parent)
     at = st_testing.AppTest.from_file(APP, default_timeout=60).run()
-    assert not at.exception and "어떤 정책" in at.title[0].value
+    assert not at.exception and "어떤 정책" in _text(at)
     at = st_testing.AppTest.from_file(APP, default_timeout=60)
     at.query_params["run"] = "ui-c"
     at.run()
-    assert not at.exception and "합성데이터" in at.title[0].value
-    assert [m.value for m in at.metric][0] == "+19.6%"
+    assert not at.exception and "합성데이터" in _text(at)
+    assert "+19.6%" in _text(at) and "정책 이후 +19.6%의 변화가 확인되었습니다" in _text(at)
     at2 = st_testing.AppTest.from_file(APP, default_timeout=60)
     at2.query_params["run"] = "../../etc"                    # 목록에 없는 값은 무시
     at2.run()
-    assert not at2.exception and "어떤 정책" in at2.title[0].value
+    assert not at2.exception and "어떤 정책" in _text(at2)
 
 
 def test_app_accuracy_page():

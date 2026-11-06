@@ -1,4 +1,4 @@
-<!doctype html><html lang="ko" style="--fs:8.6pt"><head><meta charset="utf-8">
+<!doctype html><html lang="ko" style="--fs:8.2pt"><head><meta charset="utf-8">
 <title>판정서 case-B-claude</title><style>
 @page { size: A4; margin: 11mm 12mm 10mm 12mm; }
 * { box-sizing: border-box; }
@@ -20,6 +20,9 @@ h1 { font-size: 1.55rem; margin: 0 0 1pt; line-height: 1.25; }
 .vtext b { display: block; font-size: 1.02rem; line-height: 1.35; }
 .vtext span { color: #52514e; font-size: .88rem; }
 .summary { margin: 0 0 4pt; }
+dl.pts { display: grid; grid-template-columns: 2.6em 1fr; gap: 1pt 5pt; margin: 3pt 0 0; font-size: .95em; }
+dl.pts dt { font-weight: 700; color: #0b3d5c; }
+dl.pts dd { margin: 0; }
 .naive { display: flex; gap: 6pt; align-items: stretch; margin: 2pt 0 5pt; font-size: .95em; }
 .naive > div { flex: 1; border: 1px solid #d6d5cc; border-radius: 4pt; padding: 3pt 6pt; }
 .naive .nv { background: #f6f6f3; }
@@ -47,10 +50,9 @@ code { font-family: "Menlo", "Consolas", monospace; font-size: .95em; }
 <h1>1차 긴급재난지원금</h1>
 <p class="q">질문: 1차 긴급재난지원금(2020-05)이 사용 가능 업종의 제주도민 카드 소비를 늘렸는가? · 시행 2020-05-01 · 대상 제주도민(지원금 수령), 사용 가능 업종</p>
 <div class="verdict">
- <div class="badge" style="background:#d03b3b;color:#ffffff"><span class="ic">?</span>판정 보류</div>
- <div class="vtext"><b>1차 긴급재난지원금이 사용 가능 업종의 제주도민 카드 소비를 늘렸는지는 현재 자료로 판단할 수 없어 &#x27;판정 보류&#x27;합니다.</b><span>현재 자료로는 효과가 있다고도 없다고도 말할 수 없습니다. &#x27;판정에 필요한 데이터&#x27;를 확보하면 다시 판정할 수 있습니다.</span></div>
+ <div class="badge" style="background:#fff;color:#d03b3b;border:2px solid #d03b3b"><span class="ic">?</span>판정 보류</div>
+ <div class="vtext"><b>작은 효과를 가려낼 만큼 자료가 충분하지 않아 판정을 미룹니다</b><span>현재 자료로는 효과가 있다고도 없다고도 말할 수 없습니다. &#x27;판정에 필요한 데이터&#x27;를 확보하면 다시 판정할 수 있습니다.</span><dl class="pts"><dt>추정</dt><dd>정책 이후 -4.9% · 판정 구간 -17.0% ~ +9.0%</dd><dt>검증</dt><dd>6개 중 3개 통과 · 통과하지 못함: C2a 시점 위약검정</dd><dt>원인</dt><dd>이 자료로 구분할 수 있는 최소 효과는 ±16.0%로, 의미 있다고 본 10%보다 큼</dd><dt>다음</dt><dd>정책이 계속되면 자료가 약 6개월 더 쌓인 2021년 02월 이후 같은 설계로 다시 판정하세요(필요한 사후 관측 약 10개월, 현재 4개월, 근사).</dd></dl></div>
 </div>
-<p class="summary">사후 4개월 평균은 -4.9%였으나 판정 구간이 -17.0%~+9.0%로 넓어 늘었다고도 줄었다고도 말하기 어렵습니다. 현재 자료로 구분 가능한 최소 효과는 ±16.0%로, 기준 효과 10%를 가려내기에는 검정력이 부족합니다. 시점 위약검정에서 가짜 시행일 40개 중 순위 p=0.317로 실패해, 계절·같은 시기 충격으로 나온 변화일 가능성을 배제하지 못했습니다. 따라서 이 결과를 정책 효과의 증거로 쓰기보다 추가 자료 확보 후 다시 판정하는 것이 적절합니다.</p>
 <div class="naive"><div class="nv"><b>단순 전후 비교였다면</b>&#x27;도민_가능&#x27;의 시행 후 4개월 평균이 직전 4개월보다 +5.1%: 늘어남 → &#x27;효과 있음&#x27;으로 보였을 것</div><div class="arrow">→</div><div class="jv"><b>판정관</b>판정 보류. 판정관은 같은 숫자를 그대로 믿지 않고 &#x27;판정 보류&#x27;로 판정했습니다. 이유는 아래 근거와 검증 결과에 있습니다.</div></div>
 <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 230" width="100%" role="img" aria-label="대상과 대조 집단의 차이 변화(정책 전 평균 = 0%)" font-family="inherit" font-size="10.5"><line x1="52" x2="570" y1="173.4" y2="173.4" stroke="#e1e0d9" stroke-width="0.6"/><text x="46" y="176.9" text-anchor="end" fill="#898781">-15%</text><line x1="52" x2="570" y1="139.7" y2="139.7" stroke="#e1e0d9" stroke-width="0.6"/><text x="46" y="143.2" text-anchor="end" fill="#898781">-10%</text><line x1="52" x2="570" y1="107.8" y2="107.8" stroke="#e1e0d9" stroke-width="0.6"/><text x="46" y="111.3" text-anchor="end" fill="#898781">-5%</text><line x1="52" x2="570" y1="77.6" y2="77.6" stroke="#c3c2b7" stroke-width="1.2"/><text x="46" y="81.1" text-anchor="end" fill="#898781">0%</text><line x1="52" x2="570" y1="48.8" y2="48.8" stroke="#e1e0d9" stroke-width="0.6"/><text x="46" y="52.3" text-anchor="end" fill="#898781">+5%</text><line x1="52" x2="570" y1="21.4" y2="21.4" stroke="#e1e0d9" stroke-width="0.6"/><text x="46" y="24.9" text-anchor="end" fill="#898781">+10%</text><text x="52.0" y="216" text-anchor="middle" fill="#898781">2020-02</text><text x="138.3" y="216" text-anchor="middle" fill="#898781">2020-03</text><text x="224.7" y="216" text-anchor="middle" fill="#898781">2020-04</text><text x="311.0" y="216" text-anchor="middle" fill="#898781">2020-05</text><text x="397.3" y="216" text-anchor="middle" fill="#898781">2020-06</text><text x="483.7" y="216" text-anchor="middle" fill="#898781">2020-07</text><text x="570.0" y="216" text-anchor="middle" fill="#898781">2020-08</text><line x1="311.0" x2="311.0" y1="14" y2="200" stroke="#52514e" stroke-width="1" stroke-dasharray="3 3"/><text x="307.0" y="24" text-anchor="end" fill="#52514e">시행 2020-05</text><rect x="311.0" y="26.8" width="259.0" height="160.3" fill="#eb6834" fill-opacity="0.14"/><polyline points="52.0,47.6 138.3,88.6 224.7,96.5 311.0,60.1 397.3,130.4 483.7,101.0 570.0,136.6" fill="none" stroke="#2a78d6" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/><line x1="311.0" x2="570.0" y1="77.6" y2="77.6" stroke="#52514e" stroke-width="1.5" stroke-dasharray="5 3"/><line x1="311.0" x2="570.0" y1="107.0" y2="107.0" stroke="#eb6834" stroke-width="2.5" stroke-linecap="round"/><text x="578.0" y="111.0" fill="#0b0b0b" font-weight="700">정책 후 평균 -4.9%</text><text x="578.0" y="123.0" fill="#52514e" font-size="9.5">판정 구간 -17.0~+9.0%</text><text x="578.0" y="81.6" fill="#52514e">정책이 없었다면(0%)</text><text x="56" y="194" fill="#2a78d6" font-weight="700">관측: 도민_가능 − 도민_불가</text><text x="52" y="228" fill="#898781" font-size="9">대상과 대조 집단의 차이 변화(정책 전 평균 = 0%)</text></svg><figcaption>계절(작년 같은 때)을 뺀 값. 0% 선은 &#x27;정책이 없었다면&#x27;의 기준, 굵은 선은 정책 후 평균(추정 효과), 띠는 판정 구간.</figcaption></figure>
 

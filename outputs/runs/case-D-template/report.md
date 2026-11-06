@@ -63,5 +63,5 @@
 ## 재현 정보
 
 - 실행 번호 `case-D-template` · 모드 template · 판정 규칙 v2
-- 사전 등록 지문 `a4a469ac825ba4a9e9bd642d27fb66e5310ef20b73db395afc38f947748358ba` (잠금 2026-11-06T17:09:52+0900)
+- 사전 등록 지문 `a4a469ac825ba4a9e9bd642d27fb66e5310ef20b73db395afc38f947748358ba` (잠금 2026-11-06T17:44:46+0900)
 - 기존 사전 등록 `docs/prereg/case_china_group_tour_2023.md` 지문 확인 `f9cfc845c1a8c2d3…`

@@ -64,5 +64,5 @@
 ## 재현 정보
 
 - 실행 번호 `case-E-template` · 모드 template · 판정 규칙 v2
-- 사전 등록 지문 `3c4dcd624faf6a3e6bc06146f5c076f4cf08527f577eee67f363c9108e3dcaa2` (잠금 2026-11-06T17:09:56+0900)
+- 사전 등록 지문 `3c4dcd624faf6a3e6bc06146f5c076f4cf08527f577eee67f363c9108e3dcaa2` (잠금 2026-11-06T17:44:48+0900)
 - 기존 사전 등록 `docs/prereg/case_distancing_2022.md` 지문 확인 `f1dc11cb8ed78b6e…`

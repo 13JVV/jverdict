@@ -162,6 +162,9 @@ h1 { font-size: 1.55rem; margin: 0 0 1pt; line-height: 1.25; }
 .vtext b { display: block; font-size: 1.02rem; line-height: 1.35; }
 .vtext span { color: #52514e; font-size: .88rem; }
 .summary { margin: 0 0 4pt; }
+dl.pts { display: grid; grid-template-columns: 2.6em 1fr; gap: 1pt 5pt; margin: 3pt 0 0; font-size: .95em; }
+dl.pts dt { font-weight: 700; color: #0b3d5c; }
+dl.pts dd { margin: 0; }
 .naive { display: flex; gap: 6pt; align-items: stretch; margin: 2pt 0 5pt; font-size: .95em; }
 .naive > div { flex: 1; border: 1px solid #d6d5cc; border-radius: 4pt; padding: 3pt 6pt; }
 .naive .nv { background: #f6f6f3; }
@@ -222,6 +225,9 @@ def build_html(v: RunView, font_pt: float = 9.0, compact: bool = False) -> str:
         return "<ul>" + "".join(f"<li>{E(x)}</li>" for x in xs) + "</ul>" if xs else "<p class='na'>없음</p>"
 
     needed = rep.get("needed_data") or []
+    from jverdict.report.brief import brief
+    bf = brief(v)
+    pts_html = '<dl class="pts">' + "".join(f"<dt>{E(k)}</dt><dd>{E(t)}</dd>" for k, t in bf["points"]) + "</dl>"
     nv = v.naive
     naive_html = (f'<div class="naive"><div class="nv"><b>단순 전후 비교였다면</b>{E(nv["sentence"])}</div>'
                   f'<div class="arrow">→</div><div class="jv"><b>판정관</b>{E(v.label)}. {E(v.contrast() or "")}</div></div>'
@@ -252,10 +258,9 @@ def build_html(v: RunView, font_pt: float = 9.0, compact: bool = False) -> str:
 <h1>{E(card.get('policy', ''))}</h1>
 <p class="q">질문: {E(card.get('question', ''))} · 시행 {E(card.get('start_date', ''))} · 대상 {E(card.get('treated', ''))}</p>
 <div class="verdict">
- <div class="badge" style="background:{st['bg']};color:{st['fg']}"><span class="ic">{E(st['icon'])}</span>{E(v.label)}</div>
- <div class="vtext"><b>{E(rep.get('headline', ''))}</b><span>{E(v.meaning)}</span></div>
+ <div class="badge" style="background:#fff;color:{st['bg']};border:2px solid {st['bg']}"><span class="ic">{E(st['icon'])}</span>{E(v.label)}</div>
+ <div class="vtext"><b>{E(bf['title'])}</b><span>{E(v.meaning)}</span>{pts_html}</div>
 </div>
-<p class="summary">{E(rep.get('summary', ''))}</p>
 {naive_html}
 {f'<figure>{svg_chart(cd)}<figcaption>{E(cd["note"])}</figcaption></figure>' if cd else ''}
 {f'<div class="truth"><b>정답 대조(합성데이터, 판정 뒤 공개)</b> · {E(tl)}</div>' if tl else ''}

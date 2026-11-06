@@ -350,7 +350,10 @@ class Doctor:
             at = AppTest.from_file(str(app), default_timeout=90).run()
             if at.exception:
                 return FAIL, f"화면 오류: {at.exception[0].message[:200]}"
-            return PASS, f"첫 화면 그리기 성공 ('{at.title[0].value}')"
+            text = " ".join(m.value for m in at.markdown) + " ".join(t.value for t in at.title)
+            if "어떤 정책의 효과가 궁금하신가요?" not in text:
+                return FAIL, "첫 화면 제목을 찾지 못함"
+            return PASS, "첫 화면 그리기 성공 ('어떤 정책의 효과가 궁금하신가요?')"
         self.guard(S, "화면(첫 페이지)", ui)
 
     # -------------------------------------------------------------------- 보안

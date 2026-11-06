@@ -30,6 +30,7 @@ from jverdict.agent.library import CARDS
 from jverdict.agent.llm import sanitize
 from jverdict.config import get_secret
 from jverdict.report import actions as AC
+from jverdict.report import brief as BR
 from jverdict.report import onepage
 from jverdict.report import trace as TR
 from jverdict.report.view import (LEVEL_MEANING, LEVEL_STYLE, STAGE_KO, STATUS_MARK, chart_data, list_runs,
@@ -54,35 +55,93 @@ EXAMPLES = [("A", "청소년 버스 무료화"), ("B", "1차 재난지원금"), 
 
 st.markdown("""
 <style>
-.jv-badge{display:inline-flex;align-items:center;gap:.5rem;border-radius:.5rem;padding:.45rem .9rem;
-  font-weight:800;font-size:1.6rem;white-space:nowrap}
-.jv-badge .ic{display:inline-flex;width:1.6rem;height:1.6rem;border-radius:50%;border:2px solid currentColor;
-  align-items:center;justify-content:center;font-size:1rem}
-.jv-head{font-size:1.15rem;font-weight:700;line-height:1.45;margin:.2rem 0}
-.jv-mean{color:#52514e}
+:root{--ink:#1b1f24;--ink2:#4a5059;--muted:#7a808a;--line:#e3e5e8;--soft:#f6f7f9;--navy:#0b3d5c;--navy2:#e9f0f5;
+  --ok:#1f7a3a;--warn:#9a5b00;--bad:#a32525;--null:#4a5059}
+html,body,[data-testid="stAppViewContainer"],[data-testid="stSidebar"]{
+  font-family:"Pretendard","Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;color:var(--ink)}
+[data-testid="stMainBlockContainer"]{max-width:1180px;padding-top:2.2rem}
+[data-testid="stSidebar"]{background:#f8f9fb;border-right:1px solid var(--line)}
+h1,h2,h3{letter-spacing:-.02em}
+[data-testid="stCaptionContainer"]{color:var(--muted)}
+button[role=tab] p{font-weight:600}
+[data-testid="stExpander"] details{border-color:var(--line)!important;border-radius:6px}
+.stButton>button,.stDownloadButton>button,[data-testid="stFormSubmitButton"]>button{border-radius:6px}
+/* 브랜드 */
+.jv-brand{display:flex;gap:.65rem;align-items:center;margin:.2rem 0 .3rem}
+.jv-brand .seal{width:38px;height:38px;border:1.5px solid var(--navy);border-radius:50%;display:flex;align-items:center;
+  justify-content:center;color:var(--navy);flex:0 0 auto}
+.jv-brand .nm{font-weight:800;font-size:1.12rem;line-height:1.15;color:var(--ink)}
+.jv-brand .en{font-size:.68rem;letter-spacing:.14em;color:var(--muted);font-weight:700}
+.jv-brand-sub{font-size:.8rem;color:var(--ink2);margin:.1rem 0 .4rem}
+/* 첫 화면 */
+.jv-eyebrow{font-size:.76rem;letter-spacing:.12em;color:var(--navy);font-weight:700;text-transform:uppercase}
+.jv-hero h1{font-size:2.05rem;font-weight:800;margin:.25rem 0 .45rem;padding:0;color:var(--ink)}
+.jv-hero p{color:var(--ink2);margin:0 0 .9rem;font-size:.98rem;line-height:1.6}
+.jv-principles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem;margin:.3rem 0 1.1rem}
+.jv-principles>div{border:1px solid var(--line);border-radius:8px;padding:.6rem .8rem;background:#fff}
+.jv-principles b{display:block;font-size:.88rem;color:var(--ink)}
+.jv-principles span{font-size:.78rem;color:var(--muted)}
+@media(max-width:720px){.jv-principles{grid-template-columns:1fr}}
+/* 판정서 머리 */
+.jv-doc{border-bottom:1px solid var(--line);padding-bottom:.8rem;margin-bottom:1rem}
+.jv-doc h1{font-size:1.95rem;font-weight:800;margin:.2rem 0 .35rem;padding:0;color:var(--ink)}
+.jv-doc .q{color:var(--ink2);font-size:.95rem;margin-bottom:.55rem}
+.jv-chips{display:flex;flex-wrap:wrap;gap:.35rem}
+.jv-chips span{font-size:.76rem;color:var(--ink2);background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:.12rem .6rem}
+.jv-ruling{display:grid;grid-template-columns:190px 1fr;border:1px solid var(--line);border-top:3px solid var(--lv);
+  border-radius:8px;background:#fff;margin:.2rem 0 .9rem}
+.jv-ruling .stamp{padding:1.1rem 1rem;border-right:1px solid var(--line);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center}
+.jv-ruling .stamp .k{font-size:.7rem;letter-spacing:.2em;color:var(--muted);font-weight:700}
+.jv-ruling .stamp .v{margin-top:.35rem;border:2px solid var(--lv);color:var(--lv);border-radius:6px;padding:.3rem .8rem;
+  font-weight:800;font-size:1.25rem;white-space:nowrap}
+.jv-ruling .stamp .d{font-size:.72rem;color:var(--lv);margin-top:.35rem;font-weight:600}
+.jv-ruling .body{padding:1rem 1.2rem}
+.jv-ruling .t{font-size:1.18rem;font-weight:800;line-height:1.4;color:var(--ink)}
+.jv-ruling .m{font-size:.86rem;color:var(--muted);margin:.25rem 0 .7rem}
+.jv-ruling dl{display:grid;grid-template-columns:3.2rem 1fr;gap:.32rem .6rem;margin:0}
+.jv-ruling dt{font-size:.76rem;font-weight:700;color:var(--navy);background:var(--navy2);border-radius:4px;text-align:center;
+  padding:.08rem 0;height:fit-content;margin-top:.1rem}
+.jv-ruling dd{margin:0;font-size:.9rem;color:var(--ink);line-height:1.5}
+@media(max-width:720px){.jv-ruling{grid-template-columns:1fr}.jv-ruling .stamp{border-right:0;border-bottom:1px solid var(--line)}}
+.jv-cmp{display:grid;grid-template-columns:1fr auto 1fr;gap:.6rem;align-items:stretch;margin:0 0 .9rem}
+.jv-cmp>div{border:1px solid var(--line);border-radius:8px;padding:.6rem .85rem;background:#fff}
+.jv-cmp .naive{background:var(--soft)}
+.jv-cmp .h{font-size:.74rem;font-weight:700;color:var(--muted);letter-spacing:.04em}
+.jv-cmp .n{font-size:1.15rem;font-weight:800;margin:.1rem 0}
+.jv-cmp .x{font-size:.86rem;color:var(--ink2)}
+.jv-cmp .s{font-size:.74rem;color:var(--muted);margin-top:.2rem}
+.jv-cmp .ar{border:0;background:transparent;align-self:center;color:var(--muted);padding:0}
+@media(max-width:720px){.jv-cmp{grid-template-columns:1fr}.jv-cmp .ar{display:none}}
+.jv-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.6rem;margin:0 0 1rem}
+.jv-kpis>div{border:1px solid var(--line);border-radius:8px;padding:.55rem .8rem;background:#fff}
+.jv-kpis .l{font-size:.74rem;color:var(--muted);font-weight:600}
+.jv-kpis .v{font-size:1.28rem;font-weight:800;color:var(--ink);margin-top:.1rem;font-variant-numeric:tabular-nums}
+.jv-kpis .s{font-size:.72rem;color:var(--muted)}
+@media(max-width:720px){.jv-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* 공통 조각 */
+.jv-badge{display:inline-flex;align-items:center;gap:.4rem;border:1.5px solid currentColor;border-radius:6px;padding:.15rem .6rem;
+  font-weight:800;font-size:.95rem;white-space:nowrap;background:#fff}
 .jv-steps{display:flex;flex-wrap:wrap;gap:.35rem;margin:.3rem 0 .6rem}
-.jv-step{border:1px solid #c3c2b7;border-radius:999px;padding:.15rem .65rem;font-size:.88rem;color:#52514e;background:#fff}
-.jv-step.done{border-color:#0ca30c;color:#006300;background:#eef8ee}
-.jv-step.now{border-color:#2a78d6;color:#0b3d5c;background:#e8f1fc;font-weight:700}
-.jv-step.wait{border-color:#fab219;color:#6b4a00;background:#fff6df;font-weight:700}
-.jv-log{font-family:Menlo,Consolas,monospace;font-size:.82rem;line-height:1.5;background:#f6f6f3;border-radius:.4rem;
-  padding:.5rem .7rem;max-height:18rem;overflow:auto;white-space:pre-wrap}
-.jv-ok{color:#006300;font-weight:700}.jv-bad{color:#b42323;font-weight:700}.jv-open{color:#8a5a00;font-weight:700}
+.jv-step{border:1px solid var(--line);border-radius:999px;padding:.15rem .65rem;font-size:.84rem;color:var(--ink2);background:#fff}
+.jv-step.done{border-color:#9cc9a9;color:var(--ok);background:#f1f8f3}
+.jv-step.now{border-color:var(--navy);color:var(--navy);background:var(--navy2);font-weight:700}
+.jv-step.wait{border-color:#e0b25c;color:var(--warn);background:#fff8ea;font-weight:700}
+.jv-log{font-family:Menlo,Consolas,monospace;font-size:.8rem;line-height:1.5;background:var(--soft);border:1px solid var(--line);
+  border-radius:6px;padding:.5rem .7rem;max-height:18rem;overflow:auto;white-space:pre-wrap}
+.jv-ok{color:var(--ok);font-weight:700}.jv-bad{color:var(--bad);font-weight:700}.jv-open{color:var(--warn);font-weight:700}
 .jv-ok,.jv-bad,.jv-open{white-space:nowrap}
-.jv-gap{margin-top:.6rem}
-.jv-nv{display:flex;gap:.6rem;align-items:stretch;margin:.8rem 0 .4rem;flex-wrap:wrap}
-.jv-nv>.a,.jv-nv>.b{flex:1 1 16rem;border:1px solid #c3c2b7;border-radius:.5rem;padding:.55rem .8rem}
-.jv-nv>.a{background:#f6f6f3}.jv-nv>.b{background:#fff}
-.jv-nv .h{font-size:.8rem;color:#52514e;font-weight:700}.jv-nv .n{font-size:1.35rem;font-weight:800;margin:.1rem 0}
-.jv-nv .s{font-size:.78rem;color:#6b6a65;margin-top:.2rem}.jv-nv>.ar{align-self:center;font-size:1.4rem;color:#52514e}
+.jv-nv{display:none}
 </style>""", unsafe_allow_html=True)
 
 
 # ============================================================================ 공통 조각
+LEVEL_LINE = {"효과 있음": "var(--ok)", "조건부": "var(--warn)", "효과 없음": "var(--null)", "판정 보류": "var(--bad)",
+              "판정 없음": "var(--ink)"}
+
+
 def badge(level: str, label: str) -> str:
-    s = LEVEL_STYLE.get(level, LEVEL_STYLE["판정 없음"])
-    return (f'<span class="jv-badge" style="background:{s["bg"]};color:{s["fg"]}">'
-            f'<span class="ic">{E(s["icon"])}</span>{E(label)}</span>')
+    return f'<span class="jv-badge" style="color:{LEVEL_LINE.get(level, "var(--ink)")}">{E(label)}</span>'
 
 
 def status_cls(s: str) -> str:
@@ -116,8 +175,11 @@ def go_home():
 key_ok = bool(get_secret("ANTHROPIC_API_KEY"))
 DEMO = not all(catalog.available(k) for k in catalog.DATASETS)      # 허브 자료가 없는 환경(공개 웹 데모 등)
 with st.sidebar:
-    st.markdown("## ⚖️ 정책 판정관")
-    st.caption("도정 정책의 효과를 스스로 설계·검증·판정하는 AI Agent")
+    st.markdown('<div class="jv-brand"><div class="seal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" '
+                'stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M6 21h12'
+                'M4 7h16M7 7l-3 6a3 3 0 0 0 6 0zM17 7l-3 6a3 3 0 0 0 6 0z"/></svg></div><div><div class="nm">정책 판정관</div>'
+                '<div class="en">J-VERDICT</div></div></div><div class="jv-brand-sub">도정 정책의 효과를 스스로 설계·검증·판정하는 '
+                'AI Agent</div>', unsafe_allow_html=True)
     mode_label = st.radio("실행 방식", ["오프라인(템플릿)", "Claude"], index=0,
                           help="오프라인: 인터넷·API 없이 등록된 사례를 판정합니다. "
                                "Claude: 각 단계의 판단(대조 집단 선택, 반론 제기, 서술)을 Claude가 합니다. 실행당 약 $0.1.")
@@ -157,10 +219,16 @@ with st.sidebar:
 
 # ============================================================================ ① 질문
 def render_start():
-    st.title("어떤 정책의 효과가 궁금하신가요?")
-    st.markdown("질문을 적으면 Agent가 **정책 카드 → 데이터 점검 → 비교 설계(잠금) → 추정 → 반론 검증 → 판정서** 순서로 "
-                "스스로 분석합니다. 판정은 네 가지입니다: 효과 있음 · 조건부 · 효과 없음 · **판정 보류**(자료가 부족하면 "
-                "억지로 결론 내지 않습니다).")
+    st.markdown(
+        '<div class="jv-hero"><div class="jv-eyebrow">J-Verdict · 제주 정책 효과 판정</div>'
+        '<h1>어떤 정책의 효과가 궁금하신가요?</h1>'
+        '<p>질문 하나로 Agent가 데이터를 점검하고, 비교 설계를 잠근 뒤, 반론까지 검증해 판정서를 냅니다. '
+        '판정은 효과 있음 · 조건부 · 효과 없음 · 판정 보류 네 가지이며, 근거가 부족하면 결론을 미룹니다.</p></div>'
+        '<div class="jv-principles">'
+        '<div><b>데이터부터 의심</b><span>정책 시점의 측정 방식 변화·결측을 먼저 점검</span></div>'
+        '<div><b>결과를 보기 전에 잠금</b><span>비교 설계를 지문으로 고정, 바꾸면 기록</span></div>'
+        '<div><b>보류도 다음 할 일로</b><span>필요한 자료·재판정 시점·요청 공문 초안</span></div></div>',
+        unsafe_allow_html=True)
     t1, t2 = st.tabs(["질문으로 시작", "정책 카드 직접 만들기 (새 정책 · API 키 없이)"])
     with t1:
         render_question()
@@ -354,45 +422,59 @@ def render_verdict(run_dir: str):
         st.button("처음으로", on_click=go_home)
         return
     man, rep, a = v.manifest, v.report, v.analysis
+    mode_ko = {"template": "오프라인", "claude": "Claude", "replay": "재실행"}.get(man["mode"], man["mode"])
+    llm = man.get("llm", {})
     top_l, top_r = st.columns([6, 1])
     with top_l:
-        st.caption(f"판정서 · {v.dataset_title} · 실행 {v.run_id}")
-        st.title(v.card.get("policy", ""))
-        st.caption(f"질문: {v.card.get('question', '')} · 시행 {v.card.get('start_date', '')} · 대상 {v.card.get('treated', '')}")
+        chips = [f"시행 {v.card.get('start_date', '')}", f"대상 {v.card.get('treated', '')}", f"데이터 {v.dataset_title}",
+                 f"실행 {mode_ko}" + (f" · LLM {llm['calls']}회 ${llm.get('cost_usd', 0):.3f}" if llm.get("calls") else ""),
+                 f"판정 규칙 {man.get('rules_version', '')}"]
+        st.markdown(
+            f'<div class="jv-doc"><div class="jv-eyebrow">판정서 · {E(v.run_id)}</div>'
+            f'<h1>{E(v.card.get("policy", ""))}</h1><div class="q">{E(v.card.get("question", ""))}</div>'
+            f'<div class="jv-chips">' + "".join(f"<span>{E(c)}</span>" for c in chips) + "</div></div>",
+            unsafe_allow_html=True)
     with top_r:
         st.button("새 질문", on_click=go_home, width="stretch")
 
-    c1, c2 = st.columns([1.1, 3])
-    with c1:
-        st.markdown(badge(v.level, v.label), unsafe_allow_html=True)
-    with c2:
-        st.markdown(f'<div class="jv-head">{E(rep.get("headline", ""))}</div>'
-                    f'<div class="jv-mean">{E(v.meaning)}</div>', unsafe_allow_html=True)
-    st.markdown(f'<div class="jv-gap">{E(rep.get("summary", ""))}</div>', unsafe_allow_html=True)
+    b = BR.brief(v)
+    lv = LEVEL_LINE.get(v.level, "var(--ink)")
+    pts = "".join(f"<dt>{E(k)}</dt><dd>{E(t)}</dd>" for k, t in b["points"])
+    sub = v.label.replace(v.level, "").strip("() ") if v.label != v.level else ""
+    st.markdown(
+        f'<div class="jv-ruling" style="--lv:{lv}"><div class="stamp"><div class="k">판 정</div>'
+        f'<div class="v">{E(v.level)}</div>' + (f'<div class="d">{E(sub)}</div>' if sub else "") + '</div>'
+        f'<div class="body"><div class="t">{E(b["title"])}</div><div class="m">{E(v.meaning)}</div><dl>{pts}</dl></div></div>',
+        unsafe_allow_html=True)
+
     if v.naive:
         nv = v.naive
         st.markdown(
-            f'<div class="jv-nv"><div class="a"><div class="h">단순 전후 비교였다면</div>'
-            f'<div class="n">{nv["pct"] * 100:+.1f}%</div><div>{E(nv["reading"])}</div>'
-            f'<div class="s">{E(nv["target"])} · 시행 후 {nv["n_post"]}{nv["unit"]} 평균 대 직전 {nv["n_pre"]}{nv["unit"]} '
-            f'(대조 집단·계절 보정·검증 없음)</div></div>'
-            f'<div class="ar">→</div><div class="b"><div class="h">판정관</div>'
-            f'<div class="n">{E(v.label)}</div><div>{E(v.contrast() or "")}</div></div></div>', unsafe_allow_html=True)
+            f'<div class="jv-cmp"><div class="naive"><div class="h">단순 전후 비교였다면</div>'
+            f'<div class="n">{nv["pct"] * 100:+.1f}%</div><div class="x">{E(nv["reading"])}</div>'
+            f'<div class="s">{E(nv["target"])} · 시행 후 {nv["n_post"]}{nv["unit"]} 평균 대 직전 {nv["n_pre"]}{nv["unit"]} · '
+            f'대조·계절 보정·검증 없음</div></div><div class="ar">→</div>'
+            f'<div><div class="h">정책 판정관</div><div class="n" style="color:{lv}">{E(v.label)}</div>'
+            f'<div class="x">{E(v.contrast() or "")}</div></div></div>', unsafe_allow_html=True)
 
     m, pw = a.get("main") or {}, a.get("power") or {}
-    k = st.columns(4)
+    tiles = []
     if m:
         lo, hi = a["verdict"]["ci_used"]
-        k[0].metric("추정 변화", f"{m['pct'] * 100:+.1f}%")
-        k[1].metric("판정 구간", f"{(math.exp(lo) - 1) * 100:+.1f}~{(math.exp(hi) - 1) * 100:+.1f}%",
-                    help="판정에 쓴 구간(분석 구간과 위약검정 구간을 합친 것). 이 구간이 0을 지나면 방향을 단정하지 않습니다.")
+        tiles.append(("추정 변화", f"{m['pct'] * 100:+.1f}%", "'정책이 없었다면'과 비교"))
+        tiles.append(("판정 구간", f"{math.expm1(lo) * 100:+.1f} ~ {math.expm1(hi) * 100:+.1f}%", "0을 지나면 방향을 단정하지 않음"))
     if pw.get("mde_pct") is not None:
-        k[2].metric("구분 가능한 최소 효과", f"±{pw['mde_pct'] * 100:.1f}%",
-                    help=f"이보다 작은 효과는 이 자료로 가려내기 어렵습니다(기준 {pw['reference_pct'] * 100:.0f}%).")
-    llm = man.get("llm", {})
-    k[3].metric("실행 방식", {"template": "오프라인", "claude": "Claude", "replay": "재실행"}.get(man["mode"], man["mode"]))
-    if llm.get("calls"):
-        k[3].caption(f"LLM 호출 {llm['calls']}회 · ${llm.get('cost_usd', 0):.3f}")
+        tiles.append(("구분 가능한 최소 효과", f"±{pw['mde_pct'] * 100:.1f}%", f"의미 있다고 본 기준 {pw['reference_pct'] * 100:.0f}%"))
+    pt = a.get("placebo_time") or {}
+    if pt.get("n"):
+        tiles.append(("시점 위약검정", f"p = {pt['p_two']:.3f}", f"가짜 시행일 {pt['n']}개와 비교"))
+    if tiles:
+        st.markdown('<div class="jv-kpis">' + "".join(
+            f'<div><div class="l">{E(l)}</div><div class="v">{E(val)}</div><div class="s">{E(sv)}</div></div>'
+            for l, val, sv in tiles[:4]) + "</div>", unsafe_allow_html=True)
+    with st.expander("판정 문장 전문"):
+        st.markdown(f"**{rep.get('headline', '')}**")
+        st.markdown(rep.get("summary", ""))
 
     cd = chart_data(a, v.design)
     fig = figure(cd)

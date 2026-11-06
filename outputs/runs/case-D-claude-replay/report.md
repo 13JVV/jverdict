@@ -78,5 +78,5 @@
 ## 재현 정보
 
 - 실행 번호 `case-D-claude-replay` · 모드 replay · 판정 규칙 v2
-- 사전 등록 지문 `6f2a5a4ef1c489f4f78fe52812073bd1ee48f92447ac59ac48654f73f0fc718d` (잠금 2026-11-06T17:10:33+0900)
+- 사전 등록 지문 `6f2a5a4ef1c489f4f78fe52812073bd1ee48f92447ac59ac48654f73f0fc718d` (잠금 2026-11-06T17:45:34+0900)
 - 기존 사전 등록 `docs/prereg/case_china_group_tour_2023.md` 지문 확인 `f9cfc845c1a8c2d3…`

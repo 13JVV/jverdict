@@ -1,6 +1,6 @@
 {
   "run_id": "case-A-template-replay",
-  "created": "2026-11-06T17:09:48+0900",
+  "created": "2026-11-06T17:44:41+0900",
   "calendar_as_of": "2026-11-06",
   "mode": "template",
   "rules_version": "v2",
@@ -34,11 +34,11 @@
   },
   "prereg": {
     "sha256": "0714f40efa9832c777e1232c6df766959e708d1516b86ac086ee275ecd5baf85",
-    "locked_at": "2026-11-06T17:09:44+0900",
+    "locked_at": "2026-11-06T17:44:36+0900",
     "existing": null,
     "amendments": []
   },
-  "code_sha256": "f4d9aa289a3ecae9b95e820f710bc71996d7709681a0ece04dd570c1271d57ef",
+  "code_sha256": "0bd1dc30f9d1126a07b7cb92c7d61504f4618549f71f76e0394e322480d67d1c",
   "versions": {
     "python": "3.14.3",
     "platform": "Darwin arm64",

@@ -1,22 +1,22 @@
-{"t": "17:09:50", "stage": "parse", "msg": "실행 시작: 모드 template, 판정 규칙 v2"}
-{"t": "17:09:50", "stage": "parse", "msg": "단계 시작: parse"}
-{"t": "17:09:50", "stage": "confirm", "msg": "단계 시작: confirm"}
-{"t": "17:09:50", "stage": "confirm", "msg": "정책 카드 확인 완료", "data": {"policy": "1차 긴급재난지원금", "start_date": "2020-05-01", "treated": "제주도민(지원금 수령), 사용 가능 업종", "outcome": "업종별 월 카드 이용 금액"}}
-{"t": "17:09:50", "stage": "scout", "msg": "단계 시작: scout"}
-{"t": "17:09:50", "stage": "scout", "msg": "데이터 점검: 단절 없음", "data": {"dataset": "card_sector", "cap": null, "coverage": "[집단 결측] 2023-05 ~ 2023-06 2개월 동안 기타외국, 동남아, 일본, 중국의 행이 없음 (같은 기간 내국인, 법인, 제주도민은 있음) (결측·부분 집계일은 분석에서 자동 제외)"}}
-{"t": "17:09:50", "stage": "design", "msg": "단계 시작: design"}
-{"t": "17:09:50", "stage": "design", "msg": "기존 사전 등록 문서 사용: docs/prereg/case_relief2020_engine.md (지문 확인)"}
-{"t": "17:09:50", "stage": "lock", "msg": "단계 시작: lock"}
-{"t": "17:09:50", "stage": "lock", "msg": "설계 잠금 SHA-256 32cddf2f9a993e6e…"}
-{"t": "17:09:50", "stage": "execute", "msg": "단계 시작: execute"}
-{"t": "17:09:50", "stage": "execute", "msg": "판정 규칙 결과: 판정 보류", "data": {"verdict": "판정 보류", "effect": -0.049901, "se": 0.052885, "ci_lo": -0.185847, "ci_hi": 0.086044, "p": 0.388711, "mde_pct": 0.159701}}
-{"t": "17:09:50", "stage": "skeptic", "msg": "단계 시작: skeptic"}
-{"t": "17:09:50", "stage": "skeptic", "msg": "툴 extra_check", "data": {"args": {"kind": "exclude_period", "reference": [], "placebo_target": null, "post": null, "start": "2020-02-18", "end": "2020-12-31", "reason": "코로나19 1차·2차 확산"}, "error": true}}
-{"t": "17:09:50", "stage": "skeptic", "msg": "툴 extra_check", "data": {"args": {"kind": "exclude_period", "reference": [], "placebo_target": null, "post": null, "start": "2020-03-01", "end": "2020-05-31", "reason": "등교 연기·온라인 개학(전국)"}, "error": true}}
-{"t": "17:09:50", "stage": "skeptic", "msg": "툴 extra_check", "data": {"args": {"kind": "exclude_period", "reference": [], "placebo_target": null, "post": null, "start": "2020-04-30", "end": "2020-05-05", "reason": "2020 황금연휴 국내 관광 반등"}, "error": false}}
-{"t": "17:09:50", "stage": "skeptic", "msg": "툴 extra_check", "data": {"args": {"kind": "exclude_period", "reference": [], "placebo_target": null, "post": null, "start": "2020-03-01", "end": "2020-05-31", "reason": "국제유가 급락"}, "error": true}}
-{"t": "17:09:50", "stage": "skeptic", "msg": "반론 9개 검증: 판정 규칙이 이미 반영한 성립 1개, 추가 반론 성립 0개 → 최종 판정 보류"}
-{"t": "17:09:50", "stage": "report", "msg": "단계 시작: report"}
-{"t": "17:09:50", "stage": "report", "msg": "판정서 작성 완료"}
-{"t": "17:09:50", "stage": "manifest", "msg": "단계 시작: manifest"}
-{"t": "17:09:50", "stage": "manifest", "msg": "재실행 기록 저장"}
+{"t": "17:44:43", "stage": "parse", "msg": "실행 시작: 모드 template, 판정 규칙 v2"}
+{"t": "17:44:43", "stage": "parse", "msg": "단계 시작: parse"}
+{"t": "17:44:43", "stage": "confirm", "msg": "단계 시작: confirm"}
+{"t": "17:44:43", "stage": "confirm", "msg": "정책 카드 확인 완료", "data": {"policy": "1차 긴급재난지원금", "start_date": "2020-05-01", "treated": "제주도민(지원금 수령), 사용 가능 업종", "outcome": "업종별 월 카드 이용 금액"}}
+{"t": "17:44:43", "stage": "scout", "msg": "단계 시작: scout"}
+{"t": "17:44:43", "stage": "scout", "msg": "데이터 점검: 단절 없음", "data": {"dataset": "card_sector", "cap": null, "coverage": "[집단 결측] 2023-05 ~ 2023-06 2개월 동안 기타외국, 동남아, 일본, 중국의 행이 없음 (같은 기간 내국인, 법인, 제주도민은 있음) (결측·부분 집계일은 분석에서 자동 제외)"}}
+{"t": "17:44:43", "stage": "design", "msg": "단계 시작: design"}
+{"t": "17:44:43", "stage": "design", "msg": "기존 사전 등록 문서 사용: docs/prereg/case_relief2020_engine.md (지문 확인)"}
+{"t": "17:44:43", "stage": "lock", "msg": "단계 시작: lock"}
+{"t": "17:44:43", "stage": "lock", "msg": "설계 잠금 SHA-256 32cddf2f9a993e6e…"}
+{"t": "17:44:43", "stage": "execute", "msg": "단계 시작: execute"}
+{"t": "17:44:43", "stage": "execute", "msg": "판정 규칙 결과: 판정 보류", "data": {"verdict": "판정 보류", "effect": -0.049901, "se": 0.052885, "ci_lo": -0.185847, "ci_hi": 0.086044, "p": 0.388711, "mde_pct": 0.159701}}
+{"t": "17:44:43", "stage": "skeptic", "msg": "단계 시작: skeptic"}
+{"t": "17:44:43", "stage": "skeptic", "msg": "툴 extra_check", "data": {"args": {"kind": "exclude_period", "reference": [], "placebo_target": null, "post": null, "start": "2020-02-18", "end": "2020-12-31", "reason": "코로나19 1차·2차 확산"}, "error": true}}
+{"t": "17:44:43", "stage": "skeptic", "msg": "툴 extra_check", "data": {"args": {"kind": "exclude_period", "reference": [], "placebo_target": null, "post": null, "start": "2020-03-01", "end": "2020-05-31", "reason": "등교 연기·온라인 개학(전국)"}, "error": true}}
+{"t": "17:44:43", "stage": "skeptic", "msg": "툴 extra_check", "data": {"args": {"kind": "exclude_period", "reference": [], "placebo_target": null, "post": null, "start": "2020-04-30", "end": "2020-05-05", "reason": "2020 황금연휴 국내 관광 반등"}, "error": false}}
+{"t": "17:44:43", "stage": "skeptic", "msg": "툴 extra_check", "data": {"args": {"kind": "exclude_period", "reference": [], "placebo_target": null, "post": null, "start": "2020-03-01", "end": "2020-05-31", "reason": "국제유가 급락"}, "error": true}}
+{"t": "17:44:43", "stage": "skeptic", "msg": "반론 9개 검증: 판정 규칙이 이미 반영한 성립 1개, 추가 반론 성립 0개 → 최종 판정 보류"}
+{"t": "17:44:43", "stage": "report", "msg": "단계 시작: report"}
+{"t": "17:44:43", "stage": "report", "msg": "판정서 작성 완료"}
+{"t": "17:44:43", "stage": "manifest", "msg": "단계 시작: manifest"}
+{"t": "17:44:43", "stage": "manifest", "msg": "재실행 기록 저장"}
