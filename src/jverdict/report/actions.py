@@ -40,6 +40,9 @@ def rejudge(v) -> dict:
         return {"kind": "data", "text": f"기준 효과를 가리려면 사후 관측이 약 {need}{unit} 필요해, 기다려서 풀기에는 깁니다(3년 넘음). 더 세밀한 자료가 필요합니다."}
     end = pd.Timestamp(main["window"][1] + ("-01" if len(main["window"][1]) == 7 else ""))
     when = end + (pd.DateOffset(months=extra) if unit == "개월" else pd.Timedelta(days=extra))
+    if when <= pd.Timestamp.now().normalize():
+        return {"kind": "data", "text": "그만큼의 사후 기간은 이미 지났지만, 이 설계의 사후 기간은 정책 기간에 맞춰 정해져 있어 늘릴 수 "
+                                        "없습니다. 더 세밀한 자료(일 단위·전체 카드사 등)가 있어야 다시 판정할 수 있습니다."}
     return {"kind": "date", "date": when.strftime("%Y-%m"),
             "text": f"정책이 계속되면 자료가 약 {extra}{unit} 더 쌓인 {when.strftime('%Y년 %m월')} 이후 같은 설계로 다시 판정하세요"
                     f"(필요한 사후 관측 약 {need}{unit}, 현재 {n_post}{unit}, 근사)."}

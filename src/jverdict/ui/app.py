@@ -59,7 +59,7 @@ st.markdown("""
   --ok:#1f7a3a;--warn:#9a5b00;--bad:#a32525;--null:#4a5059}
 html,body,[data-testid="stAppViewContainer"],[data-testid="stSidebar"]{
   font-family:"Pretendard","Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;color:var(--ink)}
-[data-testid="stMainBlockContainer"]{max-width:1180px;padding-top:2.2rem}
+[data-testid="stMainBlockContainer"]{max-width:1180px;padding-top:5rem}  /* 상단 고정 바(약 3.75rem)에 가리지 않게 */
 [data-testid="stSidebar"]{background:#f8f9fb;border-right:1px solid var(--line)}
 h1,h2,h3{letter-spacing:-.02em}
 [data-testid="stCaptionContainer"]{color:var(--muted)}
@@ -132,6 +132,9 @@ button[role=tab] p{font-weight:600}
 .jv-ok{color:var(--ok);font-weight:700}.jv-bad{color:var(--bad);font-weight:700}.jv-open{color:var(--warn);font-weight:700}
 .jv-ok,.jv-bad,.jv-open{white-space:nowrap}
 .jv-nv{display:none}
+[data-testid="stElementContainer"]:has(.jv-viewkey){display:none}
+[data-testid="stElementContainer"]:has(iframe[srcdoc*="jv-scroll-top"]),
+[data-testid="stElementContainer"]:has(iframe[height="0"]){position:absolute;height:0;overflow:hidden;margin:0;padding:0}
 </style>""", unsafe_allow_html=True)
 
 
@@ -169,6 +172,7 @@ def log_html(events: list[dict], last: int | None = None) -> str:
 
 def go_home():
     ss.job, ss.view_dir, ss.page = None, None, "main"
+    st.query_params.clear()          # 주소의 ?run= 이 남아 있으면 같은 판정서가 다시 열린다
 
 
 # ============================================================================ 사이드바
@@ -680,10 +684,27 @@ def render_accuracy():
 
 # ============================================================================ 라우팅
 _q = st.query_params.get("run")
-if _q and ss.job is None and not ss.view_dir:
+if _q and ss.job is None and not ss.view_dir and ss.get("_q_applied") != _q:
+    ss["_q_applied"] = _q                                       # 주소로 연 판정서는 한 번만 적용
     _hit = [d for d in list_runs(O.RUNS) if d.name == _q]      # 목록에 있는 실행 번호만(경로 조작 차단)
     if _hit:
         ss.view_dir = str(_hit[0])
+_view_key = (ss.page, ss.view_dir, getattr(ss.job, "run_id", None), getattr(ss.job, "status", None) == "confirm")
+# 다른 화면으로 넘어가면 맨 위에서 시작한다(Streamlit은 다시 그릴 때 스크롤 위치를 유지해 새 화면 위쪽이 잘려 보임).
+# 화면마다 보이지 않는 표식을 그리고, 늘 같은 내용으로 그리는 감시 스크립트가 표식이 바뀔 때 맨 위로 올린다.
+st.markdown(f'<div class="jv-viewkey" data-k="{abs(hash(_view_key)) % 10**9}"></div>', unsafe_allow_html=True)
+if True:                                             # 매번 같은 내용으로 그려야 조각이 재사용되어 스크립트가 살아 있다
+    _js = ("<!-- jv-scroll-top --><script>(function(){const w=window.parent;if(w.__jvWatch)return;w.__jvWatch=1;"
+           "let last=null;const d=w.document;const up=()=>{const m=d.querySelector('[data-testid=stMain]');"
+           "if(m)m.scrollTo({top:0});w.scrollTo(0,0);};"
+           "new w.MutationObserver(()=>{const e=d.querySelector('.jv-viewkey');if(!e)return;const k=e.getAttribute('data-k');"
+           "if(last!==null&&k!==last){up();setTimeout(up,200);setTimeout(up,600);}last=k;})"
+           ".observe(d.body,{subtree:true,childList:true,attributes:true,attributeFilter:['data-k']});})();</script>")
+    if hasattr(st, "iframe"):
+        st.iframe(_js, height=1)
+    else:                                            # 옛 Streamlit
+        import streamlit.components.v1 as _components
+        _components.html(_js, height=0)
 if ss.job is not None:
     render_job()
 elif ss.page == "accuracy":

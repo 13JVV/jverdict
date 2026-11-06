@@ -1,6 +1,6 @@
 {
   "run_id": "case-E-template",
-  "created": "2026-11-06T17:44:48+0900",
+  "created": "2026-11-06T18:14:18+0900",
   "calendar_as_of": "2026-11-06",
   "mode": "template",
   "rules_version": "v2",
@@ -31,7 +31,7 @@
   },
   "prereg": {
     "sha256": "3c4dcd624faf6a3e6bc06146f5c076f4cf08527f577eee67f363c9108e3dcaa2",
-    "locked_at": "2026-11-06T17:44:48+0900",
+    "locked_at": "2026-11-06T18:14:18+0900",
     "existing": {
       "file": "docs/prereg/case_distancing_2022.md",
       "sha256": "f1dc11cb8ed78b6ec1d82b4c5b65b6f14c2dac1115a0e44f8054c07e65fbcf66",
@@ -39,7 +39,7 @@
     },
     "amendments": []
   },
-  "code_sha256": "0bd1dc30f9d1126a07b7cb92c7d61504f4618549f71f76e0394e322480d67d1c",
+  "code_sha256": "2e371f815c9d94fce852664c1e6c85df1595e7909bf9684d85c1c1f4b5ababdb",
   "versions": {
     "python": "3.14.3",
     "platform": "Darwin arm64",

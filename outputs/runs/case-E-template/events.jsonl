@@ -1,19 +1,19 @@
-{"t": "17:44:48", "stage": "parse", "msg": "실행 시작: 모드 template, 판정 규칙 v2"}
-{"t": "17:44:48", "stage": "parse", "msg": "단계 시작: parse"}
-{"t": "17:44:48", "stage": "confirm", "msg": "단계 시작: confirm"}
-{"t": "17:44:48", "stage": "confirm", "msg": "정책 카드 확인 완료", "data": {"policy": "사회적 거리두기 전면 해제", "start_date": "2022-04-01", "treated": "영업시간·모임 제한을 받던 주점(일반유흥 주점업, 기타 주점업). 시행 4-18이라 4월은 절반만 처치(월 단위)", "outcome": "업종별 월 카드 이용 금액(제주도민)"}}
-{"t": "17:44:48", "stage": "scout", "msg": "단계 시작: scout"}
-{"t": "17:44:48", "stage": "scout", "msg": "데이터 점검: 단절 없음", "data": {"dataset": "card_sector", "cap": null, "coverage": "[집단 결측] 2023-05 ~ 2023-06 2개월 동안 기타외국, 동남아, 일본, 중국의 행이 없음 (같은 기간 내국인, 법인, 제주도민은 있음) (결측·부분 집계일은 분석에서 자동 제외)"}}
-{"t": "17:44:48", "stage": "design", "msg": "단계 시작: design"}
-{"t": "17:44:48", "stage": "design", "msg": "기존 사전 등록 문서 사용: docs/prereg/case_distancing_2022.md (지문 확인)"}
-{"t": "17:44:48", "stage": "lock", "msg": "단계 시작: lock"}
-{"t": "17:44:48", "stage": "lock", "msg": "설계 잠금 SHA-256 3c4dcd624faf6a3e…"}
-{"t": "17:44:48", "stage": "execute", "msg": "단계 시작: execute"}
-{"t": "17:44:48", "stage": "execute", "msg": "판정 규칙 결과: 판정 보류", "data": {"verdict": "판정 보류", "effect": 1.102712, "se": 1.032165, "ci_lo": -1.08538, "ci_hi": 3.290804, "p": 0.301218, "mde_pct": 17.023881}}
-{"t": "17:44:48", "stage": "skeptic", "msg": "단계 시작: skeptic"}
-{"t": "17:44:48", "stage": "skeptic", "msg": "툴 extra_check", "data": {"args": {"kind": "exclude_period", "reference": [], "placebo_target": null, "post": null, "start": "2022-03-17", "end": "2022-05-31", "reason": "오미크론 유행 정점(3-17 신규 확진 약 62만 명) 뒤 감소기"}, "error": false}}
-{"t": "17:44:48", "stage": "skeptic", "msg": "반론 6개 검증: 판정 규칙이 이미 반영한 성립 0개, 추가 반론 성립 0개 → 최종 판정 보류"}
-{"t": "17:44:48", "stage": "report", "msg": "단계 시작: report"}
-{"t": "17:44:48", "stage": "report", "msg": "판정서 작성 완료"}
-{"t": "17:44:48", "stage": "manifest", "msg": "단계 시작: manifest"}
-{"t": "17:44:48", "stage": "manifest", "msg": "재실행 기록 저장"}
+{"t": "18:14:18", "stage": "parse", "msg": "실행 시작: 모드 template, 판정 규칙 v2"}
+{"t": "18:14:18", "stage": "parse", "msg": "단계 시작: parse"}
+{"t": "18:14:18", "stage": "confirm", "msg": "단계 시작: confirm"}
+{"t": "18:14:18", "stage": "confirm", "msg": "정책 카드 확인 완료", "data": {"policy": "사회적 거리두기 전면 해제", "start_date": "2022-04-01", "treated": "영업시간·모임 제한을 받던 주점(일반유흥 주점업, 기타 주점업). 시행 4-18이라 4월은 절반만 처치(월 단위)", "outcome": "업종별 월 카드 이용 금액(제주도민)"}}
+{"t": "18:14:18", "stage": "scout", "msg": "단계 시작: scout"}
+{"t": "18:14:18", "stage": "scout", "msg": "데이터 점검: 단절 없음", "data": {"dataset": "card_sector", "cap": null, "coverage": "[집단 결측] 2023-05 ~ 2023-06 2개월 동안 기타외국, 동남아, 일본, 중국의 행이 없음 (같은 기간 내국인, 법인, 제주도민은 있음) (결측·부분 집계일은 분석에서 자동 제외)"}}
+{"t": "18:14:18", "stage": "design", "msg": "단계 시작: design"}
+{"t": "18:14:18", "stage": "design", "msg": "기존 사전 등록 문서 사용: docs/prereg/case_distancing_2022.md (지문 확인)"}
+{"t": "18:14:18", "stage": "lock", "msg": "단계 시작: lock"}
+{"t": "18:14:18", "stage": "lock", "msg": "설계 잠금 SHA-256 3c4dcd624faf6a3e…"}
+{"t": "18:14:18", "stage": "execute", "msg": "단계 시작: execute"}
+{"t": "18:14:18", "stage": "execute", "msg": "판정 규칙 결과: 판정 보류", "data": {"verdict": "판정 보류", "effect": 1.102712, "se": 1.032165, "ci_lo": -1.08538, "ci_hi": 3.290804, "p": 0.301218, "mde_pct": 17.023881}}
+{"t": "18:14:18", "stage": "skeptic", "msg": "단계 시작: skeptic"}
+{"t": "18:14:18", "stage": "skeptic", "msg": "툴 extra_check", "data": {"args": {"kind": "exclude_period", "reference": [], "placebo_target": null, "post": null, "start": "2022-03-17", "end": "2022-05-31", "reason": "오미크론 유행 정점(3-17 신규 확진 약 62만 명) 뒤 감소기"}, "error": false}}
+{"t": "18:14:18", "stage": "skeptic", "msg": "반론 6개 검증: 판정 규칙이 이미 반영한 성립 0개, 추가 반론 성립 0개 → 최종 판정 보류"}
+{"t": "18:14:18", "stage": "report", "msg": "단계 시작: report"}
+{"t": "18:14:18", "stage": "report", "msg": "판정서 작성 완료"}
+{"t": "18:14:18", "stage": "manifest", "msg": "단계 시작: manifest"}
+{"t": "18:14:18", "stage": "manifest", "msg": "재실행 기록 저장"}

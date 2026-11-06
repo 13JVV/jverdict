@@ -56,10 +56,13 @@ def test_rejudge_paths_for_withheld_verdicts():
         pass
     v = V()
     v.level, v.card = "판정 보류", {"end_date": None}
-    v.analysis = {"verdict": {"checks": []}, "main": {"window": ["2021-04", "2022-09"]},
+    v.analysis = {"verdict": {"checks": []}, "main": {"window": ["2025-04", "2026-09"]},
                   "power": {"post_needed": 20, "n_post": 6, "unit": "개월"}}
     r = AC.rejudge(v)
-    assert r["kind"] == "date" and r["date"] == "2023-11"
+    assert r["kind"] == "date" and r["date"] == "2027-11"
+    v.analysis["main"]["window"] = ["2021-04", "2022-09"]          # 계산한 날짜가 이미 지났으면 기간이 아니라 자료 문제
+    assert AC.rejudge(v)["kind"] == "data" and "이미 지났" in AC.rejudge(v)["text"]
+    v.analysis["main"]["window"] = ["2025-04", "2026-09"]
     v.analysis["power"]["pre_outliers"] = [{"time": "2021-08", "dev": -4.4}]
     assert AC.rejudge(v)["kind"] == "data" and "2021-08" in AC.rejudge(v)["text"]
     v.analysis["power"] = {"post_needed": 500, "n_post": 6, "unit": "개월"}
