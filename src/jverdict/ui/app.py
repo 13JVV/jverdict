@@ -191,7 +191,7 @@ def render_question():
                     ss.view_dir, ss.page = str(rec), "main"
                 st.rerun()
     if DEMO:
-        st.caption("이 화면에는 제주데이터허브 원자료를 싣지 않았습니다. 실데이터 사례는 이 PC에서 만든 판정서 기록을 엽니다"
+        st.caption("이 화면에는 제주데이터허브 원자료를 싣지 않았습니다. 실데이터 사례는 개발 PC에서 만든 판정서 기록을 엽니다"
                    "(숫자·판정은 기록 그대로). 합성데이터 사례와 '정책 카드 직접 만들기'는 여기서 바로 판정합니다.")
     q = st.text_area("질문", key="q_input", height=90, placeholder="예: 청소년 버스 무료화로 청소년의 버스 이용이 늘었는가?",
                      help="Claude 모드에서는 보도자료 문단을 그대로 붙여 넣어도 정책 카드로 바꿉니다.")
