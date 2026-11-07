@@ -187,3 +187,23 @@ def test_replay_tolerates_last_bit_float_noise():
     llm = LLM("replay", cache=[rec])
     llm.model = "claude-sonnet-5-5"
     assert llm.json_call("parser", "s", a, schema) == {}
+
+
+def test_extra_check_supports_panel_design(tmp_path, monkeypatch):
+    """사례 D(패널)에서도 Skeptic의 반론 검증이 오류 없이 다시 추정한다."""
+    import pytest as _pt
+    from jverdict.agent import catalog as _cat
+    from jverdict.agent import orchestrator as _O
+    from jverdict.agent import tools as _T
+    from jverdict.agent.library import CARDS as _C
+    if not _cat.available(_C["D"]["design"]["dataset"]):
+        _pt.skip("카드 데이터 없음")
+    monkeypatch.setattr(_O, "RUNS", tmp_path)
+    r = _O.run(_C["D"]["card"]["question"], mode="template", run_id="d")
+    for kind, kw in [("alt_reference", {"reference": ["일본"]}), ("alt_window", {"post": 3}),
+                     ("exclude_period", {"start": "2023-08-01", "end": "2023-08-31"}),
+                     ("placebo_group", {"placebo_target": "일본"})]:
+        args = {"reference": [], "placebo_target": None, "post": None, "start": None, "end": None, "reason": "시험", **kw}
+        out = _T.t_extra_check(r, kind, **args)
+        assert "error" not in out, (kind, out)
+        assert out["status"] in ("반론 기각", "반론 성립", "해당 없음")

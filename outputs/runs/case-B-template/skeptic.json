@@ -31,7 +31,7 @@
     {
       "hypothesis": "분석 기간·대조 선택에 따라 달라지는 우연이다",
       "check": "C3 민감도",
-      "status": "반론 기각",
+      "status": "미검증",
       "detail": "3개 중 0개 같은 방향·유의 (같은 방향 3개)",
       "source": "판정 규칙"
     }
@@ -77,11 +77,11 @@
           "p": 0.14705563560791152,
           "significant": false,
           "main_effect": -0.04990124174998678,
-          "status": "반론 기각"
+          "status": "해당 없음"
         }
       ],
       "rule_results": [],
-      "status": "반론 기각"
+      "status": "해당 없음"
     },
     {
       "hypothesis": "같은 시기의 다른 사건 때문이다: 국제유가 급락",
@@ -108,7 +108,7 @@
       "p": 0.14705563560791152,
       "significant": false,
       "main_effect": -0.04990124174998678,
-      "status": "반론 기각"
+      "status": "해당 없음"
     }
   ],
   "standing": [],
@@ -118,6 +118,6 @@
   ],
   "final_level": "판정 보류",
   "final_label": "판정 보류",
-  "light": "🔴",
+  "light": "🟣",
   "summary": ""
 }

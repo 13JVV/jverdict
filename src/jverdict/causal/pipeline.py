@@ -46,6 +46,7 @@ class Analysis:
     event_study: EventStudy | None = None
     curve: dict | None = None
     seconds: float = 0.0
+    verdict_v3: Verdict | None = None      # 개정 규칙 v3로 같은 결과를 다시 판정(공식 판정은 verdict, v2)
 
     def to_dict(self) -> dict:
         def dd(x):
@@ -56,7 +57,8 @@ class Analysis:
                 "placebo_time": dd(self.placebo_time), "placebo_space": dd(self.placebo_space),
                 "sensitivity": dd(self.sensitivity), "double_compute": dd(self.double),
                 "power": dd(self.power), "quality": dd(self.quality), "event_study": dd(self.event_study),
-                "curve": self.curve, "seconds": self.seconds}
+                "curve": self.curve, "seconds": self.seconds,
+                "verdict_v3": None if self.verdict_v3 is None else self.verdict_v3.to_dict()}
 
     def report_ko(self) -> str:
         v = self.verdict
@@ -205,17 +207,19 @@ def analyze_series(wide: pd.DataFrame, ds: SeriesDesign, *, mask: np.ndarray | N
     outl = pre_outliers(gs.g_adj[max(0, i0 - pre):i0], [fmt(t, freq) for t in gs.index[max(0, i0 - pre):i0]]) \
         if freq == "MS" else []
     pw = assess(main.se, pl.sd if (pl is not None and pl.available) else None, ds.reference_effect,
-                main.n_post, unit, ds.alpha, outliers=outl)
-    v = judge(main, pretrend_p=pt_info.get("p"), trend_adjusted=trend_adj, placebo_time=pl, placebo_space=ps,
-              sens=sens, double=dc, power=pw, quality_cap=cap, quality_reason=qreason, needed_data=needed,
+                main.n_post, unit, ds.alpha, outliers=outl, n_pre=main.n_pre)
+    kw = dict(pretrend_p=pt_info.get("p"), trend_adjusted=trend_adj, placebo_time=pl, placebo_space=ps,
+              sens=sens, double=dc, power=pw, quality_cap=cap, quality_reason=qreason,
               window_label=f"사후 {main.n_post}{unit}")
+    v = judge(main, needed_data=needed, **kw)
+    v3 = judge(main, needed_data=needed, rules="v3", **kw)
 
     win = slice(a, b)
     curve = {"dates": [fmt(t, freq) for t in gs.index[win]], "g_adj": [None if not np.isfinite(x) else float(x)
                                                                          for x in gs.g_adj[win]],
              "counterfactual": main.details["pre_mean"], "policy": fmt(gs.index[i0], freq)}
     return Analysis("series", ds.question, ds.to_dict(), main, v, pt_info, trend_adj, pl, ps, sens, dc, pw, dg,
-                    curve=curve, seconds=round(_time.time() - t_start, 2))
+                    curve=curve, seconds=round(_time.time() - t_start, 2), verdict_v3=v3)
 
 
 # =========================================================================== 패널
@@ -351,9 +355,11 @@ def analyze_panel(df: pd.DataFrame, pd_: PanelDesign, *, quality_cap: str | None
 
     n_post_t = len([t for t in times if t >= t0])
     pw = assess(main.se, pl.sd if (pl is not None and pl.available) else None, pd_.reference_effect,
-                n_post_t, "개월")
-    v = judge(main, pretrend_p=pretrend.get("p"), trend_adjusted=ta, placebo_time=pl, placebo_space=ps, sens=sens,
-              double=dc, power=pw, quality_cap=quality_cap, quality_reason=quality_reason,
-              window_label=f"사후 {n_post_t}개월")
+                n_post_t, "개월", n_pre=len([t for t in times if t < t0]))
+    kw = dict(placebo_time=pl, placebo_space=ps, sens=sens, double=dc, power=pw, quality_cap=quality_cap,
+              quality_reason=quality_reason, window_label=f"사후 {n_post_t}개월")
+    v = judge(main, pretrend_p=pretrend.get("p"), trend_adjusted=ta, **kw)
+    few = len([t for t in times if t < t0]) < 6          # v3: 사전 시점이 적으면 군집 결합검정(과대 기각)을 쓰지 않음
+    v3 = judge(main, pretrend_p=None if few else pretrend.get("p"), trend_adjusted=None if few else ta, rules="v3", **kw)
     return Analysis("panel", pd_.question, pd_.to_dict(), main, v, pretrend, ta, pl, ps, sens, dc, pw, None,
-                    event_study=es, seconds=round(_time.time() - t_start, 2))
+                    event_study=es, seconds=round(_time.time() - t_start, 2), verdict_v3=v3)

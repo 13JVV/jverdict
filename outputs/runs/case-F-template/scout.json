@@ -1,0 +1,51 @@
+{
+  "dataset": "synthetic_bus_event",
+  "series": [
+    {
+      "name": "청소년",
+      "groups": [
+        "청소년"
+      ],
+      "units_tier": null,
+      "units_list": []
+    },
+    {
+      "name": "어린이",
+      "groups": [
+        "어린이"
+      ],
+      "units_tier": null,
+      "units_list": []
+    },
+    {
+      "name": "일반",
+      "groups": [
+        "일반"
+      ],
+      "units_tier": null,
+      "units_list": []
+    },
+    {
+      "name": "경로",
+      "groups": [
+        "경로"
+      ],
+      "units_tier": null,
+      "units_list": []
+    }
+  ],
+  "target": "청소년",
+  "reference_candidates": [
+    "일반",
+    "경로",
+    "어린이"
+  ],
+  "official_stats": [],
+  "notes": [
+    "등록 사례의 기본 지표 사용"
+  ],
+  "method": "its",
+  "quality_verdict": "측정 단절 증거 없음",
+  "quality_cap": null,
+  "coverage_summary": "[부분 집계] 짧은 부분 집계 6건(6일): 합계가 평소의 7~15%. 해당 일은 분석에서 빼거나 가중치를 낮춰야 함 (결측·부분 집계일은 분석에서 자동 제외)"
+}

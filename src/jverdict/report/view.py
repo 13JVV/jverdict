@@ -14,22 +14,22 @@ from pathlib import Path
 
 # 판정 등급별 색(상태 색, 아이콘·글자와 함께만 쓴다)과 쉬운 설명
 LEVEL_STYLE = {
-    "효과 있음": {"bg": "#0ca30c", "fg": "#ffffff", "icon": "✓"},
-    "조건부": {"bg": "#fab219", "fg": "#0b0b0b", "icon": "!"},
-    "효과 없음": {"bg": "#52514e", "fg": "#ffffff", "icon": "0"},
-    "판정 보류": {"bg": "#d03b3b", "fg": "#ffffff", "icon": "?"},
+    "효과 있음": {"bg": "#1f7a3a", "fg": "#ffffff", "icon": "✓"},
+    "조건부": {"bg": "#9a5b00", "fg": "#ffffff", "icon": "!"},
+    "효과 없음": {"bg": "#4a5059", "fg": "#ffffff", "icon": "0"},
+    "판정 보류": {"bg": "#4b3f8c", "fg": "#ffffff", "icon": "‖"},      # 보류=미룸(실패가 아님): 빨강 대신 남보라
     "판정 없음": {"bg": "#0b0b0b", "fg": "#ffffff", "icon": "×"},
 }
 LEVEL_MEANING = {
     "효과 있음": "정책 이후의 변화가 우연·계절·기존 추세·측정 방식 변경으로 설명되지 않는지 확인하는 검증을 모두 통과했습니다.",
-    "조건부": "변화의 방향은 보이지만 검증 일부를 통과하지 못했거나 신호가 약합니다. 아래 조건을 확인한 뒤 판단하세요.",
+    "조건부": "변화의 방향은 보이지만 검증 일부를 통과하지 못했거나 신호가 약합니다. 성과 근거로 단독 인용하지 마세요(합성 시험에서 조건부의 절반만 실제 효과).",
     "효과 없음": "의미 있는 크기의 변화가 있었다면 잡아낼 수 있을 만큼 자료가 충분했지만, 그런 변화가 보이지 않았습니다.",
-    "판정 보류": "현재 자료로는 효과가 있다고도 없다고도 말할 수 없습니다. '판정에 필요한 데이터'를 확보하면 다시 판정할 수 있습니다.",
+    "판정 보류": "현재 자료로는 효과가 있다고도 없다고도 말할 수 없어 결론을 미룹니다. 실패 판정이 아니며, 필요한 자료를 확보하면 다시 판정할 수 있습니다.",
     "판정 없음": "분석을 끝내지 못했습니다.",
 }
 STATUS_MARK = {"통과": "✓", "실패": "✗", "해당 없음": "–"}
-STAGE_KO = {"parse": "질문 해석", "confirm": "정책 카드 확인", "scout": "데이터 점검", "design": "설계(효과 가림)",
-            "lock": "설계 잠금", "execute": "추정", "skeptic": "반론 검증", "report": "판정서 작성",
+STAGE_KO = {"parse": "질문 해석", "confirm": "정책 카드 확인", "scout": "데이터 점검", "design": "비교 방법 정하기(결과 안 봄)",
+            "lock": "분석 방법 확정(잠금)", "execute": "추정", "skeptic": "반론 검증", "report": "판정서 작성",
             "manifest": "재실행 기록"}
 
 
@@ -102,6 +102,9 @@ class RunView:
             return None
         t, v, m = self.truth, self.analysis["verdict"], self.analysis["main"]
         inside = v["ci_used"][0] <= t["effect_log"] <= v["ci_used"][1]
+        if t.get("note"):        # 사례 F: 정책 효과 0, 같은 시기 행사
+            return (f"심어 둔 정답: {t['note']} · 판정 규칙 결과 {v['label']}, 최종 판정 {self.label}"
+                    + (" · Skeptic이 행사 기간을 빼고 다시 추정해 판정을 낮춤" if self.skeptic.get("downgraded") else ""))
         return (f"심어 둔 정답 {t['group']} {t['effect_pct'] * 100:+.1f}% ({t['date']}부터) · 추정 {m['pct'] * 100:+.1f}% · "
                 f"판정 구간이 정답을 {'포함함' if inside else '포함하지 않음'}")
 
@@ -121,7 +124,7 @@ def load_run(run_dir: Path | str) -> RunView:
         if ds is not None:
             title = ds.title
             if ds.synthetic:
-                truth = catalog.synthetic_truth(man.get("seed", 20261104))
+                truth = catalog.synthetic_truth(man.get("seed", 20261104), design.get("dataset", "synthetic_bus"))
     except Exception:  # noqa: BLE001  (보기 전용: 카탈로그를 못 읽어도 판정서는 보여 준다)
         pass
     card = _read(d / "card.json", man.get("card", {}))
@@ -178,8 +181,13 @@ def _rolling(vals: list[float | None], k: int) -> list[float | None]:
     return out
 
 
+def nice(name: str) -> str:
+    """계열 이름의 밑줄(도민_주점)을 화면용으로(도민·주점)."""
+    return str(name).replace("_", "·")
+
+
 def _names(x) -> str:
-    return x if isinstance(x, str) else "·".join(x or [])
+    return nice(x) if isinstance(x, str) else "·".join(nice(n) for n in (x or []))
 
 
 def chart_data(a: dict, design: dict | None = None) -> dict | None:

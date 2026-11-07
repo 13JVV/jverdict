@@ -20,7 +20,7 @@ def main(argv=None):
     warnings.filterwarnings("ignore")
     ap = argparse.ArgumentParser()
     ap.add_argument("--claude", action="store_true")
-    ap.add_argument("--cases", nargs="*", default=list("ABCDE"))
+    ap.add_argument("--cases", nargs="*", default=list("ABCDEF"))
     a = ap.parse_args(argv)
     modes = ["template"] + (["claude"] if a.claude else [])
     for case in a.cases:

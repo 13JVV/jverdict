@@ -57,6 +57,10 @@ DATASETS: dict[str, Dataset] = {d.id: d for d in [
             "이용자 유형", "-", "이용 인원(명)",
             ["2021-01-01 ~ 2025-10-31, 일 단위", "실데이터 변동에 맞춘 합성데이터. 정답(심어 둔 효과)은 판정 후에만 공개"],
             synthetic=True),
+    Dataset("synthetic_bus_event", "합성 버스 데이터 2 (같은 시기 행사가 섞인 시연용)", "jverdict.synth 생성기", "D",
+            "이용자 유형", "-", "이용 인원(명)",
+            ["2021-01-01 ~ 2025-10-31, 일 단위", "정책 효과는 없고, 정책 2주 뒤부터 10주 동안 청소년 대상 행사가 이용을 늘린 합성데이터. "
+             "정답은 판정 후에만 공개"], synthetic=True),
 ]}
 
 
@@ -91,8 +95,28 @@ def _load_card() -> pd.DataFrame:
 _SYNTH: dict[int, tuple] = {}
 
 
-def synthetic_truth(seed: int) -> dict:
-    return _synthetic(seed)[1]
+def synthetic_truth(seed: int, dataset_id: str = "synthetic_bus") -> dict:
+    return (_synthetic_event(seed) if dataset_id == "synthetic_bus_event" else _synthetic(seed))[1]
+
+
+EVENT_F = {"policy": "2024-09-02", "start": "2024-09-16", "end": "2024-11-24", "size": 0.40}
+
+
+def _synthetic_event(seed: int):
+    """시연 사례 F: 2024-09-02 정책의 실제 효과는 0. 2024-09-16~11-24 청소년 대상 행사로 이용이 +49%(로그 0.40) 늘었다.
+    판정 규칙만으로는 행사 효과를 정책 효과로 읽기 쉽고, Skeptic이 사건 달력의 행사 기간을 빼고 다시 추정하면 사라진다."""
+    key = ("F", seed)
+    if key not in _SYNTH:
+        from jverdict.synth.generator import Effect, PartialDays, SynthSpec, generate
+        from jverdict.synth.scenarios import BUS_GROUPS
+        e = EVENT_F
+        spec = SynthSpec("2021-01-01", "2025-10-31", BUS_GROUPS, "D",
+                         injections=[Effect("청소년", e["start"], e["size"], end=e["end"]), PartialDays(6, share_high=0.25)])
+        sd = generate(spec, seed)
+        truth = {"effect_log": 0.0, "effect_pct": 0.0, "date": e["policy"], "group": "청소년", "seed": seed,
+                 "note": f"정책 효과는 0. {e['start']}~{e['end']} 행사로 청소년 이용 +{np.expm1(e['size']) * 100:.0f}%(정책과 무관)"}
+        _SYNTH[key] = (sd.df.copy(), truth)
+    return _SYNTH[key]
 
 
 def _synthetic(seed: int):
@@ -131,6 +155,8 @@ def load(dataset_id: str, seed: int = 20261104) -> pd.DataFrame:
         return _load_bus("bus_route_usertype_daily")
     if dataset_id == "card_sector":
         return _load_card()
+    if dataset_id == "synthetic_bus_event":
+        return _synthetic_event(seed)[0]
     return _synthetic(seed)[0]
 
 

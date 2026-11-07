@@ -98,7 +98,9 @@
       "n_post": 182,
       "post_needed": null,
       "unit": "일",
-      "pre_outliers": []
+      "pre_outliers": [],
+      "post_reachable": null,
+      "n_pre": 725
     },
     "quality_cap": null,
     "needed_data": [],
@@ -374,7 +376,9 @@
     "n_post": 182,
     "post_needed": null,
     "unit": "일",
-    "pre_outliers": []
+    "pre_outliers": [],
+    "post_reachable": null,
+    "n_pre": 725
   },
   "quality": {
     "target": "청소년",
@@ -385,7 +389,7 @@
     "freq": "D",
     "verdict": "측정 단절 증거 없음",
     "judgement_cap": null,
-    "message": "2024-03-04부터 '청소년'가 +11% 바뀜. 방향·크기·분류 모두 정상 범위라 효과 추정으로 넘어감",
+    "message": "2024-03-04부터 '청소년'이 +11% 바뀜. 방향·크기·분류 모두 정상 범위라 효과 추정으로 넘어감",
     "test": {
       "date": "2024-03-04",
       "step": 0.10172845517092366,
@@ -2290,5 +2294,75 @@
     "counterfactual": 0.005948211077027002,
     "policy": "2024-03-04"
   },
-  "seconds": 0.03
+  "seconds": 0.03,
+  "verdict_v3": {
+    "level": "효과 있음",
+    "direction": "증가",
+    "headline": "효과 있음(증가): 사후 182일 평균 +19.6% (판정 구간 +15.6% ~ +25.2%), C1·C2·C3 모두 통과",
+    "reasons": [
+      "사후 182일 평균 +19.6% (판정 구간 +15.6% ~ +25.2%), C1·C2·C3 모두 통과"
+    ],
+    "checks": [
+      {
+        "code": "C0",
+        "name": "데이터 품질",
+        "status": "통과",
+        "detail": "측정 단절 증거 없음"
+      },
+      {
+        "code": "C1",
+        "name": "사전추세",
+        "status": "통과",
+        "detail": "사전 추세 검정 p=0.958, 사전 추세 연장으로 설명되는 몫 -1%"
+      },
+      {
+        "code": "C2a",
+        "name": "시점 위약검정",
+        "status": "통과",
+        "detail": "가짜 시행일 35개 중 순위 p=0.028"
+      },
+      {
+        "code": "C2b",
+        "name": "공간 위약검정",
+        "status": "통과",
+        "detail": "실제 +19.6% vs 가짜 처치 경로 -1.6%, 어린이 -0.9%"
+      },
+      {
+        "code": "C3",
+        "name": "민감도",
+        "status": "통과",
+        "detail": "3개 중 3개 같은 방향·유의 (같은 방향 3개)"
+      },
+      {
+        "code": "C4",
+        "name": "이중 계산",
+        "status": "통과",
+        "detail": "사후 평균 − 사전 평균(계절 차분 격차): pandas 0.179031381 / SQL 0.179031381"
+      }
+    ],
+    "ci_used": [
+      0.14487909769578206,
+      0.22511778849490027
+    ],
+    "p_used": 0.027777777777777776,
+    "power": {
+      "se_used": 0.020795604603469967,
+      "se_source": "위약 분포 표준편차",
+      "mde_log": 0.05826065845880345,
+      "mde_pct": 0.05999125539098744,
+      "reference_pct": 0.1,
+      "enough": true,
+      "n_post": 182,
+      "post_needed": null,
+      "unit": "일",
+      "pre_outliers": [],
+      "post_reachable": null,
+      "n_pre": 725
+    },
+    "quality_cap": null,
+    "needed_data": [],
+    "rules_version": "v3",
+    "light": "🟢",
+    "label": "효과 있음(증가)"
+  }
 }

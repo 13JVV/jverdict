@@ -232,7 +232,7 @@ def run(question: str | None = None, *, card: dict | None = None, mode: str = "t
             r.design = nd
             PR.verify(rdir)
     if catalog.DATASETS[r.design["dataset"]].synthetic:
-        r.truth = catalog.synthetic_truth(seed)
+        r.truth = catalog.synthetic_truth(seed, r.design["dataset"])
     r.write("analysis.json", r.analysis.to_dict())
     r.log("execute", f"판정 규칙 결과: {r.analysis.verdict.label}", DZ.numbers_of(r.analysis))
     r.finish("execute")

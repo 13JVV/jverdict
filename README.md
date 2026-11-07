@@ -32,7 +32,7 @@
   - Agent의 판단: 누가 무엇을 왜 정했는지, Claude 기록과 오프라인 실행 비교
   - 설계 문서(잠금)
   - 재현·내려받기: 1장 PDF
-- **정확도 리포트**: 합성데이터 6,400회로 잰 판정 정확도입니다.
+- **정확도 리포트**: 정답을 심어 둔 합성데이터로 잰 판정 정확도입니다. 인과 판정 2,400회에서 실제 효과에 '효과 있음' 83%(시계열)·74.5%(패널), 없는 효과를 '효과 있음'이라 한 비율 2.4%, 판정 보류 37.6%.
 
 ## 웹 데모
 
@@ -63,7 +63,7 @@
 ```bash
 python3.14 -m venv .venv && .venv/bin/pip install -e ".[dev]"
 .venv/bin/python -m jverdict.ui              # 화면
-.venv/bin/python -m jverdict.agent --case A  # 명령줄 판정 (사례 A·B·C·D·E)
+.venv/bin/python -m jverdict.agent --case A  # 명령줄 판정 (사례 A·B·C·D·E·F)
 .venv/bin/python -m jverdict.agent.demo      # 사례 전부 판정 + 재실행 대조 + 판정서 PDF
 .venv/bin/python -m jverdict.doctor          # 설치 점검
 .venv/bin/python -m pytest                   # 자동 시험

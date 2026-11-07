@@ -16,7 +16,7 @@
     },
     {
       "hypothesis": "해마다 이맘때 생기는 변화다(방학·계절·명절)",
-      "check": "계절 차분 + C2a 시점 위약",
+      "check": "C2a 시점 위약(계절 보정 없음)",
       "status": "반론 기각",
       "detail": "가짜 시행일 34개 중 순위 p=0.029",
       "source": "판정 규칙"
@@ -31,7 +31,7 @@
     {
       "hypothesis": "분석 기간·대조 선택에 따라 달라지는 우연이다",
       "check": "C3 민감도",
-      "status": "반론 기각",
+      "status": "미검증",
       "detail": "4개 중 1개 같은 방향·유의 (같은 방향 4개)",
       "source": "판정 규칙"
     }
@@ -59,11 +59,11 @@
           "p": 0.1774851449644506,
           "significant": false,
           "main_effect": 1.1027121048684712,
-          "status": "반론 기각"
+          "status": "해당 없음"
         }
       ],
       "rule_results": [],
-      "status": "반론 기각"
+      "status": "해당 없음"
     }
   ],
   "extra_checks": [
@@ -81,7 +81,7 @@
       "p": 0.1774851449644506,
       "significant": false,
       "main_effect": 1.1027121048684712,
-      "status": "반론 기각"
+      "status": "해당 없음"
     }
   ],
   "standing": [],
@@ -89,6 +89,6 @@
   "rule_standing": [],
   "final_level": "판정 보류",
   "final_label": "판정 보류",
-  "light": "🔴",
+  "light": "🟣",
   "summary": ""
 }

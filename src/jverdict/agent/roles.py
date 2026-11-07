@@ -17,6 +17,7 @@ from jverdict.causal.verdict import LIGHT
 from . import catalog
 from . import design as DZ
 from . import tools as T
+from .cardbuilder import _josa
 from .library import CARDS, OFFICIAL_STATS, events_between, match_card
 
 _S, _SL = {"type": "string"}, {"type": "array", "items": {"type": "string"}}
@@ -78,6 +79,8 @@ def parser_llm(run, question: str) -> dict:
             for f in ("policy", "start_date", "end_date", "treated", "outcome", "source", "reference_effect"):
                 card[f] = lib_c.get(f)
             card.setdefault("assumptions", []).append(f"등록 사례 {key}와 같은 정책으로 보고 시행일·대상을 등록본으로 맞춤")
+        elif not card.get("end_date") and lib_c.get("end_date"):   # 끝난 정책인데 Parser가 종료일을 비운 경우
+            card["end_date"] = lib_c["end_date"]
     else:
         card.update(library_case=None, prereg=None, needed_hint=[])
     return card
@@ -191,6 +194,16 @@ def design_template(run) -> dict:
     return d
 
 
+DESIGN_SCOUT_KEYS = ("dataset", "series", "target", "reference_candidates", "method", "quality_verdict",
+                     "quality_cap", "coverage_summary")
+
+
+def scout_for_design(scout: dict) -> dict:
+    """Design 단계에는 효과 크기가 들어 있는 Scout 메모(notes)·공식 통계 대조를 넘기지 않는다.
+    측정 단절은 판정 이름과 상한만 넘긴다(사전 등록 문서의 '효과 값을 보지 않음'을 실제로 지키기 위해)."""
+    return {k: scout[k] for k in DESIGN_SCOUT_KEYS if k in scout}
+
+
 def design_llm(run) -> dict:
     if run.card.get("prereg"):          # 기존 사전 등록 사례는 등록 설계를 그대로 쓴다(설계 재선택 금지)
         return design_template(run)
@@ -201,7 +214,7 @@ def design_llm(run) -> dict:
            "데이터 결측·부분 집계는 넣지 않습니다(자동 처리). "
            "choices에는 선택과 이유를 공무원이 읽을 수 있게 씁니다.")
     user = (f"정책 카드:\n{json.dumps(run.card, ensure_ascii=False, indent=1)}\n\nData Scout 결과:\n"
-            f"{json.dumps({k: v for k, v in run.scout.items()}, ensure_ascii=False, indent=1, default=str)}")
+            f"{json.dumps(scout_for_design(run.scout), ensure_ascii=False, indent=1, default=str)}")
     for attempt in range(3):
         d = run.llm.agent_call("design", sys, user, DZ.DESIGN_SCHEMA_LLM, T.specs("design", strict=False),
                                lambda n, a: T.call(run, "design", n, a))
@@ -253,7 +266,7 @@ def rule_hypotheses(run) -> list[dict]:
         cs = [st[c] for c in codes if c in st]
         if any(c.status == "실패" for c in cs):
             return "반론 성립"
-        if cs and all(c.status in ("통과", "참고") for c in cs):
+        if cs and all(c.status == "통과" for c in cs):
             return "반론 기각"
         return "미검증"
     hs = [
@@ -261,7 +274,8 @@ def rule_hypotheses(run) -> list[dict]:
          "detail": st["C0"].detail if "C0" in st else ""},
         {"hypothesis": "정책 전부터 이미 변하고 있었다(기존 추세)", "check": "C1 사전추세", "status": stat("C1"),
          "detail": st["C1"].detail if "C1" in st else ""},
-        {"hypothesis": "해마다 이맘때 생기는 변화다(방학·계절·명절)", "check": "계절 차분 + C2a 시점 위약",
+        {"hypothesis": "해마다 이맘때 생기는 변화다(방학·계절·명절)",
+         "check": "C2a 시점 위약(계절 보정 없음)" if (run.design or {}).get("season") == "none" else "계절 차분 + C2a 시점 위약",
          "status": stat("C2a"), "detail": st["C2a"].detail if "C2a" in st else ""},
         {"hypothesis": "대조 집단 쪽에 다른 일이 생겼다", "check": "C2b 공간 위약", "status": stat("C2b"),
          "detail": st["C2b"].detail if "C2b" in st else ""},
@@ -294,12 +308,11 @@ def skeptic_template(run) -> list[dict]:
         seen.add(ev["name"])
         h = {"hypothesis": f"같은 시기의 다른 사건 때문이다: {ev['name']}", "why_plausible": f"영향: {ev['affects']} (출처: {ev['source']})",
              "check_ids": [], "source": "사건 달력"}
-        if run.design["method"] == "its":
-            out, err = T.call(run, "skeptic", "extra_check", {
-                "kind": "exclude_period", "reference": [], "placebo_target": None, "post": None,
-                "start": ev["start"], "end": ev["end"], "reason": ev["name"]})
-            if not err:
-                h["check_ids"] = [json.loads(out)["id"]]
+        out, err = T.call(run, "skeptic", "extra_check", {          # 시계열·패널 모두 사건 기간을 빼고 다시 추정
+            "kind": "exclude_period", "reference": [], "placebo_target": None, "post": None,
+            "start": ev["start"], "end": ev["end"], "reason": ev["name"]})
+        if not err and "id" in json.loads(out):
+            h["check_ids"] = [json.loads(out)["id"]]
         hs.append(h)
     return hs
 
@@ -330,7 +343,7 @@ def resolve_skeptic(run, hs: list[dict]) -> dict:
     """반론 결과를 코드로 판정하고, 판정 하향을 적용한다.
 
     하향 규칙: 판정 규칙 밖의 반론(사건 달력·LLM 가설)이 검증에서 '성립'하면
-      효과 있음 → 조건부, 효과 없음 → 판정 보류. (조건부·보류는 그대로)
+      효과 있음 → 조건부(반론대로 다시 추정해 효과가 사라지면 판정 보류), 효과 없음 → 판정 보류. (조건부·보류는 그대로)
     """
     checks = {x["id"]: x for x in run.extra_checks}
     vc = {c.code: c for c in run.analysis.verdict.checks}
@@ -341,8 +354,10 @@ def resolve_skeptic(run, hs: list[dict]) -> dict:
         h["rule_results"] = [f"{c.code} {c.name} {c.status}" for c in rule]
         if any(r["status"] == "반론 성립" for r in res):
             h["status"] = "반론 성립"
-        elif res:
+        elif any(r["status"] == "반론 기각" for r in res):
             h["status"] = "반론 기각"
+        elif res:
+            h["status"] = "해당 없음"
         elif rule:
             # 판정 규칙의 검증으로 답한 반론: 규칙에 이미 반영되어 추가 하향은 하지 않는다
             h["status"] = "규칙 검증: 성립" if any(c.status == "실패" for c in rule) else "규칙 검증: 기각"
@@ -352,8 +367,10 @@ def resolve_skeptic(run, hs: list[dict]) -> dict:
     level, label = v.level, v.label
     standing = [h for h in hs if h["status"] == "반론 성립"]
     downgraded = None
+    # 반론대로 다시 추정했더니 효과가 아예 사라지면(유의하지 않음) 방향도 말할 수 없으므로 보류, 줄었지만 남으면 조건부
+    gone = any(not r.get("significant", True) for h in standing for r in h.get("results", []) if r["status"] == "반론 성립")
     if standing and level == "효과 있음":
-        downgraded = ("효과 있음", "조건부")
+        downgraded = ("효과 있음", "판정 보류" if gone else "조건부")
     elif standing and level == "효과 없음":
         downgraded = ("효과 없음", "판정 보류")
     if downgraded:
@@ -430,17 +447,19 @@ def _template_summary(run) -> str:
         return f"판정 보류입니다. {v.reasons[0]}"
     m = a.main
     lo, hi = np.expm1(v.ci_used[0]) * 100, np.expm1(v.ci_used[1]) * 100
-    who = (f"'{d['target']}'의 변화를 대조 집단 '{'+'.join(d['reference'])}'와 비교했습니다" if d["method"] == "its"
+    ref = '+'.join(d['reference']) if d["method"] == "its" else ""
+    who = (f"'{d['target']}'의 변화를 대조 집단 '{ref}'{_josa(ref, '과', '와')} 비교했습니다" if d["method"] == "its"
            else f"'{d['panel']['treated']}'의 업종별 변화를 다른 집단과 비교했습니다")
     S = [f"{run.card['start_date']} 시행 전후를 놓고 {who}.",
          f"추정 변화는 {m.pct * 100:+.1f}%이고, 판정에 쓴 구간은 {lo:+.1f}% ~ {hi:+.1f}%입니다."]
     failed = [f"{c.code} {c.name}" for c in v.checks if c.status == "실패"]
     if failed:
         S.append(f"통과하지 못한 검증: {', '.join(failed)}.")
-    elif v.level == "판정 보류":
-        S.append("검증 항목은 모두 통과했지만, 판정에 쓴 구간이 넓어(검정력 부족) 결론을 미룹니다.")
     else:
-        S.append("검증 항목을 모두 통과했습니다.")
+        n_ok = sum(1 for c in v.checks if c.status == "통과")
+        rest = "" if n_ok == len(v.checks) else f"(나머지 {len(v.checks) - n_ok}개는 참고·해당 없음)"
+        S.append(f"검증 {len(v.checks)}개 중 {n_ok}개 통과, 실패 없음{rest}"
+                 + (". 다만 판정에 쓴 구간이 넓어(검정력 부족) 결론을 미룹니다." if v.level == "판정 보류" else "."))
     if sk.get("downgraded"):
         S.append(f"Skeptic이 세운 반론({'; '.join(sk['standing'])})이 성립해 판정을 {sk['downgraded'][1]}(으)로 낮췄습니다.")
     S.append(f"최종 판정은 {sk['final_label']}입니다.")

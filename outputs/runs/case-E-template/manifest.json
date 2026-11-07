@@ -1,7 +1,7 @@
 {
   "run_id": "case-E-template",
-  "created": "2026-11-06T18:14:18+0900",
-  "calendar_as_of": "2026-11-06",
+  "created": "2026-11-07T14:22:03+0900",
+  "calendar_as_of": "2026-11-07",
   "mode": "template",
   "rules_version": "v2",
   "seed": 20261104,
@@ -30,8 +30,8 @@
     "sha256": "518cd18e78141ede90cc5ee7639099282eae4c1557236e4eda6bd295b66e368d"
   },
   "prereg": {
-    "sha256": "3c4dcd624faf6a3e6bc06146f5c076f4cf08527f577eee67f363c9108e3dcaa2",
-    "locked_at": "2026-11-06T18:14:18+0900",
+    "sha256": "721743c0a5a4de0222d09068fed69e87cc73fd27b8ce9c985d202b42df0cf3ba",
+    "locked_at": "2026-11-07T14:22:03+0900",
     "existing": {
       "file": "docs/prereg/case_distancing_2022.md",
       "sha256": "f1dc11cb8ed78b6ec1d82b4c5b65b6f14c2dac1115a0e44f8054c07e65fbcf66",
@@ -39,7 +39,7 @@
     },
     "amendments": []
   },
-  "code_sha256": "2e371f815c9d94fce852664c1e6c85df1595e7909bf9684d85c1c1f4b5ababdb",
+  "code_sha256": "fd8a39ce9ce89d739de3425c6626a313d66e21559348f3424b103e3e7907e112",
   "versions": {
     "python": "3.14.3",
     "platform": "Darwin arm64",

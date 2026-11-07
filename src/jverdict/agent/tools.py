@@ -153,8 +153,10 @@ def t_extra_check(run, kind: str, reference: list[str], placebo_target: str | No
     if run.analysis is None or run.analysis.main is None:
         return {"error": "주분석 결과가 없어 반론 검증을 할 수 없음"}
     d = copy.deepcopy(run.design)
+    if d["method"] == "did_panel":
+        return _extra_check_panel(run, d, kind, reference, placebo_target, post, start, end, reason)
     if d["method"] != "its":
-        return {"error": "현재 반론 검증 툴은 시계열 설계(its)만 지원"}
+        return {"error": f"반론 검증 툴이 지원하지 않는 설계: {d['method']}"}
     names = {s["name"] for s in d["series"]}
     label = kind
     if kind == "alt_reference":
@@ -190,20 +192,70 @@ def t_extra_check(run, kind: str, reference: list[str], placebo_target: str | No
         return {"error": f"추정 실패: {e}"}
     if a is None:
         return {"error": "관측이 부족해 추정할 수 없음"}
+    rec = _record(run, kind, label, reason, a)
+    return rec
+
+
+def _record(run, kind, label, reason, a) -> dict:
     main = run.analysis.main
     same = np.sign(a.effect) == np.sign(main.effect)
     if kind == "placebo_group":
         status = "반론 성립" if (a.significant and same and abs(a.effect) >= 0.5 * abs(main.effect)) else "반론 기각"
+    elif not main.significant:
+        status = "반론 성립" if a.significant else "해당 없음"
     else:
-        keep = same and a.significant and abs(a.effect) >= 0.5 * abs(main.effect)
-        status = "반론 기각" if (keep or not main.significant) else "반론 성립"
-        if not main.significant and a.significant:
-            status = "반론 성립"           # 효과가 없다던 결론이 사양을 바꾸면 뒤집힘
+        status = "반론 기각" if (same and a.significant and abs(a.effect) >= 0.5 * abs(main.effect)) else "반론 성립"
     rec = {"id": f"X{len(run.extra_checks) + 1}", "kind": kind, "label": label, "reason": reason,
            "effect": a.effect, "pct": a.pct, "ci": list(a.ci), "p": a.p, "significant": a.significant,
            "main_effect": main.effect, "status": status}
     run.extra_checks.append(rec)
     return rec
+
+
+def _extra_check_panel(run, d, kind, reference, placebo_target, post, start, end, reason) -> dict:
+    """패널(이중차분) 설계의 반론 검증: 비교 국적, 사후 개월, 제외 기간, 가짜 처치 국적 가운데 하나만 바꾼다."""
+    p = d["panel"]
+    groups, treated = list(p["groups"]), p["treated"]
+    others = [g for g in groups if g != treated]
+    t0 = pd.Timestamp(run.card["start_date"])
+    months = [pd.Timestamp(m) for m in p["months"]]
+    if kind == "alt_reference":
+        bad = [r for r in reference if r not in others]
+        if bad or not reference:
+            return {"error": f"비교 집단으로 쓸 수 없는 값: {bad}. 가능: {others}"}
+        p["groups"] = [treated] + list(reference)
+        label = f"비교 국적을 {'+'.join(reference)}로"
+    elif kind == "alt_window":
+        if not post or post < 1:
+            return {"error": "post(사후 개월 수)가 필요"}
+        post_m = [m for m in months if m >= t0][: int(post)]
+        p["months"] = [m.strftime("%Y-%m-%d") for m in months if m < t0] + [m.strftime("%Y-%m-%d") for m in post_m]
+        label = f"사후 {len(post_m)}개월"
+    elif kind == "exclude_period":
+        if not start or not end:
+            return {"error": "start, end가 필요"}
+        keep = [m for m in months if not (pd.Timestamp(start) <= m <= pd.Timestamp(end))]
+        if sum(m < t0 for m in keep) < 2 or not any(m >= t0 for m in keep):
+            return {"error": "그 기간을 빼면 정책 전·후 관측이 부족함"}
+        p["months"] = [m.strftime("%Y-%m-%d") for m in keep]
+        if p.get("ref") and pd.Timestamp(p["ref"]) not in keep:
+            p["ref"] = max(m for m in keep if m < t0).strftime("%Y-%m-%d")
+        label = f"{start}~{end} 제외"
+    elif kind == "placebo_group":
+        if placebo_target not in others:
+            return {"error": f"가짜 처치로 쓸 수 없는 값: {placebo_target}. 가능: {others}"}
+        p["groups"] = [g for g in others]
+        p["treated"] = placebo_target
+        label = f"가짜 처치 {placebo_target}(실제 처치 {treated} 제외)"
+    else:
+        return {"error": f"알 수 없는 kind: {kind}"}
+    try:
+        a = DZ.execute(run.card, d, seed=run.seed, placebo=False)[0].main
+    except Exception as e:  # noqa: BLE001
+        return {"error": f"추정 실패: {e}"}
+    if a is None:
+        return {"error": "관측이 부족해 추정할 수 없음"}
+    return _record(run, kind, label, reason, a)
 
 
 def _excluded_estimate(run, d, start, end):
@@ -240,7 +292,7 @@ TOOLS: dict[str, Tool] = {t.name: t for t in [
                "target": _S, "candidates": _SL}), t_pick_controls, ("design",)),
     Tool("event_calendar", "기간 안의 알려진 사건(명절, 방학, 코로나19, 다른 지원금, 데이터 결측 등)과 출처.",
          _obj({"start": _S, "end": _S}), t_event_calendar, ("design", "skeptic")),
-    Tool("extra_check", "반론 검증: 잠긴 설계에서 한 가지만 바꿔 다시 추정한다. kind = alt_reference(reference에 다른 대조 계열), "
+    Tool("extra_check", "반론 검증: 잠긴 설계에서 한 가지만 바꿔 다시 추정한다(시계열·패널 모두). kind = alt_reference(reference에 다른 대조 계열·국적), "
          "alt_window(post에 사후 기간), exclude_period(start~end를 빼고), placebo_group(placebo_target을 가짜 처치로). "
          "쓰지 않는 인자는 null 또는 빈 배열. 결과의 status(반론 기각/성립)는 코드가 정한다.",
          _obj({"kind": {"type": "string", "enum": ["alt_reference", "alt_window", "exclude_period", "placebo_group"]},

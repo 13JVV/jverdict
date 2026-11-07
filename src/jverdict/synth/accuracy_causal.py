@@ -81,6 +81,13 @@ def _row(name: str, seed: int, case, a, t0: float) -> dict:
            np.sign(case.true_effect or 0) != (1 if v.direction == "증가" else -1),
            "true_effect": case.true_effect, "quality_cap": v.quality_cap,
            "seconds": round(time.time() - t0, 3)}
+    w = a.verdict_v3                     # 개정 규칙 v3로 같은 결과를 판정한 값(나란히 보고)
+    if w is not None:
+        out.update(v3_verdict=w.label, v3_level=w.level, v3_ideal=w.label in case.ideal,
+                   v3_acceptable=w.label in case.ideal or w.label in case.tolerable,
+                   v3_false_effect=(not case.has_effect) and w.level == "효과 있음",
+                   v3_false_null=case.has_effect and w.level == "효과 없음",
+                   has_effect=case.has_effect, true_sign=float(np.sign(case.true_effect or 0)))
     m = a.main
     if m is not None:
         out.update(effect=m.effect, ci_lo=m.ci[0], ci_hi=m.ci[1], ci_used_lo=v.ci_used[0], ci_used_hi=v.ci_used[1],
@@ -127,11 +134,12 @@ def run_power(args: tuple[float, int]) -> dict:
     cov = check_coverage(sd.df, "time", "group", "value", freq="D")
     w = to_wide(sd.df, "time", "group", "value", "D")
     a = analyze_series(w, series_design(d), mask=exclusion_mask(cov, w.index))
-    v = a.verdict
+    v, w = a.verdict, a.verdict_v3
     return {"size": size, "seed": seed, "level": v.level, "direction": v.direction,
             "detect": v.level == "효과 있음" and v.direction == "증가",
             "detect_any": v.level in ("효과 있음", "조건부") and v.direction == "증가",
-            "null": v.level == "효과 없음", "mde_pct": a.power.mde_pct if a.power else None}
+            "null": v.level == "효과 없음", "mde_pct": a.power.mde_pct if a.power else None,
+            "detect_v3": w.level == "효과 있음" and w.direction == "증가", "null_v3": w.level == "효과 없음"}
 
 
 def summarize(df: pd.DataFrame) -> dict:
@@ -153,14 +161,43 @@ def summarize(df: pd.DataFrame) -> dict:
         if "cover_cr1" in g and g.cover_cr1.notna().any():
             r["cover_cr1"] = float(g.cover_cr1.dropna().mean())
         r["placebo_available"] = float((g.placebo_n >= 19).mean())
+        if "v3_level" in g:
+            r.update(v3_ideal=float(g.v3_ideal.mean()), v3_acceptable=float(g.v3_acceptable.mean()),
+                     v3_false_effect=float(g.v3_false_effect.mean()), v3_false_null=float(g.v3_false_null.mean()),
+                     v3_verdicts=dict(Counter(g.v3_verdict).most_common()))
         out[name] = r
+    return out
+
+
+def _rates(df: pd.DataFrame, level: str, prefix: str = "") -> dict:
+    """규칙별 보조 지표: 보류 비율, 판정별 적중률(PPV), 효과 없는 상황의 방향 주장 비율."""
+    lv = df[f"{prefix}level"]
+    no_eff = df[~df.has_effect.astype(bool)]
+    eff_only = df[df.has_effect.astype(bool)]
+    claim = lv.isin(["효과 있음", "조건부"])
+    out = {"hold_rate": float(lv.eq("판정 보류").mean()),
+           "direction_claim_no_effect": float(claim[no_eff.index].mean()) if len(no_eff) else float("nan"),
+           "effect_detect_any": float(lv[eff_only.index].isin(["효과 있음", "조건부"]).mean()) if len(eff_only) else float("nan")}
+    for name, key in (("효과 있음", "ppv_effect"), ("조건부", "ppv_partial"), ("효과 없음", "ppv_null")):
+        sel = df[lv.eq(name)]
+        if len(sel):
+            ok = sel.has_effect.astype(bool) if name != "효과 없음" else ~sel.has_effect.astype(bool)
+            out[key], out[key + "_n"] = float(ok.mean()), int(len(sel))
     return out
 
 
 def headline(summary: dict, df: pd.DataFrame) -> dict:
     no_eff = df[df.scenario.isin([n for n, s in CSCENARIOS.items() if not _has_effect(n)])]
     eff = df[df.scenario.isin([n for n in CSCENARIOS if _has_effect(n)])]
-    return {
+    extra = {}
+    if "v3_level" in df:
+        extra = {"v2": _rates(df, "", ""), "v3": {**_rates(df, "", "v3_"),
+                 "acceptable_all": float(df.v3_acceptable.mean()), "ideal_all": float(df.v3_ideal.mean()),
+                 "false_effect_rate_no_effect_scenarios": float(no_eff.v3_false_effect.mean()),
+                 "false_null_rate_effect_scenarios": float(eff.v3_false_null.mean()),
+                 "effect_detect_series": float(df[df.scenario == "effect"].v3_verdict.eq("효과 있음(증가)").mean()),
+                 "effect_detect_panel": float(df[df.scenario == "panel_effect"].v3_verdict.eq("효과 있음(증가)").mean())}}
+    return {**extra,
         "runs": int(len(df)),
         "acceptable_all": float(df.acceptable.mean()),
         "ideal_all": float(df.ideal.mean()),
@@ -222,6 +259,35 @@ def to_markdown(res: dict) -> str:
         for p in res["power"]:
             L.append(f"| {np.expm1(p['size']) * 100:+.1f}% | {p['detect'] * 100:.1f}% | {p['detect_any'] * 100:.1f}% | "
                      f"{p['null'] * 100:.1f}% | ±{p['mde'] * 100:.1f}% |")
+    if h.get("v3"):
+        a2, a3 = h["v2"], h["v3"]
+
+        def pc(x):
+            return "-" if x is None or (isinstance(x, float) and np.isnan(x)) else f"{x * 100:.1f}%"
+        L += ["", "## 판정 규칙 v3(개정안)와 나란히", "",
+              "공식 판정은 v2입니다. v3는 외부 검토(동등성 방식의 '효과 없음', 사전 시점 4개 미만 보류, 위약검정 체제 점검)를 "
+              "반영한 개정안으로, 같은 2,400회 결과를 다시 판정한 값입니다.", "",
+              "| 지표 | v2(공식) | v3(개정안) |", "|---|---|---|",
+              f"| 이상적 판정 | {pc(h['ideal_all'])} | {pc(a3['ideal_all'])} |",
+              f"| 효과 없는데 '효과 있음' | {pc(h['false_effect_rate_no_effect_scenarios'])} | {pc(a3['false_effect_rate_no_effect_scenarios'])} |",
+              f"| 효과 있는데 '효과 없음' | {pc(h['false_null_rate_effect_scenarios'])} | {pc(a3['false_null_rate_effect_scenarios'])} |",
+              f"| 실제 효과에 '효과 있음'(시계열/패널) | {pc(h['effect_detect_series'])} / {pc(h['effect_detect_panel'])} | "
+              f"{pc(a3['effect_detect_series'])} / {pc(a3['effect_detect_panel'])} |",
+              f"| 판정 보류 비율 | {pc(a2['hold_rate'])} | {pc(a3['hold_rate'])} |",
+              f"| 효과 없는 상황에서 방향 주장('효과 있음'·'조건부') | {pc(a2['direction_claim_no_effect'])} | {pc(a3['direction_claim_no_effect'])} |",
+              f"| '효과 있음' 판정의 적중률(PPV) | {pc(a2.get('ppv_effect'))} | {pc(a3.get('ppv_effect'))} |",
+              f"| '조건부' 판정의 적중률(PPV) | {pc(a2.get('ppv_partial'))} | {pc(a3.get('ppv_partial'))} |",
+              f"| '효과 없음' 판정의 적중률 | {pc(a2.get('ppv_null'))} | {pc(a3.get('ppv_null'))} |", "",
+              "| 시나리오 | 이상적 v2 → v3 | v3 주요 판정 분포 |", "|---|---|---|"]
+        for n, r in s.items():
+            if "v3_ideal" in r:
+                top = ", ".join(f"{k} {v}" for k, v in list(r["v3_verdicts"].items())[:4])
+                L.append(f"| {r['title']} | {r['ideal'] * 100:.1f}% → {r['v3_ideal'] * 100:.1f}% | {top} |")
+        if res.get("power") and "null_v3" in res["power"][0]:
+            L += ["", "검정력 곡선(v3): " + ", ".join(
+                f"{np.expm1(p['size']) * 100:+.1f}% → 효과 있음 {p['detect_v3'] * 100:.0f}%·효과 없음 {p['null_v3'] * 100:.0f}%"
+                for p in res["power"])]
+        L += ["", "PPV는 시나리오 구성(효과 있는 시나리오와 없는 시나리오의 비율)에 따라 달라지므로 실제 현장의 적중률로 읽지 않습니다."]
     L += ["", "## 해석과 한계", ""] + [f"- {x}" for x in NOTES] + [""]
     return "\n".join(L)
 
@@ -251,7 +317,8 @@ def main(argv=None) -> dict:
         for s, g in pdf.groupby("size"):
             power.append({"size": float(s), "runs": int(len(g)), "detect": float(g.detect.mean()),
                           "detect_any": float(g.detect_any.mean()), "null": float(g.null.mean()),
-                          "mde": float(g.mde_pct.mean())})
+                          "mde": float(g.mde_pct.mean()), "detect_v3": float(g.detect_v3.mean()),
+                          "null_v3": float(g.null_v3.mean())})
     res = {"generated": time.strftime("%Y-%m-%d %H:%M"), "rules_version": RULES_VERSION,
            "platform": f"{platform.system()} {platform.machine()}, 작업자 {a.workers}",
            "seconds": time.time() - t0, "seed0": a.seed0, "runs_per_scenario": a.runs,

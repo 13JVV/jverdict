@@ -38,6 +38,14 @@ import pandas as pd
 from ._panel import (FreqParams, fmt, freq_params, rolling_median_back, rolling_median_fwd)
 from .external import ExternalCheck, ExternalStat, external_check
 
+
+def _ig(word: str) -> str:
+    """받침에 맞는 주격 조사(이/가)."""
+    c = (word or "").rstrip(")] ")[-1:]
+    if "가" <= c <= "힣":
+        return "이" if (ord(c) - 0xAC00) % 28 else "가"
+    return "이(가)"
+
 LOG2 = float(np.log(2.0))
 
 
@@ -267,7 +275,7 @@ def _reclass_evidence(wide: pd.DataFrame, target: str, refs: list[str], i0: int,
                 offset = g_pre * np.expm1(gt.step) / (-d_target)
                 out.append({"group": g, "kind": "기존 분류로 이동(합계 보존)", "offset_share": round(float(offset), 3),
                             "combined_pct": round(float(np.expm1(comb.step)), 4),
-                            "text": f"같은 때 '{g}'가 반대 방향으로 {gt.pct * 100:+.0f}% 바뀌었고(p={gt.p_rank:.3f}), "
+                            "text": f"같은 때 '{g}'{_ig(g)} 반대 방향으로 {gt.pct * 100:+.0f}% 바뀌었고(p={gt.p_rank:.3f}), "
                                     f"두 분류의 합계는 {np.expm1(comb.step) * 100:+.1f}%로 거의 그대로임. "
                                     + (f"'{target}'에서 '{g}'로" if step_t < 0 else f"'{g}'에서 '{target}'로")
                                     + " 옮겨 집계됐을 가능성"})
@@ -281,7 +289,7 @@ def _reclass_evidence(wide: pd.DataFrame, target: str, refs: list[str], i0: int,
         # 옮겨 간 양은 빠진 양의 30~150% 범위여야 '이동'으로 본다
         if np.isfinite(offset) and 0.3 <= offset <= 1.5:
             out.append({"group": g, "kind": "다른 분류로 이동 의심", "offset_share": round(float(offset), 3),
-                        "text": f"같은 때 '{g}'가 반대 방향으로 {gt.pct * 100:+.0f}% 바뀜(계절 보정, p={gt.p_rank:.3f}). "
+                        "text": f"같은 때 '{g}'{_ig(g)} 반대 방향으로 {gt.pct * 100:+.0f}% 바뀜(계절 보정, p={gt.p_rank:.3f}). "
                                 f"'{target}' 변화량의 {offset * 100:.0f}%에 해당"})
     return out
 
@@ -422,22 +430,22 @@ def diagnose(wide: pd.DataFrame, target: str, reference: str | list[str], date, 
             msg = f"{d}에 '{target}'의 뚜렷한 단절이 없음. 측정 체계 변경의 신호 없음"
     elif strong >= 2 or (strong >= 1 and moderate >= 1):
         verdict, cap = "측정 단절 의심(강)", "판정 보류"
-        msg = (f"{d}부터 '{target}'가 {test.pct * 100:+.0f}% 바뀌었지만, 근거 {strong + moderate}개가 "
+        msg = (f"{d}부터 '{target}'{_ig(target)} {test.pct * 100:+.0f}% 바뀌었지만, 근거 {strong + moderate}개가 "
                f"정책 효과보다 집계 방식 변경을 가리킴")
     elif strong == 1 or moderate >= 2:
         verdict, cap = "측정 단절 의심", "판정 보류"
-        msg = (f"{d}부터 '{target}'가 {test.pct * 100:+.0f}% 바뀜. 집계 방식 변경일 가능성이 있어 "
+        msg = (f"{d}부터 '{target}'{_ig(target)} {test.pct * 100:+.0f}% 바뀜. 집계 방식 변경일 가능성이 있어 "
                f"효과 판정을 보류함")
     elif moderate == 1:
         verdict, cap = "확인 필요", "조건부"
         which = next(e for e in ev if e.met)
-        msg = (f"{d}부터 '{target}'가 {test.pct * 100:+.0f}% 바뀜. 근거 1개({which.name})만 집계 변경을 가리킴. "
+        msg = (f"{d}부터 '{target}'{_ig(target)} {test.pct * 100:+.0f}% 바뀜. 근거 1개({which.name})만 집계 변경을 가리킴. "
                f"실제 효과일 수도 있어 공식 통계 대조가 필요함")
         if not needed:
             needed = ["같은 기간의 공식 집계(행정 통계·보도자료)"]
     else:
         verdict, cap = "측정 단절 증거 없음", None
-        msg = (f"{d}부터 '{target}'가 {test.pct * 100:+.0f}% 바뀜. 방향·크기·분류 모두 정상 범위라 "
+        msg = (f"{d}부터 '{target}'{_ig(target)} {test.pct * 100:+.0f}% 바뀜. 방향·크기·분류 모두 정상 범위라 "
                f"효과 추정으로 넘어감")
 
     if verdict.startswith("측정 단절 의심") and not needed:

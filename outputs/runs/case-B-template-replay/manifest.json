@@ -1,7 +1,7 @@
 {
   "run_id": "case-B-template-replay",
-  "created": "2026-11-06T18:14:11+0900",
-  "calendar_as_of": "2026-11-06",
+  "created": "2026-11-07T14:21:58+0900",
+  "calendar_as_of": "2026-11-07",
   "mode": "template",
   "rules_version": "v2",
   "seed": 20261104,
@@ -30,8 +30,8 @@
     "sha256": "518cd18e78141ede90cc5ee7639099282eae4c1557236e4eda6bd295b66e368d"
   },
   "prereg": {
-    "sha256": "32cddf2f9a993e6ee055501b66cb7ae250c1c1ff316edd2ce3565f0809c708ee",
-    "locked_at": "2026-11-06T18:14:11+0900",
+    "sha256": "e63e17f1238333a8ae7fb4008a34182371e9ec5ec005e6faf6df437613d1a5e6",
+    "locked_at": "2026-11-07T14:21:57+0900",
     "existing": {
       "file": "docs/prereg/case_relief2020_engine.md",
       "sha256": "38b009dbd65b762996d134d1888d02da023e497edf03ca93e7012b99ebec080d",
@@ -39,7 +39,7 @@
     },
     "amendments": []
   },
-  "code_sha256": "2e371f815c9d94fce852664c1e6c85df1595e7909bf9684d85c1c1f4b5ababdb",
+  "code_sha256": "fd8a39ce9ce89d739de3425c6626a313d66e21559348f3424b103e3e7907e112",
   "versions": {
     "python": "3.14.3",
     "platform": "Darwin arm64",

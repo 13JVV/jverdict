@@ -46,8 +46,8 @@ def test_naive_is_written_and_differs_from_engine(runs):
 def test_memo_and_rejudge_use_recorded_numbers(runs):
     v = load_run(runs / "case-C-template")
     m = AC.memo(v)
-    assert len(m) == 3 and m[0].startswith("① 판정: 효과 있음")
-    assert f"{v.analysis['main']['pct'] * 100:+.1f}%" in m[1]
+    assert m[0].startswith("□ (분석 결과) 효과 있음") and all(x.startswith("  ○ ") for x in m[1:])
+    assert f"{v.analysis['main']['pct'] * 100:+.1f}%" in m[1] and "(향후 조치)" in m[-1]
     assert AC.rejudge(v)["kind"] == "none" and AC.data_request(v) is None
 
 
@@ -66,7 +66,10 @@ def test_rejudge_paths_for_withheld_verdicts():
     v.analysis["power"]["pre_outliers"] = [{"time": "2021-08", "dev": -4.4}]
     assert AC.rejudge(v)["kind"] == "data" and "2021-08" in AC.rejudge(v)["text"]
     v.analysis["power"] = {"post_needed": 500, "n_post": 6, "unit": "개월"}
-    assert "3년 넘음" in AC.rejudge(v)["text"]
+    assert "약 42년 치" in AC.rejudge(v)["text"] and "기다려서는 풀 수 없" in AC.rejudge(v)["text"]
+    v.analysis["power"] = {"post_needed": None, "post_reachable": False, "n_post": 4, "unit": "개월"}
+    assert AC.rejudge(v)["kind"] == "data" and "정책 전 기간이 짧아" in AC.rejudge(v)["text"]
+    v.analysis["power"] = {"post_needed": 500, "n_post": 6, "unit": "개월"}
     v.card = {"end_date": "2020-08-31"}
     v.analysis["power"] = {"post_needed": 10, "n_post": 4, "unit": "개월"}
     assert "끝난 정책" in AC.rejudge(v)["text"]
@@ -79,7 +82,8 @@ def test_data_request_letter_lists_needed_data(runs):
     v.report = dict(v.report, needed_data=["교통복지카드 승차 기록"])
     v.skeptic = dict(v.skeptic, final_level="판정 보류")
     txt = AC.data_request(v)
-    assert "가. 교통복지카드 승차 기록" in txt and "(작성자 기입)" in txt and v.run_id in txt
+    assert "1) 교통복지카드 승차 기록" in txt and "(작성자 기입)" in txt and v.run_id in txt and txt.rstrip().endswith("끝.")
+    assert "J-Verdict" not in txt and "지문" not in txt                 # 외부 기관이 받는 문서에 내부 용어를 쓰지 않음
 
 
 def test_trace_marks_who_decided(runs):
@@ -101,3 +105,24 @@ def test_trace_of_recorded_claude_run_if_present():
     cmp_ = TR.compare_with_template(v, O.RUNS)
     if cmp_:
         assert cmp_["rows"][0][0] == "대조 집단"
+
+
+def test_power_post_needed_accounts_for_pre_period_variance():
+    from jverdict.causal.power import assess, mde_text, ratio_text
+    # 사례 B 형태: 사전 3, 사후 4. 사후를 무한히 늘려도 사전 평균의 분산이 남아 도달 불가
+    pw = assess(0.0529, None, 0.10, 4, "개월", n_pre=3)
+    assert not pw.enough and pw.post_reachable is False and pw.post_needed is None
+    assert "아무리 늘려도" in pw.sentence_ko() and "해결 불가" in pw.needed_ko()
+    # 사전이 길면 도달 가능하고, 옛 근사(1/n_post)보다 길게 나온다
+    pw = assess(0.05, None, 0.10, 82, "일", n_pre=683)
+    assert pw.post_reachable and pw.post_needed > int(82 * (pw.mde_log / 0.0953) ** 2)
+    assert mde_text(2.89).startswith("약 18.0배 증가 또는 94% 감소") and mde_text(0.1).startswith("±")
+    assert ratio_text(-4.44) == "약 1/85 수준" and ratio_text(0.69) == "약 2.0배"
+
+
+def test_request_drops_period_extension_when_measurement_broke(runs):
+    v = load_run(runs / "case-C-template")
+    v.report = dict(v.report, needed_data=["교통복지카드 승차 기록", "정책이 계속되는 경우 사후 기간 약 806일의 추가 자료."])
+    v.analysis = json.loads(json.dumps(v.analysis))
+    v.analysis["verdict"]["checks"] = [dict(c, status="실패") if c["code"] == "C0" else c for c in v.analysis["verdict"]["checks"]]
+    assert AC.needed_for_request(v) == ["교통복지카드 승차 기록"]

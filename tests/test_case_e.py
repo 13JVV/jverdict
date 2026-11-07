@@ -51,7 +51,7 @@ def test_pre_outliers_only_when_they_dominate_variance():
 def test_power_sentence_explains_outliers_instead_of_period():
     p = assess(1.0, 0.05, 0.10, 6, "개월", outliers=[{"time": "2021-08", "dev": -4.4, "robust_z": 9.7}])
     s = p.sentence_ko()
-    assert "2021-08" in s and "사후 기간을 늘리는 것만으로는 해결하기 어렵" in s
+    assert "2021-08" in s and "사후 기간을 늘리는 것만으로는 해결할 수 없" in s
     assert "이상 시점(2021-08)" in p.needed_ko()
     plain = assess(1.0, 0.05, 0.10, 6, "개월")
     assert "2021-08" not in plain.sentence_ko() and "사후 기간 약" in plain.sentence_ko()

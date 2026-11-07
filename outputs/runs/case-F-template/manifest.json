@@ -1,0 +1,78 @@
+{
+  "run_id": "case-F-template",
+  "created": "2026-11-07T14:22:04+0900",
+  "calendar_as_of": "2026-11-07",
+  "mode": "template",
+  "rules_version": "v2",
+  "seed": 20261104,
+  "question_input": "(시연) 2024-09-02 청소년 야간 버스 증편으로 청소년 버스 이용이 늘었는가?",
+  "question": "(시연) 2024-09-02 청소년 야간 버스 증편으로 청소년 버스 이용이 늘었는가?",
+  "card": {
+    "policy": "(시연) 청소년 야간 버스 증편 — 합성데이터 2",
+    "question": "(시연) 2024-09-02 청소년 야간 버스 증편으로 청소년 버스 이용이 늘었는가?",
+    "start_date": "2024-09-02",
+    "end_date": null,
+    "treated": "청소년",
+    "outcome": "이용자 유형별 일 단위 버스 이용 인원",
+    "expected": "increase",
+    "region": "가상",
+    "source": "합성데이터 2(정답 공개는 판정 뒤)",
+    "reference_effect": 0.1,
+    "needed_hint": [],
+    "prereg": null,
+    "library_case": "F",
+    "assumptions": []
+  },
+  "data": {
+    "dataset": "synthetic_bus_event",
+    "source": "jverdict.synth 생성기"
+  },
+  "prereg": {
+    "sha256": "d0b6f55d3e4ef8b9a1e2766f8bbec132b5882d8ae29b18615d7f2f78d756fa4a",
+    "locked_at": "2026-11-07T14:22:04+0900",
+    "existing": null,
+    "amendments": []
+  },
+  "code_sha256": "fd8a39ce9ce89d739de3425c6626a313d66e21559348f3424b103e3e7907e112",
+  "versions": {
+    "python": "3.14.3",
+    "platform": "Darwin arm64",
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "scipy": "1.18.1",
+    "duckdb": "2.0.0",
+    "statsmodels": "0.15.0",
+    "anthropic": "2.3.0"
+  },
+  "numbers": {
+    "verdict": "효과 있음(증가)",
+    "effect": 0.143546,
+    "se": 0.054795,
+    "ci_lo": 0.023368,
+    "ci_hi": 0.263724,
+    "p": 0.019229,
+    "mde_pct": 0.165924
+  },
+  "final_verdict": "판정 보류",
+  "llm": {
+    "calls": 0,
+    "cost_usd": 0.0,
+    "mode": "template"
+  },
+  "fallbacks": [],
+  "files": [
+    "analysis.json",
+    "card.json",
+    "design.json",
+    "events.jsonl",
+    "facts.txt",
+    "llm_cache.json",
+    "naive.json",
+    "prereg.lock.json",
+    "prereg.md",
+    "report.json",
+    "report.md",
+    "scout.json",
+    "skeptic.json"
+  ]
+}

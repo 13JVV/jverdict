@@ -12,7 +12,7 @@ from jverdict.synth.generator import LUNAR_HOLIDAYS
 OFFICIAL_STATS: dict[str, ExternalStat] = {
     "youth_free_483": ExternalStat(
         "어린이·청소년 무료 이용 누적 483만 건(도 발표, 2025-08~2026-02)", 4_830_000, "2025-08-01", "2026-02-28",
-        ["청소년", "어린이"], "트위그뉴스 2026-04-08 (제주도 발표 인용)", same_definition=False),
+        ["청소년", "어린이"], "제주도 2026-04-05 발표(헤드라인제주·제주일보 보도)", same_definition=False),
 }
 
 NEEDED_A = ["교통복지카드(무료) 승차 기록이 포함된 이용자 유형별 승차 자료",
@@ -20,6 +20,8 @@ NEEDED_A = ["교통복지카드(무료) 승차 기록이 포함된 이용자 유
 
 # 사건 달력: start, end, name, affects(영향받을 수 있는 집단·업종 설명), source, added(달력에 넣은 날, 없으면 처음부터)
 EVENTS: list[dict] = [
+    {"start": "2024-09-16", "end": "2024-11-24", "name": "청소년 문화축제 연계 무료 셔틀·공연(합성 시연 사례 F)",
+     "affects": "청소년 이동", "source": "가상 행사(합성데이터 시연)", "dataset": "synthetic_bus_event", "added": "2026-11-07"},
     {"start": "2020-02-18", "end": "2020-12-31", "name": "코로나19 1차·2차 확산", "affects": "전체 이동·소비",
      "source": "공지 사실"},
     {"start": "2020-03-01", "end": "2020-05-31", "name": "등교 연기·온라인 개학(전국)", "affects": "청소년·어린이 이동",
@@ -170,6 +172,22 @@ CARDS: dict[str, dict] = {
             "choices": [{"decision": "대조 집단: 일반", "reason": "정책 대상이 아니고 규모가 가장 큼"},
                         {"decision": "공간 위약: 경로·어린이", "reason": "정책 대상이 아닌 집단"}]},
     },
+    "F": {
+        "card": {"policy": "(시연) 청소년 야간 버스 증편 — 합성데이터 2",
+                 "question": "(시연) 2024-09-02 청소년 야간 버스 증편으로 청소년 버스 이용이 늘었는가?",
+                 "start_date": "2024-09-02", "end_date": None, "treated": "청소년", "outcome": "이용자 유형별 일 단위 버스 이용 인원",
+                 "expected": "increase", "region": "가상", "source": "합성데이터 2(정답 공개는 판정 뒤)", "reference_effect": 0.10,
+                 "needed_hint": [], "prereg": None},
+        "keywords": ["시연", "합성", "증편", "야간"], "must": ["증편"],
+        "design": {
+            "dataset": "synthetic_bus_event", "method": "its", "series": _bus_series("청소년", "어린이", "일반", "경로"),
+            "target": "청소년", "reference": ["일반"],
+            "placebo": [{"target": "경로", "reference": ["일반"]}, {"target": "어린이", "reference": ["일반"]}],
+            "alt_references": [], "pre": None, "post": None, "season_years": 3, "exclude": [], "reference_effect": 0.10,
+            "expected": "increase", "official_stats": [], "panel": None,
+            "choices": [{"decision": "대조 집단: 일반", "reason": "정책 대상이 아니고 규모가 가장 큼"},
+                        {"decision": "공간 위약: 경로·어린이", "reason": "정책 대상이 아닌 집단"}]},
+    },
 }
 
 
@@ -180,7 +198,7 @@ def match_card(question: str) -> str | None:
     for k, c in CARDS.items():
         if not any(w in q for w in c["must"]):
             continue
-        hit = sum(1 for w in c["keywords"] if w in q) + (5 if k == "C" else 0)   # 시연 표시는 다른 사례보다 우선
+        hit = sum(1 for w in c["keywords"] if w in q) + (5 if k in ("C", "F") else 0)   # 시연 표시는 다른 사례보다 우선
         if hit > score:
             best, score = k, hit
     return best
@@ -194,11 +212,11 @@ def events_between(start: str, end: str, dataset: str | None = None, as_of: str 
     """
     import pandas as pd
     s, e = pd.Timestamp(start), pd.Timestamp(end)
-    synth = dataset == "synthetic_bus"
+    synth = dataset in ("synthetic_bus", "synthetic_bus_event")
     out = [ev for ev in EVENTS if pd.Timestamp(ev["start"]) <= e and pd.Timestamp(ev["end"]) >= s
            and (as_of is None or ev.get("added", "") <= as_of)
            and (ev.get("dataset") is None or ev.get("dataset") == dataset)
-           and (not synth or ev["name"] == "설·추석 연휴")]
+           and (not synth or ev["name"] == "설·추석 연휴" or ev.get("dataset") == dataset)]
     for y in range(s.year - 1, e.year + 1):
         for name, (a, b) in VACATIONS.items():
             vs = pd.Timestamp(f"{y}-{a}")

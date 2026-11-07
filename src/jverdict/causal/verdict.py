@@ -38,7 +38,8 @@ from .checks import DoubleCompute, PlaceboSpace, PlaceboTime, Sensitivity
 from .estimate import Estimate
 from .power import Power
 
-RULES_VERSION = "v2"
+RULES_VERSION = "v2"          # 공식 판정(사전 등록에 쓴 규칙). v3는 외부 검토 반영 개정안으로 나란히 보고한다
+RULES_V3 = "v3"
 RULE_HISTORY = [
     {"version": "v1", "date": "2026-11-02",
      "change": "기획서 3.3 원안. 사례 D 사전 등록(2026-11-03 잠금)에 사용."},
@@ -54,7 +55,14 @@ RULE_HISTORY = [
         "(사전추세 검정의 검정력이 낮은 패널에서 오판 감소). (3) 처치 집단이 하나인 패널은 집단 수준 격차 시계열(AR(1))로 "
         "표준오차·사전추세를 계산(업종 군집 표준오차의 구간 포함률 20%). 실데이터 결과를 보기 전에 정한 변경이다.")},
 ]
-LIGHT = {"효과 있음": "🟢", "효과 없음": "⚪", "조건부": "🟡", "판정 보류": "🔴", "판정 없음": "⛔"}
+RULE_V3_CHANGES = [
+    "효과 없음: 판정 구간 전체가 ±기준 효과 안에 있을 때만(동등성 방식, TOST). 구간이 0을 포함하고 MDE가 작다는 것만으로는 부족",
+    "정책 전 시점이 4개 미만(월·패널)이면 기존 추세를 확인할 수 없으므로 판정 보류",
+    "시점 위약검정: 가짜 시행일 20개 이상일 때만 사용(19개면 순위 p가 0.05 아래로 내려갈 수 없음). "
+    "가짜 효과의 퍼짐이 분석적 표준오차와 3배 넘게 다르면(체제가 다른 기간에서 뽑힘) '참고'로만 사용",
+    "패널 사전추세: 정책 전 시점이 6개 미만이면 업종 군집 결합검정(과대 기각)을 쓰지 않고 '검정 불가'",
+]
+LIGHT = {"효과 있음": "🟢", "효과 없음": "⚪", "조건부": "🟡", "판정 보류": "🟣", "판정 없음": "⛔"}
 PASS, FAIL, NA = "통과", "실패", "해당 없음"
 DRIFT_SHARE = 0.5      # 사전 추세 연장이 효과의 이 비율 이상을 설명하면 C1 실패
 
@@ -108,7 +116,9 @@ def judge(main: Estimate | None, *, pretrend_p: float | None, trend_adjusted: Es
           placebo_time: PlaceboTime | None, placebo_space: PlaceboSpace | None,
           sens: Sensitivity | None, double: DoubleCompute | None, power: Power | None,
           quality_cap: str | None = None, quality_reason: str = "", coverage_reason: str | None = None,
-          needed_data: list[str] | None = None, window_label: str = "사후 기간") -> Verdict:
+          needed_data: list[str] | None = None, window_label: str = "사후 기간", rules: str = RULES_VERSION) -> Verdict:
+    """rules='v3'이면 개정안(RULE_V3_CHANGES)을 적용한다. 공식 판정은 v2."""
+    v3 = rules == RULES_V3
     needed = list(needed_data or [])
     checks: list[Check] = []
 
@@ -117,14 +127,19 @@ def judge(main: Estimate | None, *, pretrend_p: float | None, trend_adjusted: Es
         why = coverage_reason or "추정에 필요한 관측이 부족함"
         checks.append(Check("C0", "데이터 커버리지", FAIL, why))
         return Verdict("판정 보류", None, f"판정 보류: {why}", [why], checks,
-                       (float("nan"), float("nan")), float("nan"), power, quality_cap, needed)
+                       (float("nan"), float("nan")), float("nan"), power, quality_cap, needed, rules)
     checks.append(Check("C0", "데이터 품질",
                         FAIL if quality_cap == "판정 보류" else (("주의" if quality_cap else PASS)),
                         quality_reason or "측정 단절 증거 없음"))
 
     # ---------------- 판정용 구간
     ci, p = tuple(main.ci), main.p
-    if placebo_time is not None and placebo_time.available and placebo_time.ci:
+    pl_ok = placebo_time is not None and placebo_time.available and (not v3 or placebo_time.n >= 20)
+    regime = None                       # v3: 가짜 효과 퍼짐 / 분석적 표준오차
+    if v3 and pl_ok and main.se > 0 and np.isfinite(placebo_time.sd):
+        regime = placebo_time.sd / main.se
+    pl_ref = regime is not None and not (1 / 3 <= regime <= 3)
+    if pl_ok and placebo_time.ci:
         ci = (min(ci[0], placebo_time.ci[0]), max(ci[1], placebo_time.ci[1]))
         p = max(p, placebo_time.p_two)
     sig = bool(ci[0] > 0 or ci[1] < 0)
@@ -149,14 +164,18 @@ def judge(main: Estimate | None, *, pretrend_p: float | None, trend_adjusted: Es
 
     # ---------------- C2
     parts = []
-    if placebo_time is not None and placebo_time.available:
+    if pl_ok and pl_ref:
+        checks.append(Check("C2a", "시점 위약검정", "참고",
+                            f"가짜 시행일 {placebo_time.n}개 중 순위 p={placebo_time.p_two:.3f}. 가짜 효과의 퍼짐이 분석적 표준오차의 "
+                            f"{regime:.2f}배라 실제 기간과 체제가 달라 참고로만 씀"))
+    elif pl_ok:
         ok_t = placebo_time.p_two < 0.05
         parts.append(ok_t)
         checks.append(Check("C2a", "시점 위약검정", PASS if ok_t else FAIL,
                             f"가짜 시행일 {placebo_time.n}개 중 순위 p={placebo_time.p_two:.3f}"))
     else:
         n = 0 if placebo_time is None else placebo_time.n
-        checks.append(Check("C2a", "시점 위약검정", NA, f"가짜 시행일 {n}개(19개 미만)"))
+        checks.append(Check("C2a", "시점 위약검정", NA, f"가짜 시행일 {n}개({20 if v3 else 19}개 미만)"))
     if placebo_space is not None and placebo_space.passed is not None:
         parts.append(placebo_space.passed)
         fk = ", ".join(f"{k} {np.expm1(v['effect']) * 100:+.1f}%" for k, v in placebo_space.fakes.items())
@@ -181,7 +200,7 @@ def judge(main: Estimate | None, *, pretrend_p: float | None, trend_adjusted: Es
                             f"{double.quantity}: pandas {double.pandas:.9f} / SQL {double.sql:.9f}"))
         if not double.match:
             return Verdict("판정 없음", None, "판정 없음: 두 계산 경로의 결과가 다름(계산 오류 점검 필요)",
-                           ["C4 이중 계산 불일치"], checks, ci, p, power, quality_cap, needed)
+                           ["C4 이중 계산 불일치"], checks, ci, p, power, quality_cap, needed, rules)
     else:
         checks.append(Check("C4", "이중 계산", NA, "이중 계산 경로 없음"))
 
@@ -191,7 +210,14 @@ def judge(main: Estimate | None, *, pretrend_p: float | None, trend_adjusted: Es
     if quality_cap == "판정 보류":
         reasons = [f"데이터 품질: {quality_reason}", f"참고로 계산한 변화는 {size}이지만 측정 문제와 구분할 수 없음"]
         return Verdict("판정 보류", None, f"판정 보류: {quality_reason}", reasons, checks, ci, p, power,
-                       quality_cap, needed)
+                       quality_cap, needed, rules)
+
+    # ---------------- v3: 정책 전 시점이 너무 적으면 기존 추세를 확인할 수 없다
+    if v3 and power is not None and power.unit == "개월" and power.n_pre is not None and power.n_pre < 4:
+        why = f"정책 전 시점이 {power.n_pre}개뿐이라 기존 추세와 정책 효과를 구분할 수 없음({size})"
+        if "더 긴 정책 전 기간" not in " ".join(needed):
+            needed.append("더 긴 정책 전 기간의 자료(정책 전 4개 시점 이상)")
+        return Verdict("판정 보류", None, f"판정 보류: {why}", [why], checks, ci, p, power, quality_cap, needed, rules)
 
     reasons: list[str] = []
     if sig:
@@ -206,6 +232,8 @@ def judge(main: Estimate | None, *, pretrend_p: float | None, trend_adjusted: Es
                 ta = "계산 불가" if trend_adjusted is None else trend_adjusted.short_ko()
                 reasons.append(f"사전추세가 크게 깨짐(p={pretrend_p:.3g}): 정책 효과와 기존 추세를 구분할 수 없음. "
                                f"추세 보정 추정 {ta}")
+                needed.append("정책 전 추세를 가려낼 수 있는 더 긴 정책 전 기간의 자료, "
+                              "또는 정책 전부터 대상과 같은 추세를 보인 대조 집단의 자료")
         elif c1 is False and c2 is False:
             level = "판정 보류"
             reasons.append("사전추세(C1)와 위약검정(C2)이 모두 실패")
@@ -218,9 +246,14 @@ def judge(main: Estimate | None, *, pretrend_p: float | None, trend_adjusted: Es
             reasons.append(f"{size}. 통과하지 못한 검증: {', '.join(fails)}")
     else:
         weak = (p < 0.10 and (sens is None or sens.n == 0 or sens.same_sign == sens.n) and not c1_severe)
-        if power is not None and power.enough and not c1_severe:
+        ref_log = float(np.log1p(power.reference_pct)) if power is not None else 0.0
+        tost = power is not None and ci[0] > float(np.log1p(-power.reference_pct)) and ci[1] < ref_log
+        if v3 and tost and not c1_severe:
             level = "효과 없음"
-            reasons.append(f"{size}. 구간이 0을 포함하고, 구분 가능한 최소 효과 ±{power.mde_pct * 100:.1f}%가 "
+            reasons.append(f"{size}. 판정 구간 전체가 ±기준 효과 {power.reference_pct * 100:.0f}% 안에 있음(동등성 방식)")
+        elif not v3 and power is not None and power.enough and not c1_severe:
+            level = "효과 없음"
+            reasons.append(f"{size}. 구간이 0을 포함하고, 구분 가능한 최소 효과 {power.mde_text()}가 "
                            f"기준 효과 {power.reference_pct * 100:.0f}% 이하")
         elif weak:
             level = "조건부"
@@ -231,7 +264,7 @@ def judge(main: Estimate | None, *, pretrend_p: float | None, trend_adjusted: Es
                 reasons.append(f"사전추세가 크게 깨짐(p={pretrend_p:.3g})")
             if power is not None:
                 reasons.append(f"{size}. 검정력 부족: {power.sentence_ko()}")
-                if power.post_needed:
+                if power.post_needed or power.post_reachable is False or power.pre_outliers:
                     needed.append(power.needed_ko())
             else:
                 reasons.append(f"{size}. 검정력 부족")
@@ -243,7 +276,7 @@ def judge(main: Estimate | None, *, pretrend_p: float | None, trend_adjusted: Es
 
     d = direction if level in ("효과 있음", "조건부") else None
     head = f"{level}{f'({d})' if d else ''}: {reasons[0]}"
-    return Verdict(level, d, head, reasons, checks, ci, p, power, quality_cap, needed)
+    return Verdict(level, d, head, reasons, checks, ci, p, power, quality_cap, needed, rules)
 
 
 def judge_v1(main: Estimate, *, pretrend_p: float | None, placebo_space_pass: bool | None,

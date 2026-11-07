@@ -149,7 +149,9 @@ body { font-family: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans
        background: #fff; margin: 0; line-height: 1.45; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 .top { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1.6pt solid #0b3d5c;
        padding-bottom: 2pt; margin-bottom: 5pt; }
-.brand { font-weight: 800; color: #0b3d5c; font-size: 1.05rem; letter-spacing: .02em; }
+.brand { font-weight: 800; color: #1b1f24; font-size: 1.05rem; letter-spacing: .3em; }
+.brand small { letter-spacing: 0; font-weight: 600; color: #52514e; font-size: .8rem; margin-left: .4em; }
+.sign { color: #52514e; font-size: .82rem; }
 .meta { color: #52514e; font-size: .85rem; }
 h1 { font-size: 1.55rem; margin: 0 0 1pt; line-height: 1.25; }
 .q { color: #52514e; margin: 0 0 5pt; }
@@ -207,16 +209,21 @@ def build_html(v: RunView, font_pt: float = 9.0, compact: bool = False) -> str:
     cut = (lambda x: _short(x, 70)) if compact else (lambda x: x)
     st, rep, card, man = v.style, v.report, v.card, v.manifest
     cd = chart_data(v.analysis, v.design)
+    def detail(c):   # 결재 붙임에는 계산 경로 원값 대신 일치 여부만(원값은 화면·report.md)
+        if c["code"] == "C4" and c["status"] == "통과":
+            return "두 계산 경로(파이썬·SQL)의 결과가 일치"
+        return c["detail"]
     checks = "".join(
         f'<tr><td class="nm">{E(c["code"])} {E(c["name"])}</td><td class="st {_st_class(c["status"])}">'
-        f'{STATUS_MARK.get(c["status"], "")} {E(c["status"])}</td><td>{E(c["detail"])}</td></tr>' for c in v.checks)
+        f'{STATUS_MARK.get(c["status"], "")} {E(c["status"])}</td><td>{E(detail(c))}</td></tr>' for c in v.checks)
     objs = "".join(
         f'<tr><td>{E(cut(o["hypothesis"]))}</td><td class="st {_st_class(o["status"])}">{E(o["status"])}</td></tr>'
         for o in v.objections())
     dg = v.skeptic.get("downgraded")
-    dg_html = f'<p class="bad"><b>Skeptic 하향: {E(dg[0])} → {E(dg[1])}</b></p>' if dg else ""
+    dg_html = f'<p class="bad"><b>반론으로 판정 하향: {E(dg[0])} → {E(dg[1])}</b></p>' if dg else ""
     power = (v.analysis.get("power") or {})
-    pw_line = (f"구분 가능한 최소 효과 ±{power['mde_pct'] * 100:.1f}% (의미 있는 최소 효과 기준 "
+    from jverdict.causal.power import mde_text
+    pw_line = (f"구분 가능한 최소 효과 {mde_text(power['mde_log'])} (의미 있는 최소 효과 기준 "
                f"{power['reference_pct'] * 100:.0f}%)") if power.get("mde_pct") is not None else ""
 
     def ul(xs):
@@ -224,13 +231,14 @@ def build_html(v: RunView, font_pt: float = 9.0, compact: bool = False) -> str:
             xs = [cut(x) for x in xs[:3]] + [f"외 {len(xs) - 3}개(화면의 판정서에 전문)"]
         return "<ul>" + "".join(f"<li>{E(x)}</li>" for x in xs) + "</ul>" if xs else "<p class='na'>없음</p>"
 
-    needed = rep.get("needed_data") or []
+    from jverdict.report.actions import needed_for_request
+    needed = needed_for_request(v)
     from jverdict.report.brief import brief
     bf = brief(v)
     pts_html = '<dl class="pts">' + "".join(f"<dt>{E(k)}</dt><dd>{E(t)}</dd>" for k, t in bf["points"]) + "</dl>"
     nv = v.naive
     naive_html = (f'<div class="naive"><div class="nv"><b>단순 전후 비교였다면</b>{E(nv["sentence"])}</div>'
-                  f'<div class="arrow">→</div><div class="jv"><b>판정관</b>{E(v.label)}. {E(v.contrast() or "")}</div></div>'
+                  f'<div class="arrow">→</div><div class="jv"><b>판정관</b>{E(v.label)}. {E(bf["foot"] or v.contrast() or "")}</div></div>'
                   ) if nv else ""
     tl = v.truth_line()
     pre = man["prereg"]
@@ -248,18 +256,19 @@ def build_html(v: RunView, font_pt: float = 9.0, compact: bool = False) -> str:
             + (f" 지문 <code>{E(man['data']['sha256'][:16])}…</code>" if man['data'].get('sha256') else f" 씨앗 {man.get('seed')}")
             + f" · 코드 지문 <code>{E(man['code_sha256'][:16])}…</code>"
             + (f" · LLM 호출 {llm.get('calls', 0)}회 ${llm.get('cost_usd', 0):.3f}" if llm.get("calls") else "")
-            + f"<br>같은 판정 다시 만들기: <code>python -m jverdict.agent --replay outputs/runs/{E(v.run_id)}</code>"
-            " · 이 판정서는 판정 규칙에 따라 자동 작성되었고, 숫자는 모두 분석 결과에서 옮겼습니다.")
+            + f"<br>재현 명령: <code>python -m jverdict.agent --replay outputs/runs/{E(v.run_id)}</code>"
+            " · 이 판정서는 판정 규칙에 따라 자동 작성된 참고용 분석 자료이며, 숫자는 모두 분석 결과에서 옮겼습니다. "
+            "정책 판단의 책임은 작성 부서에 있습니다.")
     return f"""<!doctype html><html lang="ko" style="--fs:{font_pt}pt"><head><meta charset="utf-8">
 <title>판정서 {E(v.run_id)}</title><style>{CSS}</style></head>
 <body>
-<div class="top"><span class="brand">정책 판정관 J-Verdict · 판정서</span>
-<span class="meta">{E(card.get('region') or '제주도')} · 데이터 {E(v.dataset_title)}</span></div>
+<div class="top"><span class="brand">정책효과 판정서<small>참고용 분석 자료 · 정책 판정관 J-Verdict</small></span>
+<span class="sign">작성일 20&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;. · 작성 부서 ________ · 담당 ________</span></div>
 <h1>{E(card.get('policy', ''))}</h1>
-<p class="q">질문: {E(card.get('question', ''))} · 시행 {E(card.get('start_date', ''))} · 대상 {E(card.get('treated', ''))}</p>
+<p class="q">질문: {E(card.get('question', ''))} · 시행 {E(card.get('start_date', ''))} · 대상 {E(card.get('treated', ''))} · 데이터 {E(v.dataset_title)}</p>
 <div class="verdict">
  <div class="badge" style="background:#fff;color:{st['bg']};border:2px solid {st['bg']}"><span class="ic">{E(st['icon'])}</span>{E(v.label)}</div>
- <div class="vtext"><b>{E(bf['title'])}</b><span>{E(v.meaning)}</span>{pts_html}</div>
+ <div class="vtext"><b>{E(bf['title'])}</b>{pts_html}</div>
 </div>
 {naive_html}
 {f'<figure>{svg_chart(cd)}<figcaption>{E(cd["note"])}</figcaption></figure>' if cd else ''}

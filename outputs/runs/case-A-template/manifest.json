@@ -1,7 +1,7 @@
 {
   "run_id": "case-A-template",
-  "created": "2026-11-06T18:13:52+0900",
-  "calendar_as_of": "2026-11-06",
+  "created": "2026-11-07T14:21:48+0900",
+  "calendar_as_of": "2026-11-07",
   "mode": "template",
   "rules_version": "v2",
   "seed": 20261104,
@@ -33,12 +33,12 @@
     "sha256": "0eac15877892a93fd6a3235befcfb5c8e8351f6185cec8b6f04e23d98623547b"
   },
   "prereg": {
-    "sha256": "0714f40efa9832c777e1232c6df766959e708d1516b86ac086ee275ecd5baf85",
-    "locked_at": "2026-11-06T18:13:46+0900",
+    "sha256": "83732ddb39581b99db950e3c57d09e0a4f15ab28f06609fd37b2c544bb907e33",
+    "locked_at": "2026-11-07T14:21:44+0900",
     "existing": null,
     "amendments": []
   },
-  "code_sha256": "2e371f815c9d94fce852664c1e6c85df1595e7909bf9684d85c1c1f4b5ababdb",
+  "code_sha256": "fd8a39ce9ce89d739de3425c6626a313d66e21559348f3424b103e3e7907e112",
   "versions": {
     "python": "3.14.3",
     "platform": "Darwin arm64",

@@ -40,15 +40,53 @@
     {
       "hypothesis": "같은 시기의 다른 사건 때문이다: 크루즈 재입항(전후)",
       "why_plausible": "영향: 중국인 방문·면세점 (출처: 사례 D 사전 등록 9장)",
-      "check_ids": [],
+      "check_ids": [
+        "X1"
+      ],
       "source": "사건 달력",
-      "results": [],
+      "results": [
+        {
+          "id": "X1",
+          "kind": "exclude_period",
+          "label": "2023-08-31~2023-09-30 제외",
+          "reason": "크루즈 재입항(전후)",
+          "effect": 1.033372044377956,
+          "pct": 1.8105270959305506,
+          "ci": [
+            -0.089643382571726,
+            2.156387471327638
+          ],
+          "p": 0.06529835483272917,
+          "significant": false,
+          "main_effect": 0.9965036132181496,
+          "status": "반론 성립"
+        }
+      ],
       "rule_results": [],
-      "status": "미검증"
+      "status": "반론 성립"
     }
   ],
-  "extra_checks": [],
-  "standing": [],
+  "extra_checks": [
+    {
+      "id": "X1",
+      "kind": "exclude_period",
+      "label": "2023-08-31~2023-09-30 제외",
+      "reason": "크루즈 재입항(전후)",
+      "effect": 1.033372044377956,
+      "pct": 1.8105270959305506,
+      "ci": [
+        -0.089643382571726,
+        2.156387471327638
+      ],
+      "p": 0.06529835483272917,
+      "significant": false,
+      "main_effect": 0.9965036132181496,
+      "status": "반론 성립"
+    }
+  ],
+  "standing": [
+    "같은 시기의 다른 사건 때문이다: 크루즈 재입항(전후)"
+  ],
   "downgraded": null,
   "rule_standing": [
     "정책 전부터 이미 변하고 있었다(기존 추세)",
@@ -56,6 +94,6 @@
   ],
   "final_level": "판정 보류",
   "final_label": "판정 보류",
-  "light": "🔴",
+  "light": "🟣",
   "summary": ""
 }
