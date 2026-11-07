@@ -1,6 +1,6 @@
 {
   "run_id": "case-B-template",
-  "created": "2026-11-07T14:21:57+0900",
+  "created": "2026-11-07T15:05:15+0900",
   "calendar_as_of": "2026-11-07",
   "mode": "template",
   "rules_version": "v2",
@@ -31,7 +31,7 @@
   },
   "prereg": {
     "sha256": "e63e17f1238333a8ae7fb4008a34182371e9ec5ec005e6faf6df437613d1a5e6",
-    "locked_at": "2026-11-07T14:21:57+0900",
+    "locked_at": "2026-11-07T15:05:15+0900",
     "existing": {
       "file": "docs/prereg/case_relief2020_engine.md",
       "sha256": "38b009dbd65b762996d134d1888d02da023e497edf03ca93e7012b99ebec080d",

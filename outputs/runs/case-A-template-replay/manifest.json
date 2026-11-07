@@ -1,6 +1,6 @@
 {
   "run_id": "case-A-template-replay",
-  "created": "2026-11-07T14:21:56+0900",
+  "created": "2026-11-07T15:03:21+0900",
   "calendar_as_of": "2026-11-07",
   "mode": "template",
   "rules_version": "v2",
@@ -34,7 +34,7 @@
   },
   "prereg": {
     "sha256": "83732ddb39581b99db950e3c57d09e0a4f15ab28f06609fd37b2c544bb907e33",
-    "locked_at": "2026-11-07T14:21:52+0900",
+    "locked_at": "2026-11-07T15:03:17+0900",
     "existing": null,
     "amendments": []
   },

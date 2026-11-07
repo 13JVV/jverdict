@@ -54,7 +54,7 @@
 | `outputs/runs/` | 사례별 판정 기록과 재실행 대조 결과. 판정서는 `verdict.pdf` |
 | `outputs/accuracy/` | 합성데이터 정확도 리포트 |
 | `docs/` | 기획서, 사전 등록 문서(`prereg`), 연구 기록(`research/findings.md`), 매뉴얼, 허브 데이터 품질 점검 보고(`report`) |
-| `tests/` | 자동 시험 118개. 실행: `runtime\python.exe -m pytest` (자료가 없으면 해당 시험은 건너뜀) |
+| `tests/` | 자동 시험 128개. 실행: `runtime\python.exe -m pytest` (자료가 없으면 해당 시험은 건너뜀) |
 | `runtime/` | Windows용 Python 3.14.3(python.org 공식 임베디드)과 패키지 (설치 묶음에만) |
 | `BUILD_INFO.json` · `SHA256SUMS.txt` | 묶음 정보(코드 지문 등)와 모든 파일의 지문 (설치 묶음에만) |
 

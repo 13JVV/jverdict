@@ -78,7 +78,7 @@ def summarize() -> str:
         L.append(f"| {x['run']} | {x['mode']} | {x['verdict']} | {x['rule_verdict']} | {eff} | {', '.join(x['reference'])} | "
                  f"{x['llm_calls']} | ${x['cost_usd']:.3f} | {x['seconds']:.0f}초 | {rp} | {x['fallbacks']} |")
     L += ["", "- 재실행 일치: 같은 manifest로 다시 실행해 핵심 수치·판정·판정서 문장이 같은지(Claude 모드는 API 없이 응답 캐시로).",
-          "- 템플릿 대체: Claude 단계가 실패해 그 단계만 템플릿으로 대신한 횟수(`case-C-claude-nocredit`은 API 크레딧 소진으로 전 단계 대체).",
+          "- 템플릿 대체: Claude 단계가 실패해 그 단계만 템플릿으로 대신한 횟수(`case-C-claude-apifail`은 API 장애 대응 시연: 잘못된 키로 API 실패를 일으켜 전 단계 대체. 처음에는 2026-11-03 크레딧 소진 때 실측).",
           "- 등록 설계가 없는 사례(A·C)는 Claude가 대조 집단을 고르므로 효과 값이 템플릿과 다를 수 있다. 사전 등록 사례(B·D·E)는 같다."]
     L += [f"- `{x['run']}` 재실행 실패: {x['replay_error']}" for x in rows if x.get("replay_error")]
     if any("호출의 입력이" in (x.get("replay_error") or "") for x in rows):

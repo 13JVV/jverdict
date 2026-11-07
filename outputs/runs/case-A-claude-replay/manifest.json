@@ -1,7 +1,7 @@
 {
   "run_id": "case-A-claude-replay",
-  "created": "2026-11-06T18:15:40+0900",
-  "calendar_as_of": "2026-11-03",
+  "created": "2026-11-07T15:05:10+0900",
+  "calendar_as_of": "2026-11-07",
   "mode": "replay",
   "rules_version": "v2",
   "seed": 20261104,
@@ -19,12 +19,13 @@
     "source": "제주도 발표",
     "reference_effect": 0.1,
     "assumptions": [
-      "등록된 사례 A와 같은 정책으로 보고 시행일(2025-08-01)과 대상을 사례 A에 따름",
-      "어린이 무료 확대가 동시에 시행되어 청소년 단독 효과와 구분하기 어려울 수 있음(확인 필요)",
-      "분석 데이터는 bus_station(2019-01-01~2025-10-25)이며 시행 후 관측 기간은 약 3개월로 짧음(확인 필요)",
-      "종료일은 정해진 바 없어 null로 둠(확인 필요)",
-      "비교집단은 이용자 유형 중 청소년 외 유형(일반 등)으로 둘 수 있으나 여름방학·개학 등 계절성 영향 가능성 있음(확인 필요)",
-      "의미 있는 최소 효과 비율은 기본값 0.10 적용"
+      "등록된 사례 A와 같은 정책으로 보고 시행일(2025-08-01)과 대상을 사례 A에 맞춤",
+      "어린이 무료 확대가 동시에 시행되어 청소년 효과만 분리하기 어려울 수 있음(확인 필요)",
+      "종료일은 정해지지 않아 없음으로 둠(확인 필요)",
+      "실데이터 bus_station은 2025-10-25까지라 시행 후 관측 기간이 약 3개월로 짧음",
+      "비교 대상은 청소년 외 이용자 유형이며, 어린이 무료 확대의 영향이 비교군을 오염시킬 수 있음(의심)",
+      "같은 시기 방학·개학, 행사 등 다른 요인이 있었는지 확인 필요",
+      "효과의 크기 기준은 기본값 10% 사용"
     ],
     "library_case": "A",
     "prereg": null,
@@ -40,12 +41,12 @@
     "sha256": "0eac15877892a93fd6a3235befcfb5c8e8351f6185cec8b6f04e23d98623547b"
   },
   "prereg": {
-    "sha256": "02e8ce55af81b7c12d97ed38bfc4a25a4f6e41f51c074a95c3163d1876603f95",
-    "locked_at": "2026-11-06T18:15:26+0900",
+    "sha256": "6bfade05f870fb2080e54b807e38b1ee35bb42e924b6acacccb05228e3a0243a",
+    "locked_at": "2026-11-07T15:05:02+0900",
     "existing": null,
     "amendments": []
   },
-  "code_sha256": "2e371f815c9d94fce852664c1e6c85df1595e7909bf9684d85c1c1f4b5ababdb",
+  "code_sha256": "fd8a39ce9ce89d739de3425c6626a313d66e21559348f3424b103e3e7907e112",
   "versions": {
     "python": "3.14.3",
     "platform": "Darwin arm64",
@@ -58,41 +59,41 @@
   },
   "numbers": {
     "verdict": "판정 보류",
-    "effect": -1.409968,
-    "se": 0.086735,
-    "ci_lo": -1.692713,
-    "ci_hi": -1.195173,
-    "p": 0.005495,
-    "mde_pct": 0.348013
+    "effect": -1.446824,
+    "se": 0.092096,
+    "ci_lo": -1.707187,
+    "ci_hi": -1.218753,
+    "p": 0.005618,
+    "mde_pct": 0.329762
   },
   "final_verdict": "판정 보류",
   "llm": {
     "calls": 9,
     "input_tokens": 28,
-    "output_tokens": 6876,
-    "cache_read_input_tokens": 20502,
-    "cache_creation_input_tokens": 22189,
-    "cost_usd": 0.12839,
+    "output_tokens": 7012,
+    "cache_read_input_tokens": 18505,
+    "cache_creation_input_tokens": 24748,
+    "cost_usd": 0.13575,
     "by_role": {
       "parser": {
         "calls": 1,
-        "cost_usd": 0.00522
+        "cost_usd": 0.01082
       },
       "scout": {
         "calls": 3,
-        "cost_usd": 0.03284
+        "cost_usd": 0.03625
       },
       "design": {
         "calls": 2,
-        "cost_usd": 0.04167
+        "cost_usd": 0.0377
       },
       "skeptic": {
         "calls": 2,
-        "cost_usd": 0.02848
+        "cost_usd": 0.03023
       },
       "reporter": {
         "calls": 1,
-        "cost_usd": 0.02018
+        "cost_usd": 0.02075
       }
     },
     "model": "claude-sonnet-5-5",

@@ -1,6 +1,7 @@
 {
-  "run_id": "case-C-claude",
-  "created": "2026-11-03T23:08:11+0900",
+  "run_id": "case-C-claude-apifail",
+  "created": "2026-11-07T15:07:30+0900",
+  "calendar_as_of": "2026-11-07",
   "mode": "claude",
   "rules_version": "v2",
   "seed": 20261104,
@@ -27,12 +28,12 @@
     "source": "jverdict.synth 생성기"
   },
   "prereg": {
-    "sha256": "2b0e4878cadd758affe2ac18400ed91d7b6f228c4fbd9245b3477ffe490b707b",
-    "locked_at": "2026-11-03T23:08:10+0900",
+    "sha256": "9097e9b44966b88169be0233da83898894adf4536e8500bb585d7fb9c5c06bc4",
+    "locked_at": "2026-11-07T15:07:30+0900",
     "existing": null,
     "amendments": []
   },
-  "code_sha256": "dd2f431c45683f84992e3ccaf282b677aaf00e543863df9e88678f3a499f4bc3",
+  "code_sha256": "fd8a39ce9ce89d739de3425c6626a313d66e21559348f3424b103e3e7907e112",
   "versions": {
     "python": "3.14.3",
     "platform": "Darwin arm64",
@@ -68,23 +69,23 @@
   "fallbacks": [
     {
       "stage": "parse",
-      "error": "Claude API 오류 400: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cgg8FdPTnzA69h8cAixQu'}"
+      "error": "Claude API 오류 401: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'Invalid bearer token'}, 'request_id': 'req_011Cgo4qSMx2sPpdxJ5vVmQS'}"
     },
     {
       "stage": "scout",
-      "error": "Claude API 오류 400: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cgg8FfGaCbcctR7aJsyx4'}"
+      "error": "LLM 사용 불가(앞 단계의 크레딧·인증·연결 오류)"
     },
     {
       "stage": "design",
-      "error": "Claude API 오류 400: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cgg8FhAfeWXBV1tA6suKL'}"
+      "error": "LLM 사용 불가(앞 단계의 크레딧·인증·연결 오류)"
     },
     {
       "stage": "skeptic",
-      "error": "Claude API 오류 400: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cgg8FikREYSfjf4EiMVDu'}"
+      "error": "LLM 사용 불가(앞 단계의 크레딧·인증·연결 오류)"
     },
     {
       "stage": "report",
-      "error": "Claude API 오류 400: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cgg8Fk2pTug261wYPvgHH'}"
+      "error": "LLM 사용 불가(앞 단계의 크레딧·인증·연결 오류)"
     }
   ],
   "files": [
@@ -94,6 +95,7 @@
     "events.jsonl",
     "facts.txt",
     "llm_cache.json",
+    "naive.json",
     "prereg.lock.json",
     "prereg.md",
     "report.json",

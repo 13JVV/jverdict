@@ -63,7 +63,7 @@ class RunView:
     @property
     def run_id(self) -> str:
         """실행 폴더 이름(outputs/runs/<이것>). 화면 주소·재실행 명령·내려받기 파일 이름에 쓴다.
-        폴더 이름을 바꾼 기록(예: case-C-claude-nocredit)은 manifest의 run_id와 다를 수 있어 폴더 이름을 기준으로 한다."""
+        폴더 이름을 바꾼 기록(예: 이름을 바꾼 대체 시연 기록)은 manifest의 run_id와 다를 수 있어 폴더 이름을 기준으로 한다."""
         return self.run_dir.name
 
     @property

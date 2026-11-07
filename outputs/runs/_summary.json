@@ -4,17 +4,17 @@
     "mode": "claude",
     "verdict": "판정 보류",
     "rule_verdict": "판정 보류",
-    "effect": -1.409968,
+    "effect": -1.446824,
     "reference": [
-      "경로"
+      "일반"
     ],
     "llm_calls": 9,
-    "cost_usd": 0.12839,
-    "seconds": 71.0,
+    "cost_usd": 0.13575,
+    "seconds": 89.0,
     "reproduced": true,
     "replay_error": null,
     "fallbacks": 0,
-    "created": "2026-11-03T23:04:06+0900"
+    "created": "2026-11-07T15:04:52+0900"
   },
   {
     "run": "case-A-template",
@@ -27,11 +27,11 @@
     ],
     "llm_calls": 0,
     "cost_usd": 0.0,
-    "seconds": 13.0,
+    "seconds": 15.0,
     "reproduced": true,
     "replay_error": null,
     "fallbacks": 0,
-    "created": "2026-11-07T14:21:48+0900"
+    "created": "2026-11-07T15:03:12+0900"
   },
   {
     "run": "case-B-claude",
@@ -43,12 +43,12 @@
       "도민_불가"
     ],
     "llm_calls": 7,
-    "cost_usd": 0.08538,
-    "seconds": 40.0,
+    "cost_usd": 0.09283,
+    "seconds": 39.0,
     "reproduced": true,
     "replay_error": null,
     "fallbacks": 0,
-    "created": "2026-11-03T23:05:01+0900"
+    "created": "2026-11-07T15:05:56+0900"
   },
   {
     "run": "case-B-template",
@@ -65,10 +65,10 @@
     "reproduced": true,
     "replay_error": null,
     "fallbacks": 0,
-    "created": "2026-11-07T14:21:57+0900"
+    "created": "2026-11-07T15:05:15+0900"
   },
   {
-    "run": "case-C-claude-nocredit",
+    "run": "case-C-claude-apifail",
     "mode": "claude",
     "verdict": "효과 있음(증가)",
     "rule_verdict": "효과 있음(증가)",
@@ -78,11 +78,11 @@
     ],
     "llm_calls": 0,
     "cost_usd": 0.0,
-    "seconds": 3.0,
+    "seconds": 1.0,
     "reproduced": true,
     "replay_error": null,
     "fallbacks": 5,
-    "created": "2026-11-03T23:08:11+0900"
+    "created": "2026-11-07T15:07:30+0900"
   },
   {
     "run": "case-C-template",
@@ -110,13 +110,13 @@
     "reference": [
       "패널"
     ],
-    "llm_calls": 6,
-    "cost_usd": 0.09674,
-    "seconds": 47.0,
+    "llm_calls": 7,
+    "cost_usd": 0.09912,
+    "seconds": 45.0,
     "reproduced": true,
     "replay_error": null,
     "fallbacks": 0,
-    "created": "2026-11-03T23:07:43+0900"
+    "created": "2026-11-07T15:06:47+0900"
   },
   {
     "run": "case-D-template",
@@ -129,11 +129,11 @@
     ],
     "llm_calls": 0,
     "cost_usd": 0.0,
-    "seconds": 0.0,
+    "seconds": 1.0,
     "reproduced": true,
     "replay_error": null,
     "fallbacks": 0,
-    "created": "2026-11-07T14:22:01+0900"
+    "created": "2026-11-07T15:06:01+0900"
   },
   {
     "run": "case-E-template",

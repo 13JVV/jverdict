@@ -1,14 +1,15 @@
 [
   {
     "role": "parser",
-    "key": "1ce12051f5609b53ff42355f9e1768728c64a873c65b3bef5b727c19d9997537",
+    "key": "d348a797ee9b5f79810c7cf4370e45c443b0891c8974b362fb2898c3956bc1d9",
+    "key_norm": "d348a797ee9b5f79810c7cf4370e45c443b0891c8974b362fb2898c3956bc1d9",
     "model": "claude-sonnet-5-5",
     "response": {
-      "id": "msg_011Cgg7rbducYkEHnv6tUHmm",
+      "id": "msg_011Cgo4XJSgjgJCXs92Hi2Zy",
       "container": null,
       "content": [
         {
-          "text": "{\"policy\":\"청소년 버스 무료(어린이 무료 확대)\",\"question\":\"청소년 버스 무료화(2025-08-01)로 청소년의 버스 이용이 늘었는가?\",\"start_date\":\"2025-08-01\",\"end_date\":null,\"treated\":\"청소년(만 13~18세), 어린이 무료 확대 동시 시행\",\"outcome\":\"이용자 유형별 일 단위 버스 이용 인원\",\"expected\":\"increase\",\"region\":\"제주도\",\"source\":\"제주도 발표\",\"reference_effect\":0.1,\"assumptions\":[\"등록된 사례 A와 같은 정책으로 보고 시행일(2025-08-01)과 대상을 사례 A에 따름\",\"어린이 무료 확대가 동시에 시행되어 청소년 단독 효과와 구분하기 어려울 수 있음(확인 필요)\",\"분석 데이터는 bus_station(2019-01-01~2025-10-25)이며 시행 후 관측 기간은 약 3개월로 짧음(확인 필요)\",\"종료일은 정해진 바 없어 null로 둠(확인 필요)\",\"비교집단은 이용자 유형 중 청소년 외 유형(일반 등)으로 둘 수 있으나 여름방학·개학 등 계절성 영향 가능성 있음(확인 필요)\",\"의미 있는 최소 효과 비율은 기본값 0.10 적용\"]}",
+          "text": "{\"policy\":\"청소년 버스 무료(어린이 무료 확대)\",\"question\":\"청소년 버스 무료화(2025-08-01)로 청소년의 버스 이용이 늘었는가?\",\"start_date\":\"2025-08-01\",\"end_date\":null,\"treated\":\"청소년(만 13~18세), 어린이 무료 확대 동시 시행\",\"outcome\":\"이용자 유형별 일 단위 버스 이용 인원\",\"expected\":\"increase\",\"region\":\"제주도\",\"source\":\"제주도 발표\",\"reference_effect\":0.1,\"assumptions\":[\"등록된 사례 A와 같은 정책으로 보고 시행일(2025-08-01)과 대상을 사례 A에 맞춤\",\"어린이 무료 확대가 동시에 시행되어 청소년 효과만 분리하기 어려울 수 있음(확인 필요)\",\"종료일은 정해지지 않아 없음으로 둠(확인 필요)\",\"실데이터 bus_station은 2025-10-25까지라 시행 후 관측 기간이 약 3개월로 짧음\",\"비교 대상은 청소년 외 이용자 유형이며, 어린이 무료 확대의 영향이 비교군을 오염시킬 수 있음(의심)\",\"같은 시기 방학·개학, 행사 등 다른 요인이 있었는지 확인 필요\",\"효과의 크기 기준은 기본값 10% 사용\"]}",
           "type": "text"
         }
       ],
@@ -22,10 +23,10 @@
       "usage": {
         "cache_creation": {
           "ephemeral_1h_input_tokens": 0,
-          "ephemeral_5m_input_tokens": 0
+          "ephemeral_5m_input_tokens": 2418
         },
-        "cache_creation_input_tokens": 0,
-        "cache_read_input_tokens": 2204,
+        "cache_creation_input_tokens": 2418,
+        "cache_read_input_tokens": 0,
         "inference_geo": "global",
         "input_tokens": 4,
         "output_tokens": 477,
@@ -39,10 +40,10 @@
     "usage": {
       "cache_creation": {
         "ephemeral_1h_input_tokens": 0,
-        "ephemeral_5m_input_tokens": 0
+        "ephemeral_5m_input_tokens": 2418
       },
-      "cache_creation_input_tokens": 0,
-      "cache_read_input_tokens": 2204,
+      "cache_creation_input_tokens": 2418,
+      "cache_read_input_tokens": 0,
       "inference_geo": "global",
       "input_tokens": 4,
       "output_tokens": 477,
@@ -52,19 +53,19 @@
       "service_tier": "standard",
       "speed": "standard"
     },
-    "cost_usd": 0.0052188,
-    "key_norm": "1ce12051f5609b53ff42355f9e1768728c64a873c65b3bef5b727c19d9997537"
+    "cost_usd": 0.010823
   },
   {
     "role": "scout",
-    "key": "b12d0b865bb846a9c1d1f9fb0f8f28dcce3d34ec5b7e16d8995a857faedb9672",
+    "key": "989a5a85e0d217c4b1a312f8db7263c594b5a91f28bec8ac1af073bb9ffb8a07",
+    "key_norm": "989a5a85e0d217c4b1a312f8db7263c594b5a91f28bec8ac1af073bb9ffb8a07",
     "model": "claude-sonnet-5-5",
     "response": {
-      "id": "msg_011Cgg7rwFNHCm3D15aY5BHG",
+      "id": "msg_011Cgo4XhzXpyoEA6gJaZ4Nv",
       "container": null,
       "content": [
         {
-          "id": "toolu_01WwCpaU3joN3D4tyohQwvCQ",
+          "id": "toolu_01Lw1phHsrif9qMoquAv8Mf8",
           "caller": {
             "type": "direct"
           },
@@ -75,7 +76,16 @@
           "type": "tool_use"
         },
         {
-          "id": "toolu_013gTUziabo9wwNwp9CPmmPR",
+          "id": "toolu_01VFTU9k2KCFHLzgS3o6ER5Q",
+          "caller": {
+            "type": "direct"
+          },
+          "input": {},
+          "name": "official_stats",
+          "type": "tool_use"
+        },
+        {
+          "id": "toolu_01ChbtV1dda9FVNFemUfrNaG",
           "caller": {
             "type": "direct"
           },
@@ -86,12 +96,14 @@
           "type": "tool_use"
         },
         {
-          "id": "toolu_01HdxZewfFRiMmmnedAhMLTT",
+          "id": "toolu_01UJo8G9th2CUNW6QJo4zGY3",
           "caller": {
             "type": "direct"
           },
-          "input": {},
-          "name": "official_stats",
+          "input": {
+            "dataset": "bus_route"
+          },
+          "name": "dataset_profile",
           "type": "tool_use"
         }
       ],
@@ -105,13 +117,13 @@
       "usage": {
         "cache_creation": {
           "ephemeral_1h_input_tokens": 0,
-          "ephemeral_5m_input_tokens": 3225
+          "ephemeral_5m_input_tokens": 3263
         },
-        "cache_creation_input_tokens": 3225,
+        "cache_creation_input_tokens": 3263,
         "cache_read_input_tokens": 0,
         "inference_geo": "global",
         "input_tokens": 4,
-        "output_tokens": 133,
+        "output_tokens": 185,
         "output_tokens_details": {
           "thinking_tokens": 0
         },
@@ -122,32 +134,32 @@
     "usage": {
       "cache_creation": {
         "ephemeral_1h_input_tokens": 0,
-        "ephemeral_5m_input_tokens": 3225
+        "ephemeral_5m_input_tokens": 3263
       },
-      "cache_creation_input_tokens": 3225,
+      "cache_creation_input_tokens": 3263,
       "cache_read_input_tokens": 0,
       "inference_geo": "global",
       "input_tokens": 4,
-      "output_tokens": 133,
+      "output_tokens": 185,
       "output_tokens_details": {
         "thinking_tokens": 0
       },
       "service_tier": "standard",
       "speed": "standard"
     },
-    "cost_usd": 0.0094005,
-    "key_norm": "b12d0b865bb846a9c1d1f9fb0f8f28dcce3d34ec5b7e16d8995a857faedb9672"
+    "cost_usd": 0.0100155
   },
   {
     "role": "scout",
-    "key": "73844e7a4778225a8f0eaa08a2912b2fcd40c1a937f9db4068505d0a7d491392",
+    "key": "0ef8326981de52a5c7fb9bef5fa14d00ff9987271e5f1c87adff5552bc6b22c0",
+    "key_norm": "0ef8326981de52a5c7fb9bef5fa14d00ff9987271e5f1c87adff5552bc6b22c0",
     "model": "claude-sonnet-5-5",
     "response": {
-      "id": "msg_011Cgg7sDRhF6eRAL8vEVyvW",
+      "id": "msg_011Cgo4YP6GL98WBF2bsHLfb",
       "container": null,
       "content": [
         {
-          "id": "toolu_01XUEmgwX3eRopVaqF98fkFJ",
+          "id": "toolu_015zVWm8ezikvCGfQa5ojA5G",
           "caller": {
             "type": "direct"
           },
@@ -179,9 +191,10 @@
                 "units_list": []
               },
               {
-                "name": "어린이",
+                "name": "장애",
                 "groups": [
-                  "어린이"
+                  "장애 일반",
+                  "장애 동반"
                 ],
                 "units_tier": null,
                 "units_list": []
@@ -190,7 +203,8 @@
             "target": "청소년",
             "reference": [
               "일반",
-              "경로"
+              "경로",
+              "장애"
             ],
             "official_stats": [
               "youth_free_483"
@@ -210,13 +224,13 @@
       "usage": {
         "cache_creation": {
           "ephemeral_1h_input_tokens": 0,
-          "ephemeral_5m_input_tokens": 1856
+          "ephemeral_5m_input_tokens": 2881
         },
-        "cache_creation_input_tokens": 1856,
-        "cache_read_input_tokens": 3225,
+        "cache_creation_input_tokens": 2881,
+        "cache_read_input_tokens": 3263,
         "inference_geo": "global",
         "input_tokens": 2,
-        "output_tokens": 291,
+        "output_tokens": 301,
         "output_tokens_details": {
           "thinking_tokens": 0
         },
@@ -227,32 +241,32 @@
     "usage": {
       "cache_creation": {
         "ephemeral_1h_input_tokens": 0,
-        "ephemeral_5m_input_tokens": 1856
+        "ephemeral_5m_input_tokens": 2881
       },
-      "cache_creation_input_tokens": 1856,
-      "cache_read_input_tokens": 3225,
+      "cache_creation_input_tokens": 2881,
+      "cache_read_input_tokens": 3263,
       "inference_geo": "global",
       "input_tokens": 2,
-      "output_tokens": 291,
+      "output_tokens": 301,
       "output_tokens_details": {
         "thinking_tokens": 0
       },
       "service_tier": "standard",
       "speed": "standard"
     },
-    "cost_usd": 0.008199,
-    "key_norm": "73844e7a4778225a8f0eaa08a2912b2fcd40c1a937f9db4068505d0a7d491392"
+    "cost_usd": 0.0108691
   },
   {
     "role": "scout",
-    "key": "11f4126dbbccb9761ffbdf161e3868e6b51dee00ae4f097e49d442d5804e3b1e",
+    "key": "e26478a01fd080264aeec45cd3e8a3261d0920a234f06bfbd4406809ecb5799a",
+    "key_norm": "e26478a01fd080264aeec45cd3e8a3261d0920a234f06bfbd4406809ecb5799a",
     "model": "claude-sonnet-5-5",
     "response": {
-      "id": "msg_011Cgg7sb2TutUaV3p1v9RBj",
+      "id": "msg_011Cgo4YnCKRLw9sUVWZ3RzR",
       "container": null,
       "content": [
         {
-          "text": "{\"dataset\":\"bus_station\",\"series\":[{\"name\":\"청소년\",\"groups\":[\"청소년\"],\"units_tier\":null,\"units_list\":[]},{\"name\":\"일반\",\"groups\":[\"일반\"],\"units_tier\":null,\"units_list\":[]},{\"name\":\"경로\",\"groups\":[\"경로\"],\"units_tier\":null,\"units_list\":[]},{\"name\":\"어린이\",\"groups\":[\"어린이\"],\"units_tier\":null,\"units_list\":[]}],\"target\":\"청소년\",\"reference_candidates\":[\"일반\",\"경로\"],\"official_stats\":[\"youth_free_483\"],\"notes\":[\"quality_check 결과: 측정 단절 의심(강), 판정 보류 상한. 2025-08-01부터 청소년 계열이 -76% 변했습니다. 증가가 예상되는데 감소했고(방향 모순), 변화 크기도 비현실적입니다. 정책 효과보다 집계 방식 변경이 원인일 가능성이 큽니다. 다만 원인은 확정하지 않습니다.\",\"외부 통계 불일치: 도 발표 누적 483만 건의 일평균은 22,783입니다. 데이터의 일평균은 2,745로, 공식 수치가 데이터의 8.30배입니다(허용 범위 0.50~2.00배). 다만 공식 수치는 어린이와 청소년을 합친 것이고 기간도 다릅니다(same_definition=false). 일평균으로 비교했지만 정의가 달라 직접 비교에는 한계가 있습니다. 이 점은 확인이 필요합니다.\",\"분류 변경(E5)은 데이터만으로는 확인되지 않았습니다(reclassification 없음). 무료 승차(교통복지카드)가 이용자 유형 집계에서 빠졌거나 분류가 바뀌었을 가능성은 의심 단계입니다. 데이터 제공처에 확인이 필요합니다.\",\"필요 데이터: 교통복지카드(무료) 승차 기록이 포함된 이용자 유형별 승차 자료, 그리고 2025-08-01 전후 이용자 유형 분류 기준 변경 이력(데이터 제공처 확인).\",\"결측과 부분 집계: 2022-08-12~2022-11-23 전체 결측 104일 등 여러 구간이 있습니다. 짧은 부분 집계는 117건(126일)입니다. 결측·부분 집계일은 분석에서 자동 제외됩니다.\",\"대조 후보는 정책 대상이 아니고 규모가 큰 일반(일평균 36,815)과 경로(13,804)를 두었습니다. 여름방학과 개학 등 계절성은 확인이 필요합니다. 어린이 무료 확대가 동시에 시행되어 청소년 단독 효과는 구분하기 어렵습니다. 어린이 계열도 같은 단절이 있을 수 있어 대조로 쓰지 않았습니다.\",\"시행 후 관측은 약 3개월(2025-08-01~2025-10-25)로 짧습니다. 종료일과 시행일은 사례 A를 따랐고 확인이 필요합니다.\",\"현재 단계에서는 이용 증가 여부를 판정하지 않습니다. 이 지표로는 판정 보류가 맞습니다.\"]}",
+          "text": "{\"dataset\":\"bus_station\",\"series\":[{\"name\":\"청소년\",\"groups\":[\"청소년\"],\"units_tier\":null,\"units_list\":[]},{\"name\":\"일반\",\"groups\":[\"일반\"],\"units_tier\":null,\"units_list\":[]},{\"name\":\"경로\",\"groups\":[\"경로\"],\"units_tier\":null,\"units_list\":[]},{\"name\":\"장애\",\"groups\":[\"장애 일반\",\"장애 동반\"],\"units_tier\":null,\"units_list\":[]}],\"target\":\"청소년\",\"reference_candidates\":[\"일반\",\"경로\",\"장애\"],\"official_stats\":[\"youth_free_483\"],\"notes\":[\"결과지표는 이용자 유형별 일 단위 버스 이용 인원(bus_station)입니다. 청소년이 대상이고, 일반·경로·장애를 대조 후보로 두었습니다. 일반이 가장 크고(일평균 약 36,815명) 정책 대상이 아닙니다.\",\"quality_check 결과는 '측정 단절 의심(강)'이고 판정 상한은 '판정 보류'입니다. 2025-08-01부터 청소년 값이 -75% 바뀌었습니다. 근거는 방향 모순, 비현실적 크기, 외부 통계 불일치 3개이고, 분류 변경(E5)은 확인되지 않았습니다.\",\"공식 발표(누적 483만 건)는 어린이와 청소년을 합친 값이고 정의도 같지 않습니다. 일평균으로 환산하면 공식 22,783명, 데이터 2,358명이라 공식이 약 9.66배입니다(허용 0.5~2배). 기간이 다른 비교라 참고용입니다.\",\"무료 승차(교통복지카드) 기록이 이 자료에 빠졌을 가능성이 의심됩니다. 원인은 단정하지 않으며 데이터 제공처 확인이 필요합니다. 필요한 자료는 교통복지카드(무료) 승차 기록이 들어간 이용자 유형별 승차 자료와 2025-08-01 전후 분류 기준 변경 이력입니다.\",\"결측과 부분 집계가 있습니다. 2022-08-12~2022-11-23 104일은 전체 결측이고, 짧은 부분 집계는 117건(126일)입니다. 이 날짜는 분석에서 자동 제외됩니다.\",\"시행 후 관측 기간이 약 3개월(2025-08-01~2025-10-25)로 짧습니다. 방학·개학 등 계절 요인과 같은 시기 다른 요인은 확인이 필요합니다.\",\"어린이 무료 확대가 동시에 시행되어 청소년 효과만 분리하기 어려울 수 있습니다. 어린이 확대가 대조군에 미친 영향도 의심됩니다. 종료일은 확인 필요입니다.\",\"'기타' 유형은 2025-01-01부터만 존재합니다. 분류 변경과 관련 있는지 확인이 필요하므로 대조군에서 제외했습니다.\",\"bus_route(일별 승차, 2025-10-19까지)는 이번 점검 대상이 아닙니다. 교차 확인용으로 쓸 수 있는지는 확인 필요입니다.\"]}",
           "type": "text"
         }
       ],
@@ -266,13 +280,13 @@
       "usage": {
         "cache_creation": {
           "ephemeral_1h_input_tokens": 0,
-          "ephemeral_5m_input_tokens": 1202
+          "ephemeral_5m_input_tokens": 1237
         },
-        "cache_creation_input_tokens": 1202,
-        "cache_read_input_tokens": 5081,
+        "cache_creation_input_tokens": 1237,
+        "cache_read_input_tokens": 6144,
         "inference_geo": "global",
         "input_tokens": 2,
-        "output_tokens": 1122,
+        "output_tokens": 1104,
         "output_tokens_details": {
           "thinking_tokens": 0
         },
@@ -283,32 +297,32 @@
     "usage": {
       "cache_creation": {
         "ephemeral_1h_input_tokens": 0,
-        "ephemeral_5m_input_tokens": 1202
+        "ephemeral_5m_input_tokens": 1237
       },
-      "cache_creation_input_tokens": 1202,
-      "cache_read_input_tokens": 5081,
+      "cache_creation_input_tokens": 1237,
+      "cache_read_input_tokens": 6144,
       "inference_geo": "global",
       "input_tokens": 2,
-      "output_tokens": 1122,
+      "output_tokens": 1104,
       "output_tokens_details": {
         "thinking_tokens": 0
       },
       "service_tier": "standard",
       "speed": "standard"
     },
-    "cost_usd": 0.0152452,
-    "key_norm": "11f4126dbbccb9761ffbdf161e3868e6b51dee00ae4f097e49d442d5804e3b1e"
+    "cost_usd": 0.0153653
   },
   {
     "role": "design",
-    "key": "bf5b30c9126f664fa9a6e5a840713bcb96bf0e69639ee1432dafbd9c9930b23d",
+    "key": "a11003db92ac233de120c90252446817e02e678b8f848870ee6657b1ec92fad0",
+    "key_norm": "a11003db92ac233de120c90252446817e02e678b8f848870ee6657b1ec92fad0",
     "model": "claude-sonnet-5-5",
     "response": {
-      "id": "msg_011Cgg7tDp3GMRhXNpfBw4Tv",
+      "id": "msg_011Cgo4ZMejAU2D1dyo5257p",
       "container": null,
       "content": [
         {
-          "id": "toolu_01FHYXyLfs2qtxvn951Jzq4T",
+          "id": "toolu_01WkeZeQjCirRpxw8BR8R1vg",
           "caller": {
             "type": "direct"
           },
@@ -340,9 +354,10 @@
                 "units_list": []
               },
               {
-                "name": "어린이",
+                "name": "장애",
                 "groups": [
-                  "어린이"
+                  "장애 일반",
+                  "장애 동반"
                 ],
                 "units_tier": null,
                 "units_list": []
@@ -351,19 +366,20 @@
             "target": "청소년",
             "candidates": [
               "일반",
-              "경로"
+              "경로",
+              "장애"
             ]
           },
           "name": "pick_controls",
           "type": "tool_use"
         },
         {
-          "id": "toolu_01BesAWHfihp9eQZKHVr8hHR",
+          "id": "toolu_01CGFJxdp2vuZ9qFN7MenLDD",
           "caller": {
             "type": "direct"
           },
           "input": {
-            "start": "2023-01-01",
+            "start": "2023-08-01",
             "end": "2025-10-25"
           },
           "name": "event_calendar",
@@ -380,13 +396,13 @@
       "usage": {
         "cache_creation": {
           "ephemeral_1h_input_tokens": 0,
-          "ephemeral_5m_input_tokens": 6528
+          "ephemeral_5m_input_tokens": 5597
         },
-        "cache_creation_input_tokens": 6528,
+        "cache_creation_input_tokens": 5597,
         "cache_read_input_tokens": 0,
         "inference_geo": "global",
         "input_tokens": 4,
-        "output_tokens": 338,
+        "output_tokens": 348,
         "output_tokens_details": {
           "thinking_tokens": 0
         },
@@ -397,32 +413,32 @@
     "usage": {
       "cache_creation": {
         "ephemeral_1h_input_tokens": 0,
-        "ephemeral_5m_input_tokens": 6528
+        "ephemeral_5m_input_tokens": 5597
       },
-      "cache_creation_input_tokens": 6528,
+      "cache_creation_input_tokens": 5597,
       "cache_read_input_tokens": 0,
       "inference_geo": "global",
       "input_tokens": 4,
-      "output_tokens": 338,
+      "output_tokens": 348,
       "output_tokens_details": {
         "thinking_tokens": 0
       },
       "service_tier": "standard",
       "speed": "standard"
     },
-    "cost_usd": 0.019708,
-    "key_norm": "bf5b30c9126f664fa9a6e5a840713bcb96bf0e69639ee1432dafbd9c9930b23d"
+    "cost_usd": 0.0174805
   },
   {
     "role": "design",
-    "key": "5e7ab9ea1f1d3488a0bd95d3d254f8a59138320f567f88cd2f3f4912a6274217",
+    "key": "604618ebfbfb238198daad68eb29302ad11bedd269464221544b248dadfd3148",
+    "key_norm": "604618ebfbfb238198daad68eb29302ad11bedd269464221544b248dadfd3148",
     "model": "claude-sonnet-5-5",
     "response": {
-      "id": "msg_011Cgg7th3tmtYQou5jWck9N",
+      "id": "msg_011Cgo4a7ZRbQgQf7scgosYr",
       "container": null,
       "content": [
         {
-          "text": "{\"dataset\":\"bus_station\",\"series\":[{\"name\":\"청소년\",\"groups\":[\"청소년\"],\"units_tier\":null,\"units_list\":[]},{\"name\":\"일반\",\"groups\":[\"일반\"],\"units_tier\":null,\"units_list\":[]},{\"name\":\"경로\",\"groups\":[\"경로\"],\"units_tier\":null,\"units_list\":[]}],\"target\":\"청소년\",\"reference\":[\"경로\"],\"placebo\":[{\"target\":\"일반\",\"reference\":[\"경로\"]}],\"alt_references\":[{\"label\":\"일반을 대조로 사용\",\"reference\":[\"일반\"]}],\"pre\":null,\"post\":null,\"season_years\":3,\"exclude\":[{\"start\":\"2025-01-29\",\"end\":\"2025-01-29\",\"reason\":\"설 연휴(전체 이동 변동)\"},{\"start\":\"2025-10-06\",\"end\":\"2025-10-06\",\"reason\":\"추석 연휴(전체 이동 변동)\"},{\"start\":\"2025-07-20\",\"end\":\"2025-08-20\",\"reason\":\"여름방학 시기가 실제 시행일과 겹침(시점 위약검정에서 가짜 시행일 창이 겹치면 안 됨)\"}],\"reference_effect\":0.1,\"expected\":\"increase\",\"official_stats\":[\"youth_free_483\"],\"choices\":[{\"decision\":\"대조 집단은 경로 1개로 정함\",\"reason\":\"정책 전 728일 동안 청소년과 가장 비슷하게 움직였습니다(상관 0.9868, 격차 변동 0.1263). 일반은 상관 0.9838, 격차 변동 0.1439로 조금 낮았습니다. 경로는 격차 추세가 연 -0.0672로 일반(0.0228)보다 커서 대체 대조를 함께 둡니다.\"},{\"decision\":\"일반을 공간 위약으로 쓰고, 대체 대조로도 둠\",\"reason\":\"일반은 무료 정책 대상이 아니므로 경로를 기준으로 했을 때 변화가 없어야 합니다. 변화가 있다면 설계에 문제가 있다는 신호입니다. 대체 대조로 쓰면 결과가 대조 선택에 민감한지도 볼 수 있습니다.\"},{\"decision\":\"어린이는 대조와 위약에서 뺌\",\"reason\":\"어린이 무료 확대가 같은 날 시행되어 영향을 받는 집단입니다. 2025-01-01에는 '기타' 유형 신설로 어린이 집계가 바뀐 이력도 있습니다.\"},{\"decision\":\"사전·사후 기간은 기본값(728일, 182일)으로 둠\",\"reason\":\"기간을 조정할 특별한 이유가 없습니다. 시행 후 관측은 약 3개월(2025-08-01~2025-10-25)이라 기본 사후 기간보다 짧아, 결과 해석에 한계가 있습니다.\"},{\"decision\":\"계절 차분에 과거 3년을 사용함\",\"reason\":\"여름방학과 개학 때문에 청소년 이동이 계절적으로 달라집니다. 가능한 한 많은 연도를 써서 계절 영향을 줄입니다.\"},{\"decision\":\"명절 연휴와 여름방학 구간을 시점 위약검정 제외 구간에 넣음\",\"reason\":\"전체 이동에 영향을 주는 큰 사건이거나 청소년 이동이 계절적으로 크게 달라지는 시기이기 때문입니다. 데이터 결측·부분 집계는 자동 처리되므로 넣지 않았습니다.\"},{\"decision\":\"공식 통계 youth_free_483을 대조 자료로 함께 씀\",\"reason\":\"도 발표 수치와 데이터 규모가 크게 다릅니다(공식 수치가 데이터의 8.30배). 다만 공식 수치는 어린이와 청소년을 합친 값이라 정의가 다르므로 직접 비교에는 한계가 있습니다.\"},{\"decision\":\"데이터 품질 우려를 설계에 함께 적음\",\"reason\":\"시행일부터 청소년 계열이 -76% 변했습니다. 증가가 예상되는데 감소했으므로 집계 방식 변경이 원인일 가능성이 의심됩니다. 원인은 확정하지 않으며, 교통복지카드(무료) 승차가 이용자 유형 집계에 포함되는지와 분류 기준 변경 이력을 데이터 제공처에 확인해야 합니다. 이 설계는 이용 증가 여부를 판정하지 않고 판정 보류를 전제로 합니다.\"}]}",
+          "text": "{\"dataset\":\"bus_station\",\"series\":[{\"name\":\"청소년\",\"groups\":[\"청소년\"],\"units_tier\":null,\"units_list\":[]},{\"name\":\"일반\",\"groups\":[\"일반\"],\"units_tier\":null,\"units_list\":[]},{\"name\":\"경로\",\"groups\":[\"경로\"],\"units_tier\":null,\"units_list\":[]},{\"name\":\"장애\",\"groups\":[\"장애 일반\",\"장애 동반\"],\"units_tier\":null,\"units_list\":[]}],\"target\":\"청소년\",\"reference\":[\"일반\"],\"placebo\":[{\"target\":\"경로\",\"reference\":[\"일반\"]},{\"target\":\"장애\",\"reference\":[\"일반\"]}],\"alt_references\":[{\"label\":\"경로 대조\",\"reference\":[\"경로\"]},{\"label\":\"장애 대조\",\"reference\":[\"장애\"]}],\"pre\":null,\"post\":null,\"season_years\":2,\"exclude\":[{\"start\":\"2025-01-01\",\"end\":\"2025-01-31\",\"reason\":\"이용자 유형 '기타' 신설로 분류 기준이 바뀐 시기(데이터 단절 의심)\"},{\"start\":\"2025-01-29\",\"end\":\"2025-02-01\",\"reason\":\"설 연휴 및 겨울방학 시기라 가짜 시행일 창에 포함되면 안 됨\"}],\"reference_effect\":0.1,\"expected\":\"increase\",\"official_stats\":[\"youth_free_483\"],\"choices\":[{\"decision\":\"주 대조군으로 '일반'을 선택\",\"reason\":\"정책 전 728일 동안 청소년과의 상관이 0.9838로 높고, 격차 추세가 연 0.0228로 경로(-0.0672)보다 작다. 무료화 대상이 아니라 정책 영향이 적을 것으로 본다. 수준 차이는 3.28배로 크지만 비율 기준으로 비교하므로 큰 문제는 아니다.\"},{\"decision\":\"경로·장애는 위약 대상과 대체 대조로 사용\",\"reason\":\"두 집단 모두 청소년 무료화 대상이 아니다. 상관은 각각 0.9868과 0.9897로 높다. 위약 대상으로는 가짜 효과가 나오는지 확인하고, 대체 대조로는 결과가 대조 선택에 좌우되는지 확인한다. 장애 집단은 장애 일반과 장애 동반을 합쳐 쓴다.\"},{\"decision\":\"사전·사후 기간은 기본값(사전 728일, 사후 182일) 사용\",\"reason\":\"기간을 바꿔야 할 특별한 이유가 없다. 사후 관측은 약 3개월(2025-10-25까지)뿐이라 장기 효과는 말할 수 없다.\"},{\"decision\":\"계절 차분에 과거 2년 사용\",\"reason\":\"여름방학(7/20~8/20)이 시행일(8/1)과 겹친다. 같은 시기의 이전 2개년 패턴을 빼서 방학 효과와 정책 효과를 구분하려 한다. 그래도 완전히 분리되지는 않을 수 있다(확인 필요).\"},{\"decision\":\"시점 위약 검정에서 제외할 기간 지정\",\"reason\":\"2025-01 '기타' 유형 신설로 분류 기준이 바뀌었다. 설 연휴와 겨울방학도 겹치므로 가짜 시행일 창이 이 기간에 걸리지 않게 한다. 데이터 결측·부분 집계는 자동 처리되므로 넣지 않았다.\"},{\"decision\":\"공식 통계 youth_free_483과 대조\",\"reason\":\"도 발표 수치와 데이터상 청소년 이용을 비교해 집계 방식이 맞는지 확인한다.\"},{\"decision\":\"데이터 품질 한계를 명시\",\"reason\":\"Data Scout가 '측정 단절 의심(강)'으로 판정해 상한이 '판정 보류'다. 2022년 결측이 길고, 어린이 무료 확대가 동시에 시행되어 청소년 효과만 분리하기 어렵다. 일반 집단에 어린이 무료 확대의 영향이 섞였을 가능성도 의심한다. 시행일과 종료일은 확인 필요다.\"}]}",
           "type": "text"
         }
       ],
@@ -436,13 +452,13 @@
       "usage": {
         "cache_creation": {
           "ephemeral_1h_input_tokens": 0,
-          "ephemeral_5m_input_tokens": 2048
+          "ephemeral_5m_input_tokens": 1930
         },
-        "cache_creation_input_tokens": 2048,
-        "cache_read_input_tokens": 6528,
+        "cache_creation_input_tokens": 1930,
+        "cache_read_input_tokens": 5597,
         "inference_geo": "global",
         "input_tokens": 2,
-        "output_tokens": 1553,
+        "output_tokens": 1427,
         "output_tokens_details": {
           "thinking_tokens": 0
         },
@@ -453,32 +469,32 @@
     "usage": {
       "cache_creation": {
         "ephemeral_1h_input_tokens": 0,
-        "ephemeral_5m_input_tokens": 2048
+        "ephemeral_5m_input_tokens": 1930
       },
-      "cache_creation_input_tokens": 2048,
-      "cache_read_input_tokens": 6528,
+      "cache_creation_input_tokens": 1930,
+      "cache_read_input_tokens": 5597,
       "inference_geo": "global",
       "input_tokens": 2,
-      "output_tokens": 1553,
+      "output_tokens": 1427,
       "output_tokens_details": {
         "thinking_tokens": 0
       },
       "service_tier": "standard",
       "speed": "standard"
     },
-    "cost_usd": 0.0219596,
-    "key_norm": "5e7ab9ea1f1d3488a0bd95d3d254f8a59138320f567f88cd2f3f4912a6274217"
+    "cost_usd": 0.0202184
   },
   {
     "role": "skeptic",
-    "key": "31740c5c1ae2e0ee6bd0cac0f02801dcbdda27146c426db34c554053e4fc666d",
+    "key": "d552f30fa1feb5146f2b669b6b886b6a9073e969bf3dd5342426169a2e4d4068",
+    "key_norm": "eede010a72268d38aaf9c15ee3c334dd1051670efac70d73082827ada6bf66a1",
     "model": "claude-sonnet-5-5",
     "response": {
-      "id": "msg_011Cgg7unAjvgXKoraDLTYNz",
+      "id": "msg_011Cgo4bCvvUTrpkpL3mDTQw",
       "container": null,
       "content": [
         {
-          "id": "toolu_01LpyapHSNXjCB3mU8aM23dn",
+          "id": "toolu_01SHJtDwFLe53LcPe5Q5WMiG",
           "caller": {
             "type": "direct"
           },
@@ -490,39 +506,39 @@
           "type": "tool_use"
         },
         {
-          "id": "toolu_01RCHgkghW6zHs7Bw7iX6cx1",
-          "caller": {
-            "type": "direct"
-          },
-          "input": {
-            "kind": "alt_window",
-            "reference": [
-              "경로"
-            ],
-            "placebo_target": null,
-            "post": 30,
-            "start": null,
-            "end": null,
-            "reason": "시행 직후 30일만 보면 방학·계절성이 아닌 단절적 변화인지 확인"
-          },
-          "name": "extra_check",
-          "type": "tool_use"
-        },
-        {
-          "id": "toolu_018cDDxmqWiWN65RXnzVDftS",
+          "id": "toolu_013qFiWH7ArhnDUX8fUZkitv",
           "caller": {
             "type": "direct"
           },
           "input": {
             "kind": "exclude_period",
             "reference": [
-              "경로"
+              "일반"
             ],
             "placebo_target": null,
             "post": null,
             "start": "2025-07-20",
             "end": "2025-08-31",
-            "reason": "여름방학·개학 전환기를 제외해도 효과가 유지되는지 확인"
+            "reason": "여름방학 및 시행 직후 전환기(카드 분류 전환)를 빼도 -76% 하락이 유지되는지 확인"
+          },
+          "name": "extra_check",
+          "type": "tool_use"
+        },
+        {
+          "id": "toolu_011GoqqAFAi4HV21PhH1WWzt",
+          "caller": {
+            "type": "direct"
+          },
+          "input": {
+            "kind": "alt_window",
+            "reference": [
+              "일반"
+            ],
+            "placebo_target": null,
+            "post": 60,
+            "start": null,
+            "end": null,
+            "reason": "사후 기간을 60일로 줄여 개학·방학 및 장기 집계 변화 영향 확인"
           },
           "name": "extra_check",
           "type": "tool_use"
@@ -538,13 +554,13 @@
       "usage": {
         "cache_creation": {
           "ephemeral_1h_input_tokens": 0,
-          "ephemeral_5m_input_tokens": 3464
+          "ephemeral_5m_input_tokens": 3501
         },
-        "cache_creation_input_tokens": 3464,
+        "cache_creation_input_tokens": 3501,
         "cache_read_input_tokens": 0,
         "inference_geo": "global",
         "input_tokens": 4,
-        "output_tokens": 525,
+        "output_tokens": 544,
         "output_tokens_details": {
           "thinking_tokens": 0
         },
@@ -555,32 +571,32 @@
     "usage": {
       "cache_creation": {
         "ephemeral_1h_input_tokens": 0,
-        "ephemeral_5m_input_tokens": 3464
+        "ephemeral_5m_input_tokens": 3501
       },
-      "cache_creation_input_tokens": 3464,
+      "cache_creation_input_tokens": 3501,
       "cache_read_input_tokens": 0,
       "inference_geo": "global",
       "input_tokens": 4,
-      "output_tokens": 525,
+      "output_tokens": 544,
       "output_tokens_details": {
         "thinking_tokens": 0
       },
       "service_tier": "standard",
       "speed": "standard"
     },
-    "cost_usd": 0.013918,
-    "key_norm": "251aae07287af4501cfd1930649eef7f753a6b0911120385de27f0d5af94ba4b"
+    "cost_usd": 0.0142005
   },
   {
     "role": "skeptic",
-    "key": "72803024f588b5c8dd8047ec294d89f50d3e97801db8e80dcdf68b14c91ad6aa",
+    "key": "55415d0c5efa0992a9bd27bb3cd1711cccf631fd55d3a58463c560606b48df53",
+    "key_norm": "cc3fce08ada32ee0f465c1fa519ad9f886c80f8cf39d776d241ca3cc7dffae98",
     "model": "claude-sonnet-5-5",
     "response": {
-      "id": "msg_011Cgg7vPK75bYQ2nT7ePNHF",
+      "id": "msg_011Cgo4cGL5maW5zW6dPtmbX",
       "container": null,
       "content": [
         {
-          "text": "{\"hypotheses\":[{\"hypothesis\":\"여름방학·개학 등 계절 요인 때문에 청소년 이용이 줄어든 것처럼 보인다. 정책 효과가 아니라 계절성이다.\",\"why_plausible\":\"여름방학은 대략 2025-07-20~08-20이고, 시행일 2025-08-01과 겹친다. 방학 중에는 청소년 통학 이동이 줄 수 있다.\",\"check_ids\":[\"X1\",\"X2\"]},{\"hypothesis\":\"사전 추세가 시행 후까지 이어진 것이다. 청소년 이용은 원래 줄고 있었다.\",\"why_plausible\":\"사전추세 검정이 심각하게 실패했다(p=5.17e-16). 다만 사전 추세 연장으로 설명되는 몫은 9%뿐이다.\",\"check_ids\":[\"C1\"]},{\"hypothesis\":\"청소년 승차 기록의 집계·분류 방식이 2025-08-01에 바뀌었다. 예를 들면 무료 이용자가 교통복지카드 등 다른 유형으로 옮겨 기록됐을 수 있다. 이 경우 -74~-76%는 실제 이용 감소가 아니라 측정 단절이다.\",\"why_plausible\":\"C0이 실패했고 측정 단절 의심이 강하다. 정책 목적은 이용 증가인데 결과는 -75.6%로 방향이 반대다. 위약검정(C2a, C2b)과 민감도(C3)는 통과했지만, 이는 단절이 있다는 뜻일 뿐 원인이 정책임을 보이지는 않는다.\",\"check_ids\":[\"C0\",\"C2a\",\"C2b\",\"C3\"]},{\"hypothesis\":\"어린이 무료 확대가 동시에 시행되어 효과가 섞였다. 대조군 선택에 따라 결과가 달라질 수 있다.\",\"why_plausible\":\"두 정책이 같은 날 시작됐다. 다만 일반을 대조로 쓴 가짜 처치는 +6.4%여서, 대조군이 오염됐다는 근거는 이번 검증에서 보이지 않았다.\",\"check_ids\":[\"C2b\",\"C4\"]}],\"summary\":\"계절성 반론은 두 가지 검증에서 모두 기각됐다. 사후 기간을 30일로 줄이면 -68.2%였고, 방학·개학 전환기(2025-07-20~08-31)를 제외하면 -78.9%였다. 둘 다 유의했고 방향이 유지됐다. 사전추세 연장으로 설명되는 몫은 9%로 작다. 남은 가장 큰 의심은 집계·분류 방식 변경이다. 정책 목적(이용 증가)과 반대 방향의 큰 감소이고 C0이 실패했기 때문이다. 이 데이터로는 정책 효과를 판정하기 어렵다. 판정 보류가 타당하다. 제공처에 2025-08-01 전후 이용자 유형 분류 기준과 교통복지카드 기록 처리 방식의 변경 여부를 확인해야 한다(확인 필요).\"}",
+          "text": "{\"hypotheses\":[{\"hypothesis\":\"-76% 감소는 정책 효과가 아니라 집계 방식이 바뀐 결과일 수 있다. 무료 카드(교통복지카드)로 타면 '청소년' 유형이 아닌 다른 유형으로 기록됐을 수 있고, 이 경우 실제 이용은 줄지 않았는데 기록만 줄어든 것이다.\",\"why_plausible\":\"정책 기대 방향은 증가인데 결과는 -76%로 반대이고 그 크기도 매우 크다. C0 데이터 품질 검증이 '실패'로 나왔고, 측정 단절을 강하게 의심한다. 시행일에 맞춰 분류 기준이 바뀌었는지는 확인 필요하다.\",\"check_ids\":[\"C0\"]},{\"hypothesis\":\"여름방학(대략 7/20~8/20)과 시행 직후 전환기 때문에 청소년 이용이 일시적으로 줄어 보인 것일 수 있다.\",\"why_plausible\":\"event_calendar상 여름방학이 시행일(8/1)과 겹친다. 학교마다 일정이 달라 정확한 기간은 확인 필요하다. 그러나 7/20~8/31을 빼고 다시 추정해도 -79.8%(CI -1.713~-1.4875)로 유의하게 유지됐다.\",\"check_ids\":[\"X1\"]},{\"hypothesis\":\"사후 기간이 길어지면서 생긴 장기적 집계 변화나 계절 변동이 효과로 잡혔을 수 있다.\",\"why_plausible\":\"관측 기간이 약 3개월로 짧고, 개학·추석 연휴(10/6)도 포함된다. 그러나 사후 기간을 60일로 줄여도 -74.1%(CI -1.6302~-1.0688)로 유의하게 유지됐다.\",\"check_ids\":[\"X2\"]},{\"hypothesis\":\"어린이 무료 확대가 비교군('일반')을 오염시켜 효과가 왜곡됐을 수 있고, 청소년 효과를 따로 분리하기 어렵다.\",\"why_plausible\":\"어린이 무료 확대가 동시에 시행됐다. 다만 비교군을 경로·장애로 바꾼 대조(C3 민감도)에서 4개 모두 같은 방향이었고, 가짜 처치인 경로(-3.9%)와 장애(-4.8%)는 변화가 작았다(C2b). 비교군 오염만으로는 설명하기 어렵다.\",\"check_ids\":[\"C2b\",\"C3\"]}],\"summary\":\"방학·전환기를 뺀 재추정(X1)과 사후 기간 단축(X2)은 둘 다 '반론 기각'이었고, -76%에 가까운 큰 하락이 유지됐다. 시점·공간 위약검정과 민감도도 통과했다. 그러나 하락 방향이 기대(증가)와 반대이고, C0에서 집계 방식 변경(측정 단절) 의심이 강하게 나왔다. 통계 검증은 이 변화가 실제로 있었음을 보여줄 뿐, 그 원인이 정책 효과임을 보여주지는 않는다. 따라서 '판정 보류'가 타당하다. 교통복지카드 승차 기록이 어떤 유형으로 분류되는지, 2025-08-01 전후 유형 분류 기준이 바뀌었는지를 데이터 제공처에 확인해야 한다(확인 필요).\"}",
           "type": "text"
         }
       ],
@@ -594,13 +610,13 @@
       "usage": {
         "cache_creation": {
           "ephemeral_1h_input_tokens": 0,
-          "ephemeral_5m_input_tokens": 1218
+          "ephemeral_5m_input_tokens": 1257
         },
-        "cache_creation_input_tokens": 1218,
-        "cache_read_input_tokens": 3464,
+        "cache_creation_input_tokens": 1257,
+        "cache_read_input_tokens": 3501,
         "inference_geo": "global",
         "input_tokens": 2,
-        "output_tokens": 1082,
+        "output_tokens": 1218,
         "output_tokens_details": {
           "thinking_tokens": 0
         },
@@ -611,32 +627,32 @@
     "usage": {
       "cache_creation": {
         "ephemeral_1h_input_tokens": 0,
-        "ephemeral_5m_input_tokens": 1218
+        "ephemeral_5m_input_tokens": 1257
       },
-      "cache_creation_input_tokens": 1218,
-      "cache_read_input_tokens": 3464,
+      "cache_creation_input_tokens": 1257,
+      "cache_read_input_tokens": 3501,
       "inference_geo": "global",
       "input_tokens": 2,
-      "output_tokens": 1082,
+      "output_tokens": 1218,
       "output_tokens_details": {
         "thinking_tokens": 0
       },
       "service_tier": "standard",
       "speed": "standard"
     },
-    "cost_usd": 0.0145618,
-    "key_norm": "79a23b31cd9dc4647fb7e8a4506040d38bbd6590739ac5cb3913dc4966d8886a"
+    "cost_usd": 0.0160267
   },
   {
     "role": "reporter",
-    "key": "6ea55ee9d2924a4fb13401922a62ec75c23017107499a47d629857631d5d3eec",
+    "key": "45813f1d97845352f2b46d8b9d960b03d35715c5c0ba034873a0ebac3f6f5d96",
+    "key_norm": "45813f1d97845352f2b46d8b9d960b03d35715c5c0ba034873a0ebac3f6f5d96",
     "model": "claude-sonnet-5-5",
     "response": {
-      "id": "msg_011Cgg7w1N29GcbtqMj4u2dN",
+      "id": "msg_011Cgo4cwn9fiBuYAqcJCNBb",
       "container": null,
       "content": [
         {
-          "text": "{\"headline\":\"청소년 버스 무료화(2025-08-01) 이후 청소년 버스 이용이 늘었는지는 판단을 보류합니다. 자료에서 보이는 큰 감소는 실제 이용 감소인지, 집계 방식 변경인지 구분할 수 없습니다.\",\"summary\":\"2025-08-01 이후 '청소년' 이용 인원이 크게 줄어든 것으로 계산되었고, 참고 수치는 사후 82일 평균 -75.6%(판정 구간 -81.6% ~ -69.7%)입니다. 그러나 데이터 품질 검증에서 집계 방식이 바뀌었을 가능성이 강하게 의심되어 정책 효과와 측정 문제를 나눌 수 없습니다. 사전 추세 검증도 실패했습니다. 따라서 '이용이 늘었다'와 '줄었다' 어느 쪽으로도 결론을 내리지 않고, 분류 기준 변경 이력과 무료 승차 기록을 확인한 뒤 다시 판정하는 것이 맞습니다.\",\"evidence\":[\"데이터 품질 검증(C0) 실패: 측정 단절 의심(강). 2025-08-01부터 '청소년'이 -74% 바뀌었고, 근거 3개가 정책 효과보다 집계 방식 변경을 가리킴\",\"사전 추세 검증(C1) 실패: 사전 추세 검정 p=5.17e-16(심각), 사전 추세 연장으로 설명되는 몫 9%\",\"참고 추정치는 -75.6%(판정 구간 -81.6% ~ -69.7%, p=0.005)이며, 분석 기간 2023-08-04 ~ 2025-10-25, 사전 683·사후 82\",\"시점 위약검정(C2a), 공간 위약검정(C2b), 민감도(C3), 이중 계산(C4)은 통과했고, 계절성·대조 집단·분석 선택 우연 반론은 기각됨\",\"그러나 '측정 방식이 바뀌어 숫자만 달라졌다'는 반론과 '정책 전부터 이미 변하고 있었다'는 반론은 성립함\",\"예를 들어 무료 이용자가 교통복지카드 등 다른 유형으로 옮겨 기록됐다면 -74~-76%는 실제 이용 감소가 아니라 측정 단절일 수 있음\"],\"limits\":[\"통계 검증을 통과한 항목이 있어도 측정 방식 변경 의심이 해소되지 않으면 추정치를 정책 효과로 읽을 수 없음\",\"현재 구분 가능한 최소 효과는 ±34.8%(기준 효과 10%)로, 작은 효과는 구분하기 어려움\",\"사후 기간이 82일로 짧음\",\"어린이 무료 확대가 같은 시기에 시행되어 효과가 섞였을 가능성은 규칙 검증에서 기각되었으나, 정책 구성과 대상 범위는 확인 필요\",\"데이터 제공처의 분류 기준 변경 여부는 아직 확인되지 않아 '의심' 단계임\"],\"cannot_say\":[\"청소년 버스 무료화로 청소년의 실제 버스 이용이 늘었다 또는 줄었다고 말할 수 없음\",\"-75.6%가 실제 이용 감소라고 단정할 수 없음\",\"감소 원인이 집계 방식 변경이라고 확정할 수도 없음\"],\"needed_data\":[\"교통복지카드(무료) 승차 기록이 포함된 이용자 유형별 승차 자료\",\"2025-08-01 전후 이용자 유형 분류 기준 변경 이력(데이터 제공처 확인)\",\"정책이 계속되는 경우 사후 기간 약 806일(현재 82일)의 추가 자료, 또는 일 단위·전체 카드사 등 더 세밀한 자료\"]}",
+          "text": "{\"headline\":\"청소년 버스 무료화(2025-08-01) 이후 이용이 늘었는지는 판정을 보류합니다. 집계 방식이 바뀌었을 가능성이 커서 정책 효과와 구분할 수 없습니다.\",\"summary\":\"2025-08-01부터 '청소년' 유형 이용 인원이 -76.5%(판정 구간 -81.9% ~ -70.4%) 바뀌었으나, 이는 이용이 늘었다는 근거가 아니라 오히려 감소로 나타난 값입니다. 데이터 품질 검증(C0)에서 측정 단절 의심(강)이 나왔고, 근거 3개가 정책 효과보다 집계 방식 변경을 가리킵니다. 무료 카드(교통복지카드)로 탄 기록이 '청소년'이 아닌 다른 유형으로 잡혔다면 실제 이용은 줄지 않고 기록만 줄었을 수 있습니다. 따라서 이 숫자를 정책 효과로 읽지 않고, 유형 분류 기준과 무료 카드 승차 기록을 확인한 뒤 다시 판단해야 합니다.\",\"evidence\":[\"C0 데이터 품질: 실패 — 측정 단절 의심(강). 2025-08-01부터 '청소년'이 -76% 바뀌었고, 근거 3개가 집계 방식 변경을 가리킴\",\"'측정 방식이 바뀌어 숫자만 달라졌다'는 반론은 성립(규칙 검증: 성립). 무료 카드 이용이 다른 유형으로 기록됐을 가능성 있음\",\"참고용 추정 변화는 사후 82일 평균 -76.5%(판정 구간 -81.9% ~ -70.4%, p=0.006)이며 측정 문제와 구분할 수 없음\",\"사전추세(p=0.17, 연장으로 설명되는 몫 2%), 시점 위약검정(177개 중 순위 p=0.006), 공간 위약검정(실제 -76.5% vs 가짜 처치 경로 -3.9%, 장애 -4.8%), 민감도(4개 중 4개 같은 방향·유의)는 통과\",\"여름방학·전환기 제외(2025-07-20~2025-08-31 제외 시 -79.8%), 사후 60일만 볼 때 -74.1%로 반론은 기각됨\",\"C4 이중 계산은 pandas와 SQL 값이 -1.446824006으로 일치\"],\"limits\":[\"통계 검증은 대부분 통과했지만, 데이터 자체의 측정 단절 의심(강)이 해소되지 않아 결과를 정책 효과로 해석할 수 없음\",\"검정력 한계: 현재 구분 가능한 최소 효과는 ±33.0%(기준 효과 10%). 기준 효과를 구분하려면 표준오차가 지금의 1/3.0 이하여야 함\",\"어린이 무료 확대가 비교군('일반')에 미친 영향은 규칙 검증에서 기각됐으나, 청소년 효과만 따로 분리하기 어렵다는 점은 남음\",\"분석 기간은 2023-08-04 ~ 2025-10-25(사전 666 · 사후 82)이며 사후 기간이 짧음\"],\"cannot_say\":[\"청소년 버스 이용이 실제로 늘었다 또는 줄었다고 말할 수 없음\",\"-76.5% 변화가 정책 때문이라고 단정할 수 없음\",\"집계 방식이 실제로 바뀌었다고 확정할 수 없음(의심 단계이며 확인 필요)\"],\"needed_data\":[\"교통복지카드(무료) 승차 기록이 포함된 이용자 유형별 승차 자료\",\"2025-08-01 전후 이용자 유형 분류 기준 변경 이력(데이터 제공처 확인)\",\"정책이 계속되는 경우 사후 기간을 늘린 자료, 끝난 정책이면 더 세밀한 자료(일 단위·전체 카드사 등)\"]}",
           "type": "text"
         }
       ],
@@ -650,13 +666,13 @@
       "usage": {
         "cache_creation": {
           "ephemeral_1h_input_tokens": 0,
-          "ephemeral_5m_input_tokens": 2648
+          "ephemeral_5m_input_tokens": 2664
         },
-        "cache_creation_input_tokens": 2648,
+        "cache_creation_input_tokens": 2664,
         "cache_read_input_tokens": 0,
         "inference_geo": "global",
         "input_tokens": 4,
-        "output_tokens": 1355,
+        "output_tokens": 1408,
         "output_tokens_details": {
           "thinking_tokens": 0
         },
@@ -667,20 +683,19 @@
     "usage": {
       "cache_creation": {
         "ephemeral_1h_input_tokens": 0,
-        "ephemeral_5m_input_tokens": 2648
+        "ephemeral_5m_input_tokens": 2664
       },
-      "cache_creation_input_tokens": 2648,
+      "cache_creation_input_tokens": 2664,
       "cache_read_input_tokens": 0,
       "inference_geo": "global",
       "input_tokens": 4,
-      "output_tokens": 1355,
+      "output_tokens": 1408,
       "output_tokens_details": {
         "thinking_tokens": 0
       },
       "service_tier": "standard",
       "speed": "standard"
     },
-    "cost_usd": 0.020178,
-    "key_norm": "6ea55ee9d2924a4fb13401922a62ec75c23017107499a47d629857631d5d3eec"
+    "cost_usd": 0.020748
   }
 ]

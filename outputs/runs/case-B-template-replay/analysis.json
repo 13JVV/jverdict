@@ -451,7 +451,7 @@
     "counterfactual": 0.17201116163883276,
     "policy": "2020-05"
   },
-  "seconds": 0.02,
+  "seconds": 0.01,
   "verdict_v3": {
     "level": "판정 보류",
     "direction": null,
