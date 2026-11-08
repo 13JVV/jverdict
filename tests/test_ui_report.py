@@ -117,3 +117,26 @@ def test_app_accuracy_page():
     at = st_testing.AppTest.from_file(APP, default_timeout=60).run()
     [b for b in at.button if b.label.startswith("정확도 리포트")][0].click().run()
     assert not at.exception and at.title[0].value == "정확도 리포트"
+
+
+def test_app_guide_shows_once_and_reopens(c_run, monkeypatch):
+    """첫 화면에 처음 들어오면 사용 안내가 한 번 뜨고, 넘기기·건너뛰기·다시 열기가 된다. 주소로 연 판정서·?guide=0에는 안 뜬다."""
+    st_testing = pytest.importorskip("streamlit.testing.v1")
+    monkeypatch.setattr(O, "RUNS", c_run.parent)
+    at = st_testing.AppTest.from_file(APP, default_timeout=60).run()
+    assert not at.exception and "정책이 정말 효과가" in _text(at)
+    for _ in range(3):
+        [b for b in at.button if b.key == "g_next"][0].click().run()
+    assert "판정서 읽는 법" in _text(at) and any(b.key == "g_try" for b in at.button)
+    [b for b in at.button if b.key == "g_close"][0].click().run()
+    assert not at.session_state["guide_open"]
+    at.run()                                                   # 다시 그려도 저절로 다시 뜨지 않음
+    assert "정책이 정말 효과가" not in _text(at)
+    [b for b in at.button if b.key == "guide_btn"][0].click().run()
+    assert "정책이 정말 효과가" in _text(at)
+    for q in ({"run": "ui-c"}, {"guide": "0"}):
+        a2 = st_testing.AppTest.from_file(APP, default_timeout=60)
+        for k, v in q.items():
+            a2.query_params[k] = v
+        a2.run()
+        assert not a2.exception and "정책이 정말 효과가" not in _text(a2)

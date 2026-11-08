@@ -27,6 +27,7 @@ import sys
 import tempfile
 import time
 import tomllib
+import unicodedata
 import urllib.request
 import zipfile
 from pathlib import Path
@@ -349,12 +350,18 @@ def code_sha() -> str:
     return _code_fingerprint()
 
 
+def nfc(rel: str) -> str:
+    """zip 안 이름은 NFC(완성형)로 둔다. Mac에서 내려받은 파일은 이름이 NFD(자모 분리)인 경우가 있다.
+    Mac은 둘을 같은 이름으로 보지만 Windows는 다른 이름으로 봐서, 코드가 찾는 '업종별성별카드이용정보.csv'가 없다고 나온다."""
+    return unicodedata.normalize("NFC", rel)
+
+
 def write_meta(stage: Path, info: dict) -> None:
     (stage / "BUILD_INFO.json").write_text(json.dumps(info, ensure_ascii=False, indent=2), encoding="utf-8")
     rows = []
     for p in sorted(stage.rglob("*"), key=lambda p: p.relative_to(stage).as_posix()):
         if p.is_file() and p.name != "SHA256SUMS.txt":
-            rows.append(f"{sha256(p)}  {p.relative_to(stage).as_posix()}")
+            rows.append(f"{sha256(p)}  {nfc(p.relative_to(stage).as_posix())}")
     (stage / "SHA256SUMS.txt").write_text("\n".join(rows) + "\n", encoding="utf-8")
 
 
@@ -363,15 +370,17 @@ def make_zip(stage: Path, zpath: Path) -> dict:
     tmp = zpath.with_suffix(".part")
     with zipfile.ZipFile(tmp, "w", zipfile.ZIP_DEFLATED, compresslevel=6) as zf:
         for p in files:
-            zf.write(p, f"{BUNDLE}/{p.relative_to(stage).as_posix()}")      # 한글 이름은 UTF-8 표시(0x800)로 저장됨
+            zf.write(p, nfc(f"{BUNDLE}/{p.relative_to(stage).as_posix()}"))  # 한글 이름은 NFC + UTF-8 표시(0x800)
     tmp.replace(zpath)
     with zipfile.ZipFile(zpath) as zf:
         badcrc = zf.testzip()
         infos = zf.infolist()
         nonascii_noflag = [i.filename for i in infos if not i.filename.isascii() and not i.flag_bits & 0x800]
-    if badcrc or nonascii_noflag or len(infos) != len(files):
+        not_nfc = [i.filename for i in infos if i.filename != nfc(i.filename)]
+        names = {i.filename for i in infos}
+    if badcrc or nonascii_noflag or not_nfc or len(names) != len(files):
         raise SystemExit(f"[오류] 압축 검사 실패: crc={badcrc}, utf8표시없음={nonascii_noflag[:3]}, "
-                         f"항목 {len(infos)}/{len(files)}")
+                         f"NFC아님={not_nfc[:3]}, 항목 {len(names)}/{len(files)}")
     return {"entries": len(infos), "bytes": zpath.stat().st_size, "sha256": sha256(zpath)}
 
 

@@ -182,6 +182,22 @@ button[role=tab] p{font-weight:600}
 .jv-case-card .w{font-size:.78rem;color:var(--muted);margin:.05rem 0 .45rem}
 .jv-case-card .naive{font-size:.84rem;color:var(--ink2);text-decoration:line-through;text-decoration-color:#b9bec5}
 .jv-case-card .why{font-size:.8rem;color:var(--ink2);margin-top:.35rem;line-height:1.45}
+.jv-g-dots{display:flex;gap:.35rem;margin:-.2rem 0 .8rem}
+.jv-g-dots i{display:block;height:4px;flex:1;border-radius:2px;background:var(--line)}
+.jv-g-dots i.on{background:var(--navy)}
+.jv-g-h{font-size:1.15rem;font-weight:800;color:var(--ink);margin:.1rem 0 .35rem}
+.jv-g-p{font-size:.93rem;color:var(--ink2);line-height:1.6;margin:0 0 .7rem}
+.jv-g-row{display:flex;gap:.7rem;align-items:flex-start;padding:.55rem .1rem;border-top:1px solid var(--line)}
+.jv-g-row:first-of-type{border-top:0}
+.jv-g-row .n{flex:0 0 1.6rem;height:1.6rem;border-radius:50%;background:var(--navy2);color:var(--navy);font-weight:800;
+  font-size:.85rem;display:flex;align-items:center;justify-content:center}
+.jv-g-row .t{font-weight:700;color:var(--ink);font-size:.92rem}
+.jv-g-row .d{color:var(--ink2);font-size:.86rem;line-height:1.5;margin-top:.1rem}
+.jv-g-flow{display:flex;flex-wrap:wrap;gap:.3rem;align-items:center;margin:.2rem 0 .8rem}
+.jv-g-flow span{font-size:.8rem;padding:.2rem .55rem;border:1px solid var(--line);border-radius:999px;background:var(--soft);color:var(--ink)}
+.jv-g-flow span.lock{border-color:var(--navy);color:var(--navy);font-weight:700}
+.jv-g-flow b{color:var(--muted);font-weight:400}
+.jv-g-tip{font-size:.86rem;background:var(--navy2);color:var(--navy);border-radius:6px;padding:.55rem .75rem;margin-top:.6rem}
 @media(max-width:720px){.jv-cases{grid-template-columns:1fr 1fr}}
 /* 판정서 꼬리: 직인 */
 .jv-tail{display:flex;justify-content:flex-end;align-items:center;gap:.8rem;margin:1.6rem 0 .4rem;color:var(--ink2);font-size:.85rem}
@@ -265,6 +281,8 @@ with st.sidebar:
                 unsafe_allow_html=True)
     busy = ss.job is not None and ss.job.alive
     st.button("＋ 새 판정", type="primary", width="stretch", on_click=go_home, disabled=busy)
+    if st.button("사용 안내", icon=":material/help_outline:", width="stretch", key="guide_btn"):
+        ss.guide_step, ss.guide_open = 0, True
 
     st.markdown("**지난 판정서**")
     runs = [d for d in list_runs(O.RUNS) if not d.name.endswith("-replay")]
@@ -315,6 +333,103 @@ def _case_summary(run_dir: str, mtime: float) -> dict | None:
                           v.naive.get("naive_level", "")) + "'") if v.naive else ""}
     except Exception:  # noqa: BLE001
         return None
+
+
+GUIDE_STEPS = 4
+
+
+def _guide_html(i: int) -> str:
+    dots = '<div class="jv-g-dots">' + "".join(f'<i class="{"on" if k <= i else ""}"></i>' for k in range(GUIDE_STEPS)) + "</div>"
+
+    def rows(items):
+        return "".join(f'<div class="jv-g-row"><div class="n">{E(n)}</div><div><div class="t">{E(t)}</div>'
+                       f'<div class="d">{d}</div></div></div>' for n, t, d in items)
+    if i == 0:
+        body = ('<div class="jv-g-h">정책이 정말 효과가 있었는지 판정합니다</div>'
+                '<p class="jv-g-p">정책 이름이나 질문을 주면, Agent가 제주 공공데이터로 그 정책의 효과를 따져 '
+                '<b>판정서</b>를 냅니다. 시행 전후 숫자만 비교하지 않습니다.</p>'
+                + rows([("1", "비교 대상을 둡니다", "정책을 받지 않은 집단과 함께 보아 계절·경기 같은 다른 변화를 걸러 냅니다."),
+                        ("2", "결과를 보기 전에 방법을 잠급니다", "결과에 맞춰 방법을 바꾸지 못하도록 분석 계획을 먼저 확정합니다."),
+                        ("3", "스스로 반론합니다", "가짜 시행일 시험과 '같은 시기 다른 사건' 같은 반론으로 결론을 다시 검증합니다."),
+                        ("4", "모르면 미룹니다", "근거가 부족하면 '판정 보류'를 내고, 무엇이 있으면 판정할 수 있는지 알려 줍니다.")]))
+    elif i == 1:
+        body = ('<div class="jv-g-h">세 가지 방법으로 시작합니다</div>'
+                + rows([("▶", "사례 카드의 ‘진행 재생 · 판정서’", "첫 화면 위쪽의 실제 제주 정책 4건입니다. 이미 판정한 기록을 "
+                         "단계별로 재생하고 판정서를 엽니다. <b>처음이라면 여기부터</b> 보세요."),
+                        ("?", "질문으로 시작", "예시 질문을 고르거나 직접 적고 <b>판정 시작</b>을 누릅니다. "
+                         "Agent가 정리한 <b>정책 카드</b>(시행일·대상·자료)를 확인한 뒤 <b>이 카드로 판정 시작</b>을 누르면 됩니다."),
+                        ("＋", "직접 만들기(새 정책)", "등록되지 않은 정책은 자료, 정책 이름, 시행일, 대상을 골라 "
+                         "정책 카드를 직접 만들어 판정합니다.")])
+                + '<div class="jv-g-tip">기본 실행은 인터넷과 API 키 없이 이 PC 안에서 돌아갑니다. '
+                  "사례 1건에 20~30초가 걸립니다.</div>")
+    elif i == 2:
+        flow = "".join((f'<span class="lock">{E(STAGE_KO[k])}</span>' if k == "lock" else f"<span>{E(STAGE_KO[k])}</span>")
+                       + ("<b>→</b>" if k != "report" else "")
+                       for k in ("parse", "confirm", "scout", "design", "lock", "execute", "skeptic", "report"))
+        body = ('<div class="jv-g-h">판정 중에는 이런 단계를 거칩니다</div>'
+                f'<div class="jv-g-flow">{flow}</div>'
+                + rows([("1", "데이터 점검", "자료가 중간에 끊기거나 집계 기준이 바뀐 곳이 없는지 먼저 의심합니다."),
+                        ("2", "비교 방법 정하기 → 잠금", "결과를 보지 않은 채 비교 대상과 계산 방법을 정하고, "
+                         "설계 문서를 지문(SHA-256)으로 잠급니다."),
+                        ("3", "추정과 반론", "통계 도구로 계산한 뒤 가짜 시행일·가짜 대상 시험을 하고, "
+                         "다른 설명이 가능한지 반론을 세워 다시 계산합니다.")])
+                + '<div class="jv-g-tip">모든 숫자는 통계 도구가 계산합니다. AI는 설계를 고르고 결과를 말로 옮깁니다.</div>')
+    else:
+        lv = "".join(f'<div class="jv-g-row"><div style="flex:0 0 6.2rem">{badge(k, k)}</div>'
+                     f'<div class="d">{E(LEVEL_MEANING[k])}</div></div>'
+                     for k in ("효과 있음", "조건부", "효과 없음", "판정 보류"))
+        body = ('<div class="jv-g-h">판정서 읽는 법</div>'
+                '<p class="jv-g-p">맨 위 <b>도장</b>이 결론이고, 옆의 <b>요지</b> 한 줄이 이유입니다. '
+                '그 아래 숫자 줄에서 <b>단순 비교였다면</b>과 <b>판정관 추정</b>이 얼마나 다른지 보세요.</p>'
+                + lv
+                + '<div class="jv-g-tip"><b>판정 보류는 실패가 아닙니다.</b> 틀린 결론을 막는 판정이며, '
+                  "‘다음 할 일’ 탭에 필요한 자료와 공문 초안을 함께 냅니다.</div>")
+    return dots + body + '<div style="height:.5rem"></div>'
+
+
+def _guide_go(step: int):
+    ss.guide_step = max(0, min(GUIDE_STEPS - 1, step))
+
+
+def _guide_try_first():
+    d = _recorded("A")
+    if d is not None:
+        ss.view_dir, ss.page, ss.job = str(d), "replay", None
+    ss.guide_open = False
+
+
+def _guide_close():
+    ss.guide_open = False
+
+
+@st.dialog("정책 판정관 사용 안내", width="large", on_dismiss=_guide_close)   # X·Esc·바깥 클릭으로 닫아도 다시 안 뜨게
+def show_guide():
+    i = ss.get("guide_step", 0)
+    st.markdown(_guide_html(i), unsafe_allow_html=True)
+    a, b_, c = st.columns([1, 1, 1.4])
+    with a:
+        if i > 0:
+            st.button("← 이전", on_click=_guide_go, args=(i - 1,), width="stretch", key="g_prev")
+        else:
+            if st.button("건너뛰기", width="stretch", key="g_skip"):
+                ss.guide_open = False
+                st.rerun()
+    with b_:
+        st.markdown(f'<div style="text-align:center;color:var(--muted);font-size:.85rem;padding-top:.45rem">'
+                    f'{i + 1} / {GUIDE_STEPS}</div>', unsafe_allow_html=True)
+    with c:
+        if i < GUIDE_STEPS - 1:
+            st.button("다음 →", type="primary", on_click=_guide_go, args=(i + 1,), width="stretch", key="g_next")
+        else:
+            busy_ = ss.job is not None and ss.job.alive
+            if st.button("▶ 첫 사례 재생해 보기", type="primary", width="stretch", key="g_try", disabled=busy_):
+                _guide_try_first()
+                st.rerun()
+    if i == GUIDE_STEPS - 1:
+        if st.button("닫기", key="g_close", type="tertiary", width="stretch"):
+            ss.guide_open = False
+            st.rerun()
+    st.caption("이 안내는 왼쪽 메뉴의 ‘사용 안내’에서 다시 볼 수 있습니다.")
 
 
 def render_start():
@@ -619,6 +734,17 @@ def render_verdict(run_dir: str):
         if b["foot"]:
             html_cells += f'<div class="foot">{E(b["foot"])}</div>'
         st.markdown(f'<div class="jv-strip">{html_cells}</div>', unsafe_allow_html=True)
+    with st.expander("이 판정서 읽는 법"):
+        st.markdown(
+            "- **도장**: 판정 결과입니다. 효과 있음·조건부·효과 없음·판정 보류 네 가지이며, 도장 아래 작은 글씨가 그 이유의 종류입니다.\n"
+            "- **요지 · 근거 · 검증 · 반론 · 다음**: 도장 옆 다섯 줄입니다. 요지 한 줄만 읽어도 결론과 이유를 알 수 있습니다.\n"
+            "- **숫자 줄**: '단순 전후 비교였다면'은 대조와 검증 없이 시행 전후만 비교한 값입니다. '판정관 추정'과 차이가 클수록 "
+            "단순 비교가 틀렸을 가능성이 큽니다. '구분 가능한 최소 변화'가 기준보다 크면 자료가 부족해 판단할 수 없다는 뜻입니다.\n"
+            "- **그래프**: 정책 대상과 비교 대상의 차이가 시간에 따라 어떻게 변했는지 보여 줍니다. 세로 점선이 시행일이고, "
+            "시행 뒤 굵은 선이 0%(정책이 없었다면)에서 멀어질수록 효과가 큽니다.\n"
+            "- **탭**: '다음 할 일'(보고 요약·공문 초안), '검증·반론'(시험별 통과 여부), 'Agent의 판단'(단계별 기록), "
+            "'설계 문서(잠금)'(결과를 보기 전에 확정한 계획), '재현·내려받기'(같은 결과가 다시 나오는지 확인)."
+        )
 
     cd = chart_data(a, v.design)
     fig = figure(cd)
@@ -906,6 +1032,13 @@ if True:                                             # 매번 같은 내용으�
     else:                                            # 옛 Streamlit
         import streamlit.components.v1 as _components
         _components.html(_js, height=0)
+# 사용 안내: 첫 화면에 처음 들어오면 한 번 띄운다(주소에 ?guide=0이면 띄우지 않음: 녹화·캡처용)
+if not ss.get("guide_seen"):
+    ss.guide_seen = True
+    if (st.query_params.get("guide") != "0" and ss.job is None and not ss.view_dir and ss.page == "main"):
+        ss.guide_step, ss.guide_open = 0, True
+if ss.get("guide_open"):                             # 버튼·닫기(on_dismiss)로만 꺼진다
+    show_guide()
 if ss.job is not None:
     render_job()
 elif ss.page == "accuracy":
