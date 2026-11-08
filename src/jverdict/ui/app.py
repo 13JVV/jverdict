@@ -360,8 +360,10 @@ def _guide_html(i: int) -> str:
                          "Agent가 정리한 <b>정책 카드</b>(시행일·대상·자료)를 확인한 뒤 <b>이 카드로 판정 시작</b>을 누르면 됩니다."),
                         ("＋", "직접 만들기(새 정책)", "등록되지 않은 정책은 자료, 정책 이름, 시행일, 대상을 골라 "
                          "정책 카드를 직접 만들어 판정합니다.")])
-                + '<div class="jv-g-tip">기본 실행은 인터넷과 API 키 없이 이 PC 안에서 돌아갑니다. '
-                  "사례 1건에 20~30초가 걸립니다.</div>")
+                + ('<div class="jv-g-tip">이 웹 데모에는 제주데이터허브 원자료가 없어, 실데이터 사례는 개발 PC에서 만든 '
+                   "판정서 기록을 엽니다. 합성데이터 사례와 직접 만들기는 여기서 바로 판정합니다.</div>" if DEMO else
+                   '<div class="jv-g-tip">기본 실행은 인터넷과 API 키 없이 이 PC 안에서 돌아갑니다. '
+                   "실데이터 사례 1건에 20~30초가 걸립니다.</div>"))
     elif i == 2:
         flow = "".join((f'<span class="lock">{E(STAGE_KO[k])}</span>' if k == "lock" else f"<span>{E(STAGE_KO[k])}</span>")
                        + ("<b>→</b>" if k != "report" else "")
