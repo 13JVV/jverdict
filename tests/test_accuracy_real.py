@@ -2,7 +2,6 @@
 import hashlib
 import json
 
-import numpy as np
 import pytest
 
 from jverdict.agent import catalog
@@ -32,15 +31,22 @@ def test_plasmode_one_run_card():
 
 def test_skeptic_benchmark_runs_offline():
     r = S.run_one(("K1", 1))                    # 합성데이터라 자료 없이 돈다
-    assert r["new_status"] in ("반론 성립", "반론 기각", "판단 불가", "해당 없음") and "prop_level" in r
+    assert r["new_status"] in ("반론 성립", "반론 기각", "판단 불가", "해당 없음") and "v22_level" in r
 
 
-def test_proposed_rule_downgrades_partial_when_objection_stands():
+def test_v23_downgrades_partial_when_objection_stands():
+    """v2.3: 방향을 말한 '조건부'는 주분석이 유의하지 않아도 크기 기준으로 반론을 보고, 성립하면 판정 보류."""
+    from jverdict.agent.roles import apply_downgrade
+    from jverdict.agent.tools import objection_status
     m = type("M", (), {"effect": 0.2, "significant": False})()
     gone = type("A", (), {"effect": 0.01, "significant": False})()
     kept = type("A", (), {"effect": 0.19, "significant": False})()
-    assert S.proposed("조건부", "증가", m, gone)[0] == "판정 보류"
-    assert S.proposed("조건부", "증가", m, kept)[0] == "조건부"
+    assert objection_status("exclude_period", m, gone, claimed=True) == "반론 성립"
+    assert objection_status("exclude_period", m, kept, claimed=True) == "반론 기각"
+    assert objection_status("exclude_period", m, gone) == "해당 없음"          # 방향을 말하지 않은 판정(보류 등)은 그대로
+    res = [{"significant": False, "status": "반론 성립"}]
+    assert apply_downgrade("조건부", "증가", res, True)[0] == "판정 보류"
+    assert apply_downgrade("조건부", "증가", res, True, partial=False)[0] == "조건부"   # v2.2
+    assert apply_downgrade("효과 있음", "증가", [{"significant": True, "status": "반론 성립"}], True)[1] == "조건부(증가)"
     m2 = type("M", (), {"effect": 0.2, "significant": True})()
-    assert S.proposed("효과 있음", "증가", m2, type("A", (), {"effect": 0.05, "significant": True})())[0] == "조건부"
-    assert np.isclose(S.old_status(m2, kept) == "반론 성립", True)       # 옛 규칙: 크기가 유지돼도 유의성이 사라지면 성립
+    assert S.old_status(m2, kept) == "반론 성립"       # 11-09 이전 규칙: 크기가 유지돼도 유의성이 사라지면 성립

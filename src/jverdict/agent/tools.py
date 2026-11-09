@@ -212,9 +212,10 @@ def _record(run, kind, label, reason, a, note: str = "") -> dict:
     주분석이 유의할 때: 다시 추정한 점추정이 절반 넘게 줄거나 방향이 바뀌면 '반론 성립'.
     크기는 유지됐는데 관측이 줄어 유의성만 사라진 경우는 반론이 맞았다는 증거가 아니므로 '판단 불가(검정력 부족)'.
     (2026-11-09 보완: 이전에는 이 경우도 '반론 성립'으로 적었다. 규칙 이력 v2.2)
+    판정 규칙 결과가 '조건부'처럼 방향을 말했으면 주분석이 유의하지 않아도 크기 기준으로 본다(v2.3).
     """
     main = run.analysis.main
-    status = objection_status(kind, main, a)
+    status = objection_status(kind, main, a, claimed=run.analysis.verdict.level in ("효과 있음", "조건부"))
     if note:
         status = "해당 없음"
     rec = {"id": f"X{len(run.extra_checks) + 1}", "kind": kind, "label": label, "reason": reason,
@@ -298,12 +299,18 @@ def exclusion_refit(wide, target, reference, freq: str, mask, policy_date: str, 
     return its_fit(gs, i0, pre=pre, post=post)
 
 
-def objection_status(kind: str, main, a) -> str:
-    """반론 결과 판정 규칙(코드). main·a는 effect·significant를 가진 추정치."""
+def objection_status(kind: str, main, a, claimed: bool = False) -> str:
+    """반론 결과 판정 규칙(코드). main·a는 effect·significant를 가진 추정치.
+
+    claimed: 판정 규칙 결과가 방향을 말했는가('효과 있음'·'조건부'). 그렇다면 주분석이 유의하지 않은 약한 신호(조건부)여도
+    '크기가 절반 넘게 줄거나 방향이 바뀌면 성립'으로 본다(v2.3, 반론 단계 성능 시험 결과를 본 뒤 채택).
+    """
     same = np.sign(a.effect) == np.sign(main.effect)
     kept = same and abs(a.effect) >= 0.5 * abs(main.effect)
     if kind == "placebo_group":
         return "반론 성립" if (a.significant and kept) else "반론 기각"
+    if not main.significant and claimed:
+        return "반론 기각" if kept else "반론 성립"
     if not main.significant:
         return "반론 성립" if a.significant else "해당 없음"
     if not kept:

@@ -346,10 +346,12 @@ def skeptic_llm(run) -> list[dict]:
     return hs
 
 
-def apply_downgrade(level: str, direction: str | None, standing_results: list[dict], any_standing: bool):
+def apply_downgrade(level: str, direction: str | None, standing_results: list[dict], any_standing: bool,
+                    partial: bool = True):
     """판정 하향 규칙(코드): (최종 등급, 표시 이름, (원래, 바뀐) 또는 None).
 
     반론대로 다시 추정했더니 효과가 아예 사라지면(유의하지 않음) 방향도 말할 수 없으므로 보류, 줄었지만 남으면 조건부.
+    조건부는 반론이 성립하면 보류(v2.3). partial=False는 v2.2까지의 규칙(조건부는 그대로)으로, 성능 시험의 비교에만 쓴다.
     """
     label = f"{level}({direction})" if level in ("효과 있음", "조건부") and direction else level
     downgraded = None
@@ -358,6 +360,8 @@ def apply_downgrade(level: str, direction: str | None, standing_results: list[di
         downgraded = ("효과 있음", "판정 보류" if gone else "조건부")
     elif any_standing and level == "효과 없음":
         downgraded = ("효과 없음", "판정 보류")
+    elif any_standing and level == "조건부" and partial:
+        downgraded = ("조건부", "판정 보류")
     if downgraded:
         level = downgraded[1]
         label = f"{level}({direction})" if level == "조건부" and direction else level
@@ -368,7 +372,8 @@ def resolve_skeptic(run, hs: list[dict]) -> dict:
     """반론 결과를 코드로 판정하고, 판정 하향을 적용한다.
 
     하향 규칙: 판정 규칙 밖의 반론(사건 달력·LLM 가설)이 검증에서 '성립'하면
-      효과 있음 → 조건부(반론대로 다시 추정해 효과가 사라지면 판정 보류), 효과 없음 → 판정 보류. (조건부·보류는 그대로)
+      효과 있음 → 조건부(반론대로 다시 추정해 효과가 사라지면 판정 보류), 효과 없음 → 판정 보류,
+      조건부 → 판정 보류(v2.3). (보류는 그대로)
     """
     checks = {x["id"]: x for x in run.extra_checks}
     vc = {c.code: c for c in run.analysis.verdict.checks}

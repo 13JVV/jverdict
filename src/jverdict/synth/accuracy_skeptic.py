@@ -15,7 +15,8 @@ Claude 반론 단계는 비용 때문에 이 시험에 넣지 않는다(사례 F
 - K3 실제 효과(로그 0.15~0.30) + 같은 시기 청소년 행사, 달력에 있음       → 정답: 방향은 유지('효과 있음' 또는 '조건부')
 - K4 정책 효과 0 + 같은 시기 청소년 행사, 달력에 없음                     → 반론 단계가 알 수 없는 경우(한계 확인)
 - K5 실제 효과, 행사 없음                                               → 기준선(반론 단계가 할 일 없음)
-비교: 11-09 이전 반론 규칙(크기가 유지돼도 유의성이 사라지면 '성립')으로 같은 데이터를 판정한 값.
+비교: 사전 등록을 잠글 때의 규칙(v2.2: '조건부'는 낮추지 않음)과 11-09 이전 규칙(크기가 유지돼도 유의성이 사라지면
+'성립')으로 같은 데이터를 판정한 값. 현재 공식 규칙은 이 시험 결과를 본 뒤 채택한 v2.3이다.
 """
 from __future__ import annotations
 
@@ -40,6 +41,8 @@ KS = {"K1": "정책 효과 0 + 같은 시기 행사(달력에 있음)",
       "K4": "정책 효과 0 + 같은 시기 행사(달력에 없음)",
       "K5": "실제 효과, 행사 없음"}
 HAS_EFFECT = {"K1": False, "K2": True, "K3": True, "K4": False, "K5": True}
+# new: 현재 공식 규칙(v2.3, 이 시험 결과를 본 뒤 채택) · v22: 사전 등록을 잠글 때의 규칙 · old: 11-09 이전 규칙
+RULES = ("new", "v22", "old")
 
 
 def old_status(main, a) -> str:
@@ -48,25 +51,6 @@ def old_status(main, a) -> str:
     if not main.significant:
         return "반론 성립" if a.significant else "해당 없음"
     return "반론 기각" if (same and a.significant and abs(a.effect) >= 0.5 * abs(main.effect)) else "반론 성립"
-
-
-def proposed(level: str, direction: str | None, main, a) -> tuple[str, str, bool]:
-    """[사후 추가 · 개정안] 방향을 말한 판정(효과 있음·조건부)이면 주분석의 유의성과 상관없이 '크기가 절반 넘게 줄거나
-    방향이 바뀌면 성립'으로 보고, 성립하면 조건부도 판정 보류로 낮춘다. 공식 결과는 현재 규칙(new)이다."""
-    if level in ("효과 있음", "조건부") and direction:
-        same = np.sign(a.effect) == np.sign(main.effect)
-        standing = not (same and abs(a.effect) >= 0.5 * abs(main.effect))
-    else:
-        from jverdict.agent.tools import objection_status
-        standing = objection_status("exclude_period", main, a) == "반론 성립"
-    if not standing:
-        lb = f"{level}({direction})" if level in ("효과 있음", "조건부") and direction else level
-        return level, lb, False
-    if level == "효과 있음" and a.significant:
-        return "조건부", f"조건부({direction})", True
-    if level in ("효과 있음", "조건부", "효과 없음"):
-        return "판정 보류", "판정 보류", True
-    return level, level, False
 
 
 def run_one(args: tuple[str, int]) -> dict:
@@ -103,17 +87,18 @@ def run_one(args: tuple[str, int]) -> dict:
            "rule_level": v.level, "rule_verdict": v.label, "est": m.effect if m is not None else None,
            "sig": bool(m.significant) if m is not None else None}
     in_calendar = k in ("K1", "K2", "K3")
-    final = {"new": (v.level, v.label, None), "old": (v.level, v.label, None), "prop": (v.level, v.label, None)}
+    final = {r: (v.level, v.label, None) for r in RULES}
+    claimed = v.level in ("효과 있음", "조건부")
     if in_calendar and m is not None:
         x = exclusion_refit(w, "청소년", "일반", "D", mask, date, str(ev_s.date()), str(ev_e.date()))
         if x is not None:
             row.update(ex_est=x.effect, ex_sig=bool(x.significant))
-            for rule, st_ in (("new", objection_status("exclude_period", m, x)), ("old", old_status(m, x))):
+            for rule, st_, partial in (("new", objection_status("exclude_period", m, x, claimed=claimed), True),
+                                       ("v22", objection_status("exclude_period", m, x), False),
+                                       ("old", old_status(m, x), False)):
                 row[f"{rule}_status"] = st_
                 res = [{"significant": bool(x.significant), "status": st_}] if st_ == "반론 성립" else []
-                final[rule] = apply_downgrade(v.level, v.direction, res, st_ == "반론 성립")
-            pl, pb, pd_ = proposed(v.level, v.direction, m, x)
-            final["prop"] = (pl, pb, pd_ or None)
+                final[rule] = apply_downgrade(v.level, v.direction, res, st_ == "반론 성립", partial=partial)
     for rule, (lv, lb, dg) in final.items():
         row[f"{rule}_level"], row[f"{rule}_verdict"], row[f"{rule}_downgraded"] = lv, lb, dg is not None
     row["direction"] = v.direction
@@ -128,7 +113,7 @@ def summarize(df: pd.DataFrame) -> list[dict]:
         r = {"k": k, "title": KS[k], "runs": int(len(g)), "has_effect": HAS_EFFECT[k],
              "rule_effect_yes": float(g.rule_level.eq("효과 있음").mean()),
              "rule_verdicts": dict(Counter(g.rule_verdict).most_common())}
-        for rule in ("new", "old", "prop"):
+        for rule in RULES:
             lv = g[f"{rule}_level"]
             r[rule] = {"effect_yes": float(lv.eq("효과 있음").mean()),
                        "effect_or_partial_inc": float((lv.isin(["효과 있음", "조건부"]) & inc).mean()),
@@ -144,7 +129,7 @@ def summarize(df: pd.DataFrame) -> list[dict]:
 def headline(summary: list[dict]) -> dict:
     s = {r["k"]: r for r in summary}
     h = {}
-    for rule in ("new", "old", "prop"):
+    for rule in RULES:
         h[rule] = {
             # 행사 때문에 생긴 변화를 '효과 있음'으로 남긴 비율(낮을수록 좋음): 달력에 있는 경우
             "event_false_effect": s["K1"][rule]["effect_yes"] if "K1" in s else None,
@@ -161,26 +146,25 @@ def headline(summary: list[dict]) -> dict:
 def to_markdown(res: dict) -> str:
     def pc(x):
         return "-" if x is None else f"{x * 100:.1f}%"
-    h, n, o, pp = res["headline"], res["headline"]["new"], res["headline"]["old"], res["headline"]["prop"]
+    h, n, o, pp = res["headline"], res["headline"]["new"], res["headline"]["old"], res["headline"]["v22"]
     L = ["# 반론(Skeptic) 단계 성능 시험", "",
          f"생성 {res['generated']} · 판정 규칙 {res['rules_version']} · 상황당 {res['runs_per_k']}회 · 소요 {res['seconds']:.0f}초 · "
          f"사전 등록 `{res['prereg']['file']}` (지문 `{res['prereg']['sha256'][:16]}…`, 잠금 {res['prereg']['locked_at']})", "",
          "합성 버스 데이터에 같은 시기 청소년 행사를 심고, 오프라인 반론 단계와 같은 함수로 '행사 기간을 빼고 다시 추정 → "
          "반론 성립 여부 → 판정 하향'을 거쳤습니다. Claude 반론 단계는 비용 때문에 넣지 않았습니다.", "",
          "## 요약", "",
-         "| 지표 | 판정 규칙만 | 반론 단계 뒤(현재 규칙) | 반론 단계 뒤(11-09 이전 규칙) | 개정안(사후 추가) |", "|---|---|---|---|---|",
+         "| 지표 | 판정 규칙만 | 현재 규칙 v2.3(사후 채택) | 잠글 때 규칙 v2.2(사전 등록 공식 결과) | 11-09 이전 규칙 |", "|---|---|---|---|---|",
          f"| 정책 효과 0 + 같은 시기 행사(달력에 있음): '효과 있음' 비율 (낮을수록 좋음) | {pc(h['rule_only_event_false_effect'])} | "
-         f"{pc(n['event_false_effect'])} | {pc(o['event_false_effect'])} | {pc(pp['event_false_effect'])} |",
-         f"| 실제 효과 + 무관한 행사: 잘못 낮춘 비율 (낮을수록 좋음) | 0.0% | {pc(n['wrong_downgrade'])} | {pc(o['wrong_downgrade'])} | {pc(pp['wrong_downgrade'])} |",
+         f"{pc(n['event_false_effect'])} | {pc(pp['event_false_effect'])} | {pc(o['event_false_effect'])} |",
+         f"| 실제 효과 + 무관한 행사: 잘못 낮춘 비율 (낮을수록 좋음) | 0.0% | {pc(n['wrong_downgrade'])} | {pc(pp['wrong_downgrade'])} | {pc(o['wrong_downgrade'])} |",
          f"| 실제 효과 + 같은 시기 행사: 증가 방향을 유지한 비율 (높을수록 좋음) | - | {pc(n['kept_direction_with_event'])} | "
          f"{pc(o['kept_direction_with_event'])} | {pc(pp['kept_direction_with_event'])} |",
          f"| 정책 효과 0 + 행사가 달력에 없음: '효과 있음' 비율(한계) | - | {pc(h['not_in_calendar_false_effect'])} | - | - |",
          f"| 정책 효과 0 + 같은 시기 행사(달력에 있음): 증가 방향을 주장한 비율('효과 있음'·'조건부') | - | "
-         f"{pc(res['k1_claim']['new'])} | {pc(res['k1_claim']['old'])} | {pc(res['k1_claim']['prop'])} |", "",
-         "개정안(사후 추가): 실행 뒤 K1에서 '조건부(증가)'가 남는 것을 보고 추가한 비교 열입니다. 방향을 말한 판정이면 "
-         "주분석의 유의성과 상관없이 '크기가 절반 넘게 줄거나 방향이 바뀌면 반론 성립'으로 보고, 성립하면 '조건부'도 '판정 보류'로 낮춥니다. "
-         "공식 결과는 '현재 규칙' 열입니다(사전 등록 5장 변경 기록).", "",
-         "## 상황별 판정 분포", "", "| 상황 | 판정 규칙만 | 반론 단계 뒤(현재 규칙) | 반론 결과(현재 규칙) |", "|---|---|---|---|"]
+         f"{pc(res['k1_claim']['new'])} | {pc(res['k1_claim']['v22'])} | {pc(res['k1_claim']['old'])} |", "",
+         "사전 등록을 잠글 때의 공식 결과는 v2.2 열입니다. 실행 뒤 v2.2가 '조건부'를 낮추지 않아 행사 효과에 '조건부(증가)'가 "
+         "남는 것을 보고, 반론이 성립하면 '조건부'도 판정 보류로 낮추는 v2.3을 채택했습니다(사후 변경, 사전 등록 5장·규칙 이력).", "",
+         "## 상황별 판정 분포", "", "| 상황 | 판정 규칙만 | 반론 단계 뒤(현재 규칙 v2.3) | 반론 결과(v2.3) |", "|---|---|---|---|"]
     for r in res["summary"]:
         top = lambda d: ", ".join(f"{k} {v}" for k, v in list(d.items())[:4])  # noqa: E731
         L.append(f"| {r['k']} {r['title']} | {top(r['rule_verdicts'])} | {top(r['new']['verdicts'])} | "
@@ -188,8 +172,7 @@ def to_markdown(res: dict) -> str:
     L += ["", "## 읽는 법과 한계", "",
           "- 반론 단계는 사건 달력에 있는 사건만 검증합니다. 달력에 없는 사건(K4)은 판정 규칙의 결과가 그대로 남습니다. "
           "그래서 판정서마다 '이 분석이 말할 수 없는 것'에 같은 시기 다른 요인을 적고, 사건 달력에 출처와 함께 사건을 쌓습니다.",
-          "- 행사 기간을 빼면 관측이 줄어 유의성이 사라질 수 있습니다. 현재 규칙은 이것만으로는 반론이 맞았다고 보지 않습니다"
-          "('판단 불가'). 이전 규칙과의 차이가 표의 오른쪽 두 열입니다.",
+          "- 행사 기간을 빼면 관측이 줄어 유의성이 사라질 수 있습니다. v2.2부터는 이것만으로는 반론이 맞았다고 보지 않습니다('판단 불가').",
           "- 합성데이터 시험이라 실데이터의 함정은 들어 있지 않습니다. 행사 크기(로그 0.25~0.45)와 길이(6~12주)는 사례 F와 비슷하게 잡았습니다.", ""]
     return "\n".join(L)
 
@@ -214,7 +197,7 @@ def main(argv=None) -> dict:
     summ = summarize(df)
     k1 = df[df.k == "K1"]
     k1_claim = {r: float((k1[f"{r}_level"].isin(["효과 있음", "조건부"]) & k1.direction.eq("증가")).mean())
-                for r in ("new", "old", "prop")}
+                for r in RULES}
     res = {"k1_claim": k1_claim, "generated": time.strftime("%Y-%m-%d %H:%M"), "rules_version": RULES_VERSION, "runs_per_k": runs,
            "seconds": time.time() - t0, "platform": f"{platform.system()} {platform.machine()}, 작업자 {a.workers}",
            "prereg": {k: lock[k] for k in ("file", "sha256", "locked_at")}, "summary": summ, "headline": headline(summ)}

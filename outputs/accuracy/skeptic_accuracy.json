@@ -1,13 +1,13 @@
 {
   "k1_claim": {
-    "new": 0.33,
-    "old": 0.33,
-    "prop": 0.03
+    "new": 0.03,
+    "v22": 0.33,
+    "old": 0.33
   },
-  "generated": "2026-11-09 19:05",
+  "generated": "2026-11-09 19:15",
   "rules_version": "v2",
   "runs_per_k": 200,
-  "seconds": 7.349261045455933,
+  "seconds": 8.480156183242798,
   "platform": "Darwin arm64, 작업자 9",
   "prereg": {
     "file": "docs/prereg/plasmode_skeptic_accuracy.md",
@@ -27,6 +27,20 @@
         "판정 보류": 23
       },
       "new": {
+        "effect_yes": 0.0,
+        "effect_or_partial_inc": 0.03,
+        "downgraded": 0.885,
+        "hold": 0.97,
+        "verdicts": {
+          "판정 보류": 194,
+          "조건부(증가)": 6
+        },
+        "status": {
+          "반론 성립": 180,
+          "해당 없음": 20
+        }
+      },
+      "v22": {
         "effect_yes": 0.0,
         "effect_or_partial_inc": 0.33,
         "downgraded": 0.585,
@@ -52,16 +66,6 @@
         "status": {
           "반론 성립": 153,
           "해당 없음": 47
-        }
-      },
-      "prop": {
-        "effect_yes": 0.0,
-        "effect_or_partial_inc": 0.03,
-        "downgraded": 0.885,
-        "hold": 0.97,
-        "verdicts": {
-          "판정 보류": 194,
-          "조건부(증가)": 6
         }
       }
     },
@@ -90,7 +94,7 @@
           "반론 기각": 200
         }
       },
-      "old": {
+      "v22": {
         "effect_yes": 0.855,
         "effect_or_partial_inc": 0.99,
         "downgraded": 0.0,
@@ -104,7 +108,7 @@
           "반론 기각": 200
         }
       },
-      "prop": {
+      "old": {
         "effect_yes": 0.855,
         "effect_or_partial_inc": 0.99,
         "downgraded": 0.0,
@@ -113,6 +117,9 @@
           "효과 있음(증가)": 171,
           "조건부(증가)": 27,
           "판정 보류": 2
+        },
+        "status": {
+          "반론 기각": 200
         }
       }
     },
@@ -128,6 +135,21 @@
       },
       "new": {
         "effect_yes": 0.755,
+        "effect_or_partial_inc": 0.99,
+        "downgraded": 0.06,
+        "hold": 0.01,
+        "verdicts": {
+          "효과 있음(증가)": 151,
+          "조건부(증가)": 47,
+          "판정 보류": 2
+        },
+        "status": {
+          "반론 기각": 188,
+          "반론 성립": 12
+        }
+      },
+      "v22": {
+        "effect_yes": 0.755,
         "effect_or_partial_inc": 1.0,
         "downgraded": 0.05,
         "hold": 0.0,
@@ -152,17 +174,6 @@
         "status": {
           "반론 기각": 188,
           "반론 성립": 12
-        }
-      },
-      "prop": {
-        "effect_yes": 0.755,
-        "effect_or_partial_inc": 0.99,
-        "downgraded": 0.06,
-        "hold": 0.01,
-        "verdicts": {
-          "효과 있음(증가)": 151,
-          "조건부(증가)": 47,
-          "판정 보류": 2
         }
       }
     },
@@ -191,7 +202,7 @@
         },
         "status": {}
       },
-      "old": {
+      "v22": {
         "effect_yes": 0.545,
         "effect_or_partial_inc": 0.86,
         "downgraded": 0.0,
@@ -204,7 +215,7 @@
         },
         "status": {}
       },
-      "prop": {
+      "old": {
         "effect_yes": 0.545,
         "effect_or_partial_inc": 0.86,
         "downgraded": 0.0,
@@ -214,7 +225,8 @@
           "조건부(증가)": 63,
           "판정 보류": 26,
           "효과 없음": 2
-        }
+        },
+        "status": {}
       }
     },
     {
@@ -240,7 +252,7 @@
         },
         "status": {}
       },
-      "old": {
+      "v22": {
         "effect_yes": 0.84,
         "effect_or_partial_inc": 0.99,
         "downgraded": 0.0,
@@ -252,7 +264,7 @@
         },
         "status": {}
       },
-      "prop": {
+      "old": {
         "effect_yes": 0.84,
         "effect_or_partial_inc": 0.99,
         "downgraded": 0.0,
@@ -261,12 +273,18 @@
           "효과 있음(증가)": 168,
           "조건부(증가)": 30,
           "판정 보류": 2
-        }
+        },
+        "status": {}
       }
     }
   ],
   "headline": {
     "new": {
+      "event_false_effect": 0.0,
+      "wrong_downgrade": 0.0,
+      "kept_direction_with_event": 0.99
+    },
+    "v22": {
       "event_false_effect": 0.0,
       "wrong_downgrade": 0.0,
       "kept_direction_with_event": 1.0
@@ -275,11 +293,6 @@
       "event_false_effect": 0.0,
       "wrong_downgrade": 0.0,
       "kept_direction_with_event": 1.0
-    },
-    "prop": {
-      "event_false_effect": 0.0,
-      "wrong_downgrade": 0.0,
-      "kept_direction_with_event": 0.99
     },
     "rule_only_event_false_effect": 0.585,
     "not_in_calendar_false_effect": 0.545

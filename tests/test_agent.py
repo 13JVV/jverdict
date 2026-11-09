@@ -218,6 +218,7 @@ def _fake_run(main_eff, main_sig, case="C"):
     r.extra_checks, r.card = [], {"library_case": case}
     r.analysis = A()
     r.analysis.main = type("M", (), {"effect": main_eff, "significant": main_sig})()
+    r.analysis.verdict = type("V", (), {"level": "효과 있음" if main_sig else "판정 보류"})()
     return r
 
 
