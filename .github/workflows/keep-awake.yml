@@ -1,0 +1,21 @@
+# 웹 데모가 잠들지 않게 6시간마다 브라우저로 한 번 연다(Streamlit Community Cloud는 접속이 없으면 앱을 재운다).
+name: 웹 데모 깨워 두기
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  open-demo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: 브라우저 준비
+        run: pip install playwright==1.48.0 && python -m playwright install --with-deps chromium
+      - name: 데모 열기(잠들어 있으면 깨우기)
+        run: python tools/keep_awake.py https://jverdict.streamlit.app
