@@ -54,17 +54,25 @@ sys.path.insert(0, str(SRC))
 # (그렇지 않으면 새 화면 코드와 옛 계산·보고 코드가 섞여 오류가 난다). 이 진입 파일이 처음 도는 프로세스면 모두 새로 읽는다.
 import time as _time  # noqa: E402
 
+# 하나라도 바뀌었으면 jverdict 전체를 버린다: 바뀐 모듈만 버리면 'from jverdict.report import brief'처럼
+# 상위 패키지 속성으로 가져오는 import가 옛 모듈을 계속 쓴다.
 _first = not getattr(sys, "_jv_entry_seen", False)
 sys._jv_entry_seen = True
-for _name, _mod in list(sys.modules.items()):
-    _f = getattr(_mod, "__file__", None)
-    if not (_name.startswith("jverdict") and _f):
-        continue
+_ours = {n: m for n, m in list(sys.modules.items()) if n == "jverdict" or n.startswith("jverdict.")}
+
+
+def _changed(m) -> bool:
+    _f = getattr(m, "__file__", None)
+    if not _f:
+        return False
     try:
-        _stale = _first or Path(_f).stat().st_mtime > getattr(_mod, "_jv_loaded", float("inf"))
+        return Path(_f).stat().st_mtime > getattr(m, "_jv_loaded", float("inf"))
     except OSError:
-        _stale = True
-    if _stale:
+        return True
+
+
+if _first or any(_changed(m) for m in _ours.values()):
+    for _name in _ours:
         del sys.modules[_name]
 
 
