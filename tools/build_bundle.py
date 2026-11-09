@@ -76,8 +76,14 @@ def sha256(p: Path) -> str:
     return h.hexdigest()
 
 
+# 제출 묶음에 넣지 않는 내부 문서: 센터 방문 준비물(방문은 하지 않음), 옛 기획서 초안
+SKIP_DIRS = {"center-visit"}
+SKIP_FILES = {"기획서_v0.1_센터데이터안.md", "export_public.py.bak"}
+
+
 def skip(p: Path) -> bool:
-    return any(part in SKIP_NAMES for part in p.parts) or p.suffix in SKIP_SUFFIX or p.name.startswith("._")
+    return (any(part in SKIP_NAMES or part in SKIP_DIRS for part in p.parts) or p.suffix in SKIP_SUFFIX
+            or p.name.startswith("._") or p.name in SKIP_FILES)
 
 
 def copy_file(src: Path, dst: Path) -> None:

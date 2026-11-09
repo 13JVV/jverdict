@@ -214,16 +214,7 @@ def _record(run, kind, label, reason, a, note: str = "") -> dict:
     (2026-11-09 보완: 이전에는 이 경우도 '반론 성립'으로 적었다. 규칙 이력 v2.2)
     """
     main = run.analysis.main
-    same = np.sign(a.effect) == np.sign(main.effect)
-    kept = same and abs(a.effect) >= 0.5 * abs(main.effect)
-    if kind == "placebo_group":
-        status = "반론 성립" if (a.significant and kept) else "반론 기각"
-    elif not main.significant:
-        status = "반론 성립" if a.significant else "해당 없음"
-    elif not kept:
-        status = "반론 성립"
-    else:
-        status = "반론 기각" if a.significant else "판단 불가"
+    status = objection_status(kind, main, a)
     if note:
         status = "해당 없음"
     rec = {"id": f"X{len(run.extra_checks) + 1}", "kind": kind, "label": label, "reason": reason,
@@ -285,21 +276,39 @@ def _extra_check_panel(run, d, kind, reference, placebo_target, post, start, end
 
 def _excluded_estimate(run, d, start, end):
     """사후 창에서 특정 기간(다른 사건)을 뺀 추정: 해당 기간을 결측으로 두고 다시 계산."""
-    from jverdict.causal.estimate import gap_series, its_fit
     sm = DZ._series_map(d)
     _, wide = catalog.series_frame(d["dataset"], sm, run.seed)
     freq = catalog.DATASETS[d["dataset"]].freq
     from jverdict.quality.coverage import exclusion_mask
     mask = exclusion_mask(DZ.coverage(d["dataset"], run.seed), wide.index)
+    return exclusion_refit(wide, d["target"], d["reference"], freq, mask, run.card["start_date"], start, end,
+                           season=d.get("season", "sdiff"), season_years=int(d["season_years"]), pre=d.get("pre"),
+                           post=d.get("post"))
+
+
+def exclusion_refit(wide, target, reference, freq: str, mask, policy_date: str, start: str, end: str, *,
+                    season: str = "sdiff", season_years: int = 3, pre: int | None = None, post: int | None = None):
+    """기간 제외 재추정의 계산부(반론 검증과 반론 성능 시험이 함께 쓴다). 계절 처리는 잠긴 설계 그대로."""
+    from jverdict.causal.estimate import DEFAULTS, gap_series, its_fit
     mask = mask | ((wide.index >= pd.Timestamp(start)) & (wide.index <= pd.Timestamp(end)))
-    # 계절 처리는 잠긴 설계 그대로(주분석과 같은 조건). 빠뜨리면 '계절 차분 없음' 설계도 차분해 버린다
-    gs = gap_series(wide, d["target"], d["reference"], freq, season=d.get("season", "sdiff"),
-                    season_years=int(d["season_years"]), mask=mask)
-    from jverdict.causal.estimate import DEFAULTS
-    i0 = gs.pos(run.card["start_date"])
+    gs = gap_series(wide, target, reference, freq, season=season, season_years=season_years, mask=mask)
+    i0 = gs.pos(policy_date)
     fin = np.flatnonzero(np.isfinite(gs.g_adj[:i0]))
-    pre = min(d.get("pre") or DEFAULTS[freq]["pre"], int(i0 - fin[0]) if len(fin) else 0)
-    return its_fit(gs, i0, pre=pre, post=d.get("post"))
+    pre = min(pre or DEFAULTS[freq]["pre"], int(i0 - fin[0]) if len(fin) else 0)
+    return its_fit(gs, i0, pre=pre, post=post)
+
+
+def objection_status(kind: str, main, a) -> str:
+    """반론 결과 판정 규칙(코드). main·a는 effect·significant를 가진 추정치."""
+    same = np.sign(a.effect) == np.sign(main.effect)
+    kept = same and abs(a.effect) >= 0.5 * abs(main.effect)
+    if kind == "placebo_group":
+        return "반론 성립" if (a.significant and kept) else "반론 기각"
+    if not main.significant:
+        return "반론 성립" if a.significant else "해당 없음"
+    if not kept:
+        return "반론 성립"
+    return "반론 기각" if a.significant else "판단 불가"
 
 
 SERIES_ITEM = DZ.SERIES_SCHEMA

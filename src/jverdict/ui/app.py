@@ -315,7 +315,7 @@ with st.sidebar:
     else:
         st.caption("아직 실행 기록이 없습니다.")
 
-    if st.button("정확도 리포트(합성데이터)", width="stretch", disabled=busy):
+    if st.button("정확도 리포트", width="stretch", disabled=busy):
         ss.page, ss.view_dir = "accuracy", None
         st.rerun()
     with st.expander("판정 등급의 뜻"):
@@ -521,7 +521,8 @@ def render_demo_row():
         st.markdown(
             '<div class="jv-case-card" style="min-height:9.5rem"><div class="p">합성 시험 2,400회 정확도</div>'
             '<div class="why" style="font-size:.86rem">없는 효과를 \'효과 있음\'이라 함 <b>2.4%</b><br>'
-            '실제 효과에 \'효과 있음\' <b>83%</b>(시계열)·<b>74.5%</b>(패널)<br>판정 보류 <b>37.6%</b> · 방향 반대 <b>0%</b></div></div>',
+            '실제 효과에 \'효과 있음\' <b>83%</b>(시계열)·<b>74.5%</b>(패널)<br>판정 보류 <b>37.6%</b> · 방향 반대 <b>0%</b><br>'
+            '<span style="color:var(--muted)">실데이터에 심어 본 시험: 오판 0%, 대신 \'조건부\'가 많음</span></div></div>',
             unsafe_allow_html=True)
         if st.button("정확도 리포트 보기", key="demo_acc", width="stretch"):
             ss.page, ss.view_dir = "accuracy", None
@@ -1051,7 +1052,8 @@ def render_repro(v):
 # ============================================================================ 정확도 리포트
 def render_accuracy():
     st.title("정확도 리포트")
-    st.caption("정답을 아는 합성데이터에 판정 규칙을 그대로 적용해, 판정이 얼마나 맞는지 잰 결과입니다.")
+    st.caption("정답을 아는 데이터에 판정 규칙을 그대로 적용해 판정이 얼마나 맞는지 잰 결과입니다. 합성데이터 시험, "
+               "실데이터에 정답을 심은 반합성 시험, 반론 단계 시험 세 가지입니다.")
     st.button("처음으로", on_click=go_home)
     p = OUTPUT_DIR / "accuracy" / "causal_accuracy.json"
     if not p.exists():
@@ -1073,6 +1075,8 @@ def render_accuracy():
                f"받아들일 만한 판정 {h['acceptable_all'] * 100:.1f}%(보류 포함이라 보조 지표) · "
                "한계: 합성데이터는 잡음 크기를 실데이터에 맞췄지만 이상 시점·구조 변화는 흉내 내지 못해 낙관적일 수 있음. "
                "반론 단계의 성능은 이 시험에 들어 있지 않음")
+    render_real_accuracy()
+    st.markdown("**합성데이터 시나리오별 판정**")
     rows = ["| 시나리오 | 정답 | 받아들일 만함 | 이상적 판정 | 잘못된 '효과 있음' | 판정 분포 |", "|---|---|---|---|---|---|"]
     for key, sc in j["scenarios"].items():
         truth = ("효과 있음(감소)" if "역효과" in sc["title"] else "효과 있음") if "실제" in sc["title"] else "효과 없음"
@@ -1092,6 +1096,39 @@ def render_accuracy():
     if md.exists():
         with st.expander("상세 보고서(원문)"):
             st.markdown(md.read_text(encoding="utf-8"))
+
+
+def render_real_accuracy():
+    """실데이터 반합성 시험과 반론 단계 성능 시험(사전 등록). 결과 파일이 없으면 건너뛴다."""
+    pj = OUTPUT_DIR / "accuracy" / "plasmode_accuracy.json"
+    if pj.exists():
+        j = json.loads(pj.read_text(encoding="utf-8"))
+        st.markdown(f"**실데이터에 정답을 심은 반합성 시험** · {j['runs']}회 · 사전 등록 지문 `{j['prereg']['sha256'][:8]}`")
+        st.caption("실데이터의 정책이 없던 날을 가짜 시행일로 두고, 그날부터 효과를 곱해 넣은 뒤 같은 엔진으로 판정했습니다. "
+                   "실데이터의 잡음·계절·충격이 그대로 들어 있어 합성 시험보다 현실에 가깝습니다.")
+        rows = ["| 자료 | 심은 효과 | '효과 있음(증가)' | '조건부'(증가)까지 | 판정 보류 | 방향 반대 | 평균 MDE |", "|---|---|---|---|---|---|---|"]
+        for r in j["summary"]:
+            nm = "버스(일)" if r["family"] == "bus" else "카드(월)"
+            ws = "-" if r["wrong_sign"] is None else f"{r['wrong_sign'] * 100:.1f}%"
+            rows.append(f"| {nm} | {r['effect_pct'] * 100:+.1f}% | {r['effect_yes'] * 100:.1f}% | {r['effect_or_partial'] * 100:.1f}% | "
+                        f"{r['hold'] * 100:.1f}% | {ws} | ±{(r['mde_mean'] or 0) * 100:.1f}% |")
+        st.markdown("\n".join(rows))
+        st.caption("효과가 없을 때 '효과 있음'은 0%였습니다. 대신 실제 효과가 있어도 정책 전 추세 검증에서 자주 떨어져 '조건부'나 "
+                   "'보류'가 많습니다(합성 시험보다 보수적). 가짜 시행일끼리 분석 창이 겹쳐 독립 표본은 아닙니다.")
+    sj = OUTPUT_DIR / "accuracy" / "skeptic_accuracy.json"
+    if sj.exists():
+        j = json.loads(sj.read_text(encoding="utf-8"))
+        h = j["headline"]
+        st.markdown(f"**반론(Skeptic) 단계 성능 시험** · 상황마다 {j['runs_per_k']}회(합성) · 사전 등록")
+        k = st.columns(3)
+        k[0].metric("같은 시기 행사로 생긴 '효과 있음'", f"{h['new']['event_false_effect'] * 100:.1f}%",
+                    help="행사가 사건 달력에 있을 때. 반론 단계가 행사 기간을 빼고 다시 추정해 낮춘 결과")
+        k[1].metric("무관한 행사로 잘못 낮춤", f"{h['new']['wrong_downgrade'] * 100:.1f}%")
+        k[2].metric("달력에 없는 행사로 생긴 '효과 있음'", f"{h['not_in_calendar_false_effect'] * 100:.1f}%",
+                    help="반론 단계는 사건 달력에 있는 사건만 검증합니다(한계)")
+        st.caption(f"판정 규칙만으로는 같은 시기 행사 때문에 '효과 있음'이 {h['rule_only_event_false_effect'] * 100:.1f}% 나왔고, "
+                   "반론 단계가 행사 기간을 빼고 다시 추정해 낮췄습니다. 다만 '조건부(증가)'는 하향 규칙상 낮추지 않아 "
+                   f"{j['k1_claim']['new'] * 100:.0f}%가 남습니다(개정안 비교는 상세 보고서). Claude 반론 단계는 비용 때문에 이 시험에 넣지 않았습니다.")
 
 
 def render_replay(run_dir: str):

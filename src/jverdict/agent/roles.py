@@ -346,6 +346,24 @@ def skeptic_llm(run) -> list[dict]:
     return hs
 
 
+def apply_downgrade(level: str, direction: str | None, standing_results: list[dict], any_standing: bool):
+    """판정 하향 규칙(코드): (최종 등급, 표시 이름, (원래, 바뀐) 또는 None).
+
+    반론대로 다시 추정했더니 효과가 아예 사라지면(유의하지 않음) 방향도 말할 수 없으므로 보류, 줄었지만 남으면 조건부.
+    """
+    label = f"{level}({direction})" if level in ("효과 있음", "조건부") and direction else level
+    downgraded = None
+    gone = any(not r.get("significant", True) for r in standing_results)
+    if any_standing and level == "효과 있음":
+        downgraded = ("효과 있음", "판정 보류" if gone else "조건부")
+    elif any_standing and level == "효과 없음":
+        downgraded = ("효과 없음", "판정 보류")
+    if downgraded:
+        level = downgraded[1]
+        label = f"{level}({direction})" if level == "조건부" and direction else level
+    return level, label, downgraded
+
+
 def resolve_skeptic(run, hs: list[dict]) -> dict:
     """반론 결과를 코드로 판정하고, 판정 하향을 적용한다.
 
@@ -373,18 +391,10 @@ def resolve_skeptic(run, hs: list[dict]) -> dict:
         else:
             h["status"] = "미검증"
     v = run.analysis.verdict
-    level, label = v.level, v.label
     standing = [h for h in hs if h["status"] == "반론 성립"]
-    downgraded = None
-    # 반론대로 다시 추정했더니 효과가 아예 사라지면(유의하지 않음) 방향도 말할 수 없으므로 보류, 줄었지만 남으면 조건부
-    gone = any(not r.get("significant", True) for h in standing for r in h.get("results", []) if r["status"] == "반론 성립")
-    if standing and level == "효과 있음":
-        downgraded = ("효과 있음", "판정 보류" if gone else "조건부")
-    elif standing and level == "효과 없음":
-        downgraded = ("효과 없음", "판정 보류")
-    if downgraded:
-        level = downgraded[1]
-        label = f"{level}({v.direction})" if level == "조건부" and v.direction else level
+    level, label, downgraded = apply_downgrade(
+        v.level, v.direction, [r for h in standing for r in h.get("results", []) if r["status"] == "반론 성립"],
+        bool(standing))
     return {"rule_hypotheses": rule_hypotheses(run), "hypotheses": hs, "extra_checks": run.extra_checks,
             "standing": [h["hypothesis"] for h in standing], "downgraded": downgraded,
             "rule_standing": [h["hypothesis"] for h in rule_hypotheses(run) if h["status"] == "반론 성립"],

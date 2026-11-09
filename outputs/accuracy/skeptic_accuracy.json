@@ -1,0 +1,287 @@
+{
+  "k1_claim": {
+    "new": 0.33,
+    "old": 0.33,
+    "prop": 0.03
+  },
+  "generated": "2026-11-09 19:05",
+  "rules_version": "v2",
+  "runs_per_k": 200,
+  "seconds": 7.349261045455933,
+  "platform": "Darwin arm64, 작업자 9",
+  "prereg": {
+    "file": "docs/prereg/plasmode_skeptic_accuracy.md",
+    "sha256": "8d48cfd81c7346fb2fe7d43e46690a5573b936b53509b91c832e0b00b9ed7763",
+    "locked_at": "2026-11-09T18:58:23+0900"
+  },
+  "summary": [
+    {
+      "k": "K1",
+      "title": "정책 효과 0 + 같은 시기 행사(달력에 있음)",
+      "runs": 200,
+      "has_effect": false,
+      "rule_effect_yes": 0.585,
+      "rule_verdicts": {
+        "효과 있음(증가)": 117,
+        "조건부(증가)": 60,
+        "판정 보류": 23
+      },
+      "new": {
+        "effect_yes": 0.0,
+        "effect_or_partial_inc": 0.33,
+        "downgraded": 0.585,
+        "hold": 0.67,
+        "verdicts": {
+          "판정 보류": 134,
+          "조건부(증가)": 66
+        },
+        "status": {
+          "반론 성립": 153,
+          "해당 없음": 47
+        }
+      },
+      "old": {
+        "effect_yes": 0.0,
+        "effect_or_partial_inc": 0.33,
+        "downgraded": 0.585,
+        "hold": 0.67,
+        "verdicts": {
+          "판정 보류": 134,
+          "조건부(증가)": 66
+        },
+        "status": {
+          "반론 성립": 153,
+          "해당 없음": 47
+        }
+      },
+      "prop": {
+        "effect_yes": 0.0,
+        "effect_or_partial_inc": 0.03,
+        "downgraded": 0.885,
+        "hold": 0.97,
+        "verdicts": {
+          "판정 보류": 194,
+          "조건부(증가)": 6
+        }
+      }
+    },
+    {
+      "k": "K2",
+      "title": "실제 효과 + 달력에만 있는 무관한 행사",
+      "runs": 200,
+      "has_effect": true,
+      "rule_effect_yes": 0.855,
+      "rule_verdicts": {
+        "효과 있음(증가)": 171,
+        "조건부(증가)": 27,
+        "판정 보류": 2
+      },
+      "new": {
+        "effect_yes": 0.855,
+        "effect_or_partial_inc": 0.99,
+        "downgraded": 0.0,
+        "hold": 0.01,
+        "verdicts": {
+          "효과 있음(증가)": 171,
+          "조건부(증가)": 27,
+          "판정 보류": 2
+        },
+        "status": {
+          "반론 기각": 200
+        }
+      },
+      "old": {
+        "effect_yes": 0.855,
+        "effect_or_partial_inc": 0.99,
+        "downgraded": 0.0,
+        "hold": 0.01,
+        "verdicts": {
+          "효과 있음(증가)": 171,
+          "조건부(증가)": 27,
+          "판정 보류": 2
+        },
+        "status": {
+          "반론 기각": 200
+        }
+      },
+      "prop": {
+        "effect_yes": 0.855,
+        "effect_or_partial_inc": 0.99,
+        "downgraded": 0.0,
+        "hold": 0.01,
+        "verdicts": {
+          "효과 있음(증가)": 171,
+          "조건부(증가)": 27,
+          "판정 보류": 2
+        }
+      }
+    },
+    {
+      "k": "K3",
+      "title": "실제 효과 + 같은 시기 행사(달력에 있음)",
+      "runs": 200,
+      "has_effect": true,
+      "rule_effect_yes": 0.805,
+      "rule_verdicts": {
+        "효과 있음(증가)": 161,
+        "조건부(증가)": 39
+      },
+      "new": {
+        "effect_yes": 0.755,
+        "effect_or_partial_inc": 1.0,
+        "downgraded": 0.05,
+        "hold": 0.0,
+        "verdicts": {
+          "효과 있음(증가)": 151,
+          "조건부(증가)": 49
+        },
+        "status": {
+          "반론 기각": 188,
+          "반론 성립": 12
+        }
+      },
+      "old": {
+        "effect_yes": 0.755,
+        "effect_or_partial_inc": 1.0,
+        "downgraded": 0.05,
+        "hold": 0.0,
+        "verdicts": {
+          "효과 있음(증가)": 151,
+          "조건부(증가)": 49
+        },
+        "status": {
+          "반론 기각": 188,
+          "반론 성립": 12
+        }
+      },
+      "prop": {
+        "effect_yes": 0.755,
+        "effect_or_partial_inc": 0.99,
+        "downgraded": 0.06,
+        "hold": 0.01,
+        "verdicts": {
+          "효과 있음(증가)": 151,
+          "조건부(증가)": 47,
+          "판정 보류": 2
+        }
+      }
+    },
+    {
+      "k": "K4",
+      "title": "정책 효과 0 + 같은 시기 행사(달력에 없음)",
+      "runs": 200,
+      "has_effect": false,
+      "rule_effect_yes": 0.545,
+      "rule_verdicts": {
+        "효과 있음(증가)": 109,
+        "조건부(증가)": 63,
+        "판정 보류": 26,
+        "효과 없음": 2
+      },
+      "new": {
+        "effect_yes": 0.545,
+        "effect_or_partial_inc": 0.86,
+        "downgraded": 0.0,
+        "hold": 0.13,
+        "verdicts": {
+          "효과 있음(증가)": 109,
+          "조건부(증가)": 63,
+          "판정 보류": 26,
+          "효과 없음": 2
+        },
+        "status": {}
+      },
+      "old": {
+        "effect_yes": 0.545,
+        "effect_or_partial_inc": 0.86,
+        "downgraded": 0.0,
+        "hold": 0.13,
+        "verdicts": {
+          "효과 있음(증가)": 109,
+          "조건부(증가)": 63,
+          "판정 보류": 26,
+          "효과 없음": 2
+        },
+        "status": {}
+      },
+      "prop": {
+        "effect_yes": 0.545,
+        "effect_or_partial_inc": 0.86,
+        "downgraded": 0.0,
+        "hold": 0.13,
+        "verdicts": {
+          "효과 있음(증가)": 109,
+          "조건부(증가)": 63,
+          "판정 보류": 26,
+          "효과 없음": 2
+        }
+      }
+    },
+    {
+      "k": "K5",
+      "title": "실제 효과, 행사 없음",
+      "runs": 200,
+      "has_effect": true,
+      "rule_effect_yes": 0.84,
+      "rule_verdicts": {
+        "효과 있음(증가)": 168,
+        "조건부(증가)": 30,
+        "판정 보류": 2
+      },
+      "new": {
+        "effect_yes": 0.84,
+        "effect_or_partial_inc": 0.99,
+        "downgraded": 0.0,
+        "hold": 0.01,
+        "verdicts": {
+          "효과 있음(증가)": 168,
+          "조건부(증가)": 30,
+          "판정 보류": 2
+        },
+        "status": {}
+      },
+      "old": {
+        "effect_yes": 0.84,
+        "effect_or_partial_inc": 0.99,
+        "downgraded": 0.0,
+        "hold": 0.01,
+        "verdicts": {
+          "효과 있음(증가)": 168,
+          "조건부(증가)": 30,
+          "판정 보류": 2
+        },
+        "status": {}
+      },
+      "prop": {
+        "effect_yes": 0.84,
+        "effect_or_partial_inc": 0.99,
+        "downgraded": 0.0,
+        "hold": 0.01,
+        "verdicts": {
+          "효과 있음(증가)": 168,
+          "조건부(증가)": 30,
+          "판정 보류": 2
+        }
+      }
+    }
+  ],
+  "headline": {
+    "new": {
+      "event_false_effect": 0.0,
+      "wrong_downgrade": 0.0,
+      "kept_direction_with_event": 1.0
+    },
+    "old": {
+      "event_false_effect": 0.0,
+      "wrong_downgrade": 0.0,
+      "kept_direction_with_event": 1.0
+    },
+    "prop": {
+      "event_false_effect": 0.0,
+      "wrong_downgrade": 0.0,
+      "kept_direction_with_event": 0.99
+    },
+    "rule_only_event_false_effect": 0.585,
+    "not_in_calendar_false_effect": 0.545
+  }
+}
