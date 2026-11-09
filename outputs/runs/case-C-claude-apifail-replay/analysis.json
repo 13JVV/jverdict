@@ -2294,7 +2294,7 @@
     "counterfactual": 0.005948211077027002,
     "policy": "2024-03-04"
   },
-  "seconds": 0.02,
+  "seconds": 0.03,
   "verdict_v3": {
     "level": "효과 있음",
     "direction": "증가",

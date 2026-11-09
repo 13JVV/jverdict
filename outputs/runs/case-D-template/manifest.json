@@ -1,7 +1,7 @@
 {
   "run_id": "case-D-template",
-  "created": "2026-11-07T15:06:01+0900",
-  "calendar_as_of": "2026-11-07",
+  "created": "2026-11-09T15:56:00+0900",
+  "calendar_as_of": "2026-11-09",
   "mode": "template",
   "rules_version": "v2",
   "seed": 20261104,
@@ -31,7 +31,7 @@
   },
   "prereg": {
     "sha256": "49bad30d4892043201b359a322f508e45b096489c657343d682bd8a7093dae82",
-    "locked_at": "2026-11-07T15:06:00+0900",
+    "locked_at": "2026-11-09T15:55:59+0900",
     "existing": {
       "file": "docs/prereg/case_china_group_tour_2023.md",
       "sha256": "f9cfc845c1a8c2d3913be905694bf98a454c919e6d12ca69c473a693bf31be29",
@@ -39,7 +39,7 @@
     },
     "amendments": []
   },
-  "code_sha256": "fd8a39ce9ce89d739de3425c6626a313d66e21559348f3424b103e3e7907e112",
+  "code_sha256": "8de26d3cf1068df60a5a7056e13276e46fbd3e42265b765e70e155cb72ccd8d6",
   "versions": {
     "python": "3.14.3",
     "platform": "Darwin arm64",

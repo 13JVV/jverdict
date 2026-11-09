@@ -5,6 +5,6 @@
   "verdict_equal": true,
   "report_equal": true,
   "data_equal": true,
-  "code_equal": true,
+  "code_equal": false,
   "reproduced": true
 }

@@ -30,8 +30,10 @@ def _fix_josa(t: str) -> str:
     return re.sub(r"'([^']+)'(가|이) ", lambda m: f"'{m.group(1)}'{_josa(m.group(1), '이', '가')} ", t or "")
 
 
-TAGS = {"skeptic": "같은 시기 다른 사건", "quality": "측정 단절 의심", "outlier": "기준 기간 이상", "pretrend": "기존 추세와 구분 불가",
-        "power": "자료 부족", "effect": "", "null": "", "partial": "검증 일부 실패", "other": ""}
+# 보류 이유의 이름. 문서(기획서·결과 설명자료)와 같은 말을 쓴다
+TAGS = {"skeptic": "같은 시기 다른 사건", "quality": "측정 단절 의심", "outlier": "기준 기간 이상",
+        "pretrend": "정책 전 추세와 구분 불가", "power": "검정력 부족", "effect": "", "null": "", "partial": "검증 일부 실패",
+        "other": ""}
 
 
 def say(v, cause: str) -> str:
@@ -45,15 +47,63 @@ def say(v, cause: str) -> str:
     if cause == "quality":
         return f"공개 자료의 {npct} 변화는 집계 방식 변경 의심 때문에 정책 효과(또는 실패)의 근거로 쓸 수 없음"
     if cause == "outlier":
-        return f"기준 기간이 흔들려 효과 크기는 말할 수 없음. 이상 시점을 확인하기 전에는 {_pct(m.get('pct', 0))} 같은 숫자를 인용하지 말 것"
+        return "기준 기간이 흔들려 효과 크기는 말할 수 없음. 이상 시점을 확인하기 전에는 효과 크기를 인용하지 말 것"
     if cause == "pretrend":
         return f"정책 이후의 {_pct(m.get('pct', 0))}는 정책 전부터 이어진 추세와 구분되지 않아 정책 효과라고 말할 수 없음"
     if not m or not vd.get("ci_used"):
         return ""
     lo, hi = (math.expm1(x) for x in vd["ci_used"])
+    if v.level == "효과 있음":
+        return f"정책 이후 {_pct(m.get('pct', 0))}(구간 {_pct(lo)} ~ {_pct(hi)})의 변화는 대조·계절 보정과 검증을 거친 값으로 인용할 수 있음"
+    if v.level == "조건부":
+        return (f"{'증가' if m.get('pct', 0) > 0 else '감소'} 방향은 보이지만 검증 일부를 통과하지 못함. "
+                "성과 근거로 단독 인용하지 말 것(합성 시험에서 '조건부'의 적중률은 약 50%)")
     if v.level in ("판정 보류", "효과 없음") and lo < 0 < hi:
         return f"효과가 있었더라도 {_pct(lo)} ~ {_pct(hi)} 사이: 이보다 큰 증가·감소는 자료상 확인되지 않음"
     return ""
+
+
+def speech(v, cause: str) -> dict:
+    """대외적으로 '말해도 되는 문장'과 '말하면 안 되는 문장'(보고·답변 작성용). 새 숫자는 만들지 않는다."""
+    a = v.analysis
+    m, pw = a.get("main") or {}, a.get("power") or {}
+    nv = getattr(v, "naive", None) or {}
+    pol = v.card.get("policy", "이 정책")
+    npct = f"{nv['pct'] * 100:+.0f}%" if nv.get("pct") is not None else None
+    ok, no = [], []
+    if v.level == "효과 있음":
+        ok.append(f"「{pol}」 이후 대상 집단의 지표가 대조 집단보다 {_pct(m.get('pct', 0))} 변했고, 검증을 모두 통과했다.")
+        no.append("이 변화가 전부 정책 하나 때문이라고 단정하는 말(같은 시기 다른 요인은 사건 달력에 있는 것만 확인함).")
+    elif v.level == "조건부":
+        ok.append(f"「{pol}」 이후 {'증가' if m.get('pct', 0) > 0 else '감소'} 방향의 신호가 있으나 검증 일부를 통과하지 못했다.")
+        no.append("\"정책 효과가 확인되었다\"(조건부는 성과 근거로 단독 인용하지 않음).")
+    elif v.level == "효과 없음":
+        ok.append(f"「{pol}」 이후 의미 있다고 본 크기 이상의 변화는 확인되지 않았다.")
+        no.append("\"정책이 실패했다\"(작은 효과는 이 자료로 가려낼 수 없음).")
+    else:
+        ok.append(f"공개 자료만으로는 「{pol}」의 효과를 확정할 수 없어 판단을 보류했다.")
+        if cause == "quality":
+            ok.append("정책 시점에 공개 자료의 집계 방식이 바뀐 것으로 의심되어 제공처에 확인을 요청했다.")
+            if npct:
+                no.append(f"\"이용(소비)이 {npct} 변했다\" 또는 \"정책이 실패했다\"(집계 변경 의심 숫자).")
+        elif cause == "pretrend":
+            ok.append("정책 전부터 이어진 추세와 정책 효과를 가를 수 있는 자료가 부족하다.")
+            if npct:
+                no.append(f"\"정책으로 {npct} 늘었다\"(정책 전부터의 추세가 섞인 숫자).")
+        elif cause == "outlier":
+            ok.append("비교 기준 기간에 크게 벗어난 시점이 있어 효과 크기를 계산할 수 없었다.")
+            no.append(f"\"{_pct(m.get('pct', 0))} 늘었다\" 같은 효과 크기(기준선이 흔들린 참고 계산).")
+        elif cause == "skeptic":
+            ok.append("같은 시기의 다른 사건이 변화를 설명할 수 있어 정책 효과를 확정하지 않았다.")
+            no.append(f"\"정책으로 {_pct(m.get('pct', 0))} 늘었다\"(같은 시기 사건을 빼면 사라지는 변화).")
+        elif cause == "power":
+            from jverdict.causal.power import mde_text
+            if pw.get("mde_log") is not None:
+                ok.append(f"이 자료로 구분할 수 있는 최소 효과는 {mde_text(pw['mde_log'])}이며, 그보다 작은 효과는 판단할 수 없다.")
+            no.append("\"효과가 없었다\"(효과가 없다는 증거가 아니라 자료가 부족하다는 뜻).")
+        if npct and cause not in ("quality", "pretrend"):
+            no.append(f"단순 전후 비교 {npct}를 정책 효과로 인용하는 말.")
+    return {"ok": [_fix_josa(x) for x in ok], "no": [_fix_josa(x) for x in no]}
 
 
 def foot(v, cause: str) -> str:
@@ -96,7 +146,7 @@ def brief(v) -> dict:
         title = ("같은 시기 다른 사건이 변화를 설명해 판정을 미룹니다" if level == "판정 보류"
                  else "같은 시기 다른 사건이 변화의 일부를 설명해 판정을 낮췄습니다")
         r = next((x for x in h.get("results", []) if x.get("status") == "반론 성립"), None)
-        why = h["hypothesis"].replace("같은 시기의 다른 사건 때문이다: ", "같은 시기 사건: ")
+        why = h["hypothesis"].replace("같은 시기의 다른 사건 때문이다: ", "같은 시기 사건: ").rstrip(". ")
         if r:
             why += (f". 그 기간을 빼고 다시 추정하니 {_pct(m.get('pct', 0))} → {_pct(r['pct'])}"
                     + ("(유의하지 않음)" if not r.get("significant") else ""))
@@ -169,4 +219,4 @@ def brief(v) -> dict:
     if rj["kind"] != "none":
         points.append(("다음", rj["text"]))
     return {"title": title, "cause": cause, "tag": TAGS.get(cause, ""), "say": _fix_josa(sy), "foot": foot(v, cause),
-            "points": [(k, _fix_josa(t)) for k, t in points]}
+            "points": [(k, _fix_josa(t)) for k, t in points], "speech": speech(v, cause)}

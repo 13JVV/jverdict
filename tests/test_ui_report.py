@@ -52,7 +52,7 @@ def test_onepage_html_content(c_run):
     assert "효과 있음(증가)" in h and "<svg" in h and "정답 대조" in h
     for c in ("C0", "C1", "C2a", "C2b", "C3", "C4"):
         assert c in h
-    assert v.manifest["prereg"]["sha256"][:24] in h and "sk-ant" not in h
+    assert v.manifest["prereg"]["sha256"][:12] in h and "sk-ant" not in h and v.analysis_no in h
 
 
 @pytest.mark.skipif(onepage.find_browser() is None, reason="Chrome·Edge 없음")
@@ -106,6 +106,9 @@ def test_app_start_and_verdict_pages(c_run, monkeypatch):
     at.run()
     assert not at.exception and "합성데이터" in _text(at)
     assert "+19.6%" in _text(at) and "정책 이후 +19.6%의 변화가 확인되었습니다" in _text(at)
+    t = _text(at)
+    assert "Agent가 정한 것" in t and "말해도 되는 것" in t and "말하면 안 되는 것" in t and "분석 번호" in t
+    assert "문서번호" not in t and "끝." not in t.split("공문")[0]           # 판정서 머리·꼬리는 공문서 흉내를 내지 않음
     at2 = st_testing.AppTest.from_file(APP, default_timeout=60)
     at2.query_params["run"] = "../../etc"                    # 목록에 없는 값은 무시
     at2.run()

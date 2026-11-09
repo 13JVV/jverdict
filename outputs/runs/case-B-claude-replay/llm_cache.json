@@ -5,11 +5,11 @@
     "key_norm": "43b9a8e0084bc8e19e75ac19b3345752b1199a26a7a8a3820e992dd558665a73",
     "model": "claude-sonnet-5-5",
     "response": {
-      "id": "msg_011Cgo4ffu1ZCSP9zZrp9hjc",
+      "id": "msg_011Cgrv6Ajj6Xtadj5yaBmYJ",
       "container": null,
       "content": [
         {
-          "text": "{\"policy\":\"1차 긴급재난지원금\",\"question\":\"1차 긴급재난지원금(2020-05)이 사용 가능 업종의 제주도민 카드 소비를 늘렸는가?\",\"start_date\":\"2020-05-01\",\"end_date\":null,\"treated\":\"제주도민(지원금 수령), 사용 가능 업종(card_sector의 tier:가능 업종 묶음의 제주도민 이용 금액)\",\"outcome\":\"업종별 월 카드 이용 금액(원)\",\"expected\":\"increase\",\"region\":\"제주도\",\"source\":\"행정안전부·제주도 발표(2020)\",\"reference_effect\":0.1,\"assumptions\":[\"등록된 사례 B와 같은 정책으로 보아 시행일(2020-05-01)과 대상을 사례 B에 따랐다. 질문의 기간 단위가 월이므로 시행일은 그 달 1일이다.\",\"종료일은 질문과 사례에 없어 null로 두었다. 지원금 사용 기한과 종료일은 확인 필요.\",\"분석 데이터는 card_sector(월 단위, 2018-01~2025-06, 비씨카드 실적)를 쓰는 것이 적합해 보인다. 비씨카드 실적이므로 제주도 전체 카드 소비를 대표하는지는 확인 필요.\",\"비교 대상은 tier:불가 업종의 제주도민 이용 금액 또는 다른 이용자 구분(내국인 관광객 등)이 될 수 있다. 확정은 이후 단계에서 한다.\",\"업종 묶음 tier:불확실은 사용 가능 여부가 분명하지 않아 처리 방법은 확인 필요.\",\"2020-05은 코로나19 시기와 겹쳐 같은 시기 다른 요인이 있었을 수 있다. 원인을 단정하지 않는다.\",\"지원금 지급일과 실제 사용 시작일이 시행일과 다를 수 있어 확인 필요.\",\"기대 방향은 증가로 두었으며 의미 있는 최소 효과 비율은 기본값 0.10을 적용했다.\"]}",
+          "text": "{\"policy\":\"1차 긴급재난지원금\",\"question\":\"1차 긴급재난지원금(2020-05)이 사용 가능 업종의 제주도민 카드 소비를 늘렸는가?\",\"start_date\":\"2020-05-01\",\"end_date\":null,\"treated\":\"제주도민(지원금 수령), 사용 가능 업종 (card_sector의 tier:가능 업종 묶음, 이용자 구분: 제주도민)\",\"outcome\":\"업종별 월 카드 이용 금액(원)\",\"expected\":\"increase\",\"region\":\"제주도\",\"source\":\"행정안전부·제주도 발표(2020)\",\"reference_effect\":0.1,\"assumptions\":[\"등록 사례 B와 같은 정책으로 보고 시행일(2020-05-01)과 대상을 사례 B에 따름. 질문의 기간 단위가 월(2020-05)이므로 시행일을 그 달 1일로 둠.\",\"종료일은 질문과 등록 사례에 없으므로 null로 두며 지원금 사용 기한 등은 확인 필요.\",\"분석 데이터는 card_sector(월 단위, 2018-01~2025-06, 비씨카드 실적)를 쓰는 것이 적합함. 비씨카드 실적이므로 전체 카드 소비를 대표하는지는 확인 필요.\",\"비교 대상(대조군)은 tier:불가 업종 또는 다른 이용자 구분(내국인·외국인 등)을 후보로 두되, 같은 시기 코로나19 영향 등 다른 요인이 섞였을 가능성이 있어 원인을 단정할 수 없음.\",\"tier:불확실 업종은 사용처 규정이 모호하므로 주 분석에서 제외하거나 민감도 분석으로 다룰 것을 제안함. 확인 필요.\",\"reference_effect는 기본값 0.10(10%)을 사용함.\"]}",
           "type": "text"
         }
       ],
@@ -29,7 +29,7 @@
         "cache_read_input_tokens": 0,
         "inference_geo": "global",
         "input_tokens": 4,
-        "output_tokens": 719,
+        "output_tokens": 645,
         "output_tokens_details": {
           "thinking_tokens": 0
         },
@@ -46,26 +46,26 @@
       "cache_read_input_tokens": 0,
       "inference_geo": "global",
       "input_tokens": 4,
-      "output_tokens": 719,
+      "output_tokens": 645,
       "output_tokens_details": {
         "thinking_tokens": 0
       },
       "service_tier": "standard",
       "speed": "standard"
     },
-    "cost_usd": 0.013268
+    "cost_usd": 0.012528
   },
   {
     "role": "scout",
-    "key": "4476ec0a87db667b5a3c149dd72ec4b61801461d2078950de074746ded0abcfa",
-    "key_norm": "4476ec0a87db667b5a3c149dd72ec4b61801461d2078950de074746ded0abcfa",
+    "key": "c5e57a4fc5bda9718427d7459974b9b34dd39f31d1241ee7393d6e0d01e72212",
+    "key_norm": "c5e57a4fc5bda9718427d7459974b9b34dd39f31d1241ee7393d6e0d01e72212",
     "model": "claude-sonnet-5-5",
     "response": {
-      "id": "msg_011Cgo4g5gUus2aXvhrMMq5n",
+      "id": "msg_011Cgrv6dqPYfX6D4JDAAEjb",
       "container": null,
       "content": [
         {
-          "id": "toolu_01NDg1Q4ojxRyh3biXnd6dQc",
+          "id": "toolu_0186277wzYfq9TF6qrCebZbQ",
           "caller": {
             "type": "direct"
           },
@@ -76,7 +76,7 @@
           "type": "tool_use"
         },
         {
-          "id": "toolu_01H7j1bys5e3Fe16iV7pjJ6N",
+          "id": "toolu_01R9rMEYJvj5utf1Tfw5rA7K",
           "caller": {
             "type": "direct"
           },
@@ -87,7 +87,7 @@
           "type": "tool_use"
         },
         {
-          "id": "toolu_01KNnKBHkR69MVbMSNm4Vx9i",
+          "id": "toolu_013UD7xr3tGPdPYZcncwe6df",
           "caller": {
             "type": "direct"
           },
@@ -106,9 +106,9 @@
       "usage": {
         "cache_creation": {
           "ephemeral_1h_input_tokens": 0,
-          "ephemeral_5m_input_tokens": 3445
+          "ephemeral_5m_input_tokens": 3365
         },
-        "cache_creation_input_tokens": 3445,
+        "cache_creation_input_tokens": 3365,
         "cache_read_input_tokens": 0,
         "inference_geo": "global",
         "input_tokens": 4,
@@ -123,9 +123,9 @@
     "usage": {
       "cache_creation": {
         "ephemeral_1h_input_tokens": 0,
-        "ephemeral_5m_input_tokens": 3445
+        "ephemeral_5m_input_tokens": 3365
       },
-      "cache_creation_input_tokens": 3445,
+      "cache_creation_input_tokens": 3365,
       "cache_read_input_tokens": 0,
       "inference_geo": "global",
       "input_tokens": 4,
@@ -136,24 +136,24 @@
       "service_tier": "standard",
       "speed": "standard"
     },
-    "cost_usd": 0.0099005
+    "cost_usd": 0.0097005
   },
   {
     "role": "scout",
-    "key": "3328d1637edf3da2e03469f69c6c82584db5919f34397e9a8635d0f19a4db9b4",
-    "key_norm": "3328d1637edf3da2e03469f69c6c82584db5919f34397e9a8635d0f19a4db9b4",
+    "key": "616171abbfa73e001a642fc2eddd99c7984c1342a1aa870b30aa07da15782741",
+    "key_norm": "616171abbfa73e001a642fc2eddd99c7984c1342a1aa870b30aa07da15782741",
     "model": "claude-sonnet-5-5",
     "response": {
-      "id": "msg_011Cgo4gD5z73s1iZPiJvui2",
+      "id": "msg_011Cgrv6qdJUjgcEdTybSpQ6",
       "container": null,
       "content": [
         {
-          "signature": "CAQS1wYKEAgTGAI4AUIIdGhpbmtpbmcSDLxjHnB2gq9EKbas5BoMuyu1N/UUvTEUP4bZIjBWzNEJDqJgl/6M9MV6ugxODIWumgqMHF2zYMB3WEaOjyzeyfpaZ8l9BrKCwJrJ9Tsq9AVJaPjpUDA0qyCHkL1QbV08rL4K0HlY+a2Nd9BUgFXIlmo+2wJcDEeJJwXPY6aI31HSx3VncAfylfOA/Rdsyd9p0ndp8mEC1is3yrUvs7I76t9qzJsBBcXSGahHz4tXMWHmeuN7vM7itR4ubvZT236J2SfWYk83MoG4h98R1WZy3FzXN5e/j82YueMrZhnxp0b5icbvGHM5X/r8cxuc5xjjaykkSFF/EsP3yMqWm5x4n1vqN2htYsWDgCJ91HVFU6VCG9nwO5EYCoq05230kpuUJKO/OWFqI5kLHgBNCKZ14tDWeNZ+miRZexTxVC4hp2aP0pCPzTKF6oS9rQXYgSJ0hYdiUavKilW8s7cxQ/yMEZwEa3eTmiUcboM5ngpbjxB6Z2UZ9gvAb3BBtP8D8hdZECeCCSglyPERkFKukzCshz53e8jvKL5PpTEDIOzPr1ND9sgPMwerPj0V8QIFz/1GgDmZh0zDyB4EiHlD8LjK+ZA9eNp0JcDN+LwOyaFaLG28Vwfbj2OoenUgb6qixVe/3tAPaRhRBeNBWr10ZiFL1ClXi2dbJ8g1Tj3tUMKv9PYOQ6ak+5BeOEo8XaGhDL4AsdimpGPHtKv4a8BtBeY7z/RhURO84hYAe4baYKN1l/JMXbfnggn/K/IXimcxppwKGL/J2nHZnNzXKaZrWvKZBWd4s6cUaZgMRZ/m+wJfyx1s8BY1qFejSkcAQ9gJULbrnl87AAmjiCHJwijXu+UMd2xHkhuNWwuozn7ge1N6jrUSaAdrxpCMD+3JVras67SsbCec+obiN1E8o9WQsq0geG4OTxZvJmxiySNedVwdJIebzuHGrtek4Dd3XF1Z9ks1mjBaBzJJhpz079kvOGjrJ6n3+qT/1j+VmjHWgqaX/WnfTzu2Vgo2rjLMiryPOERQRTBxNUFIpq5Dnd1gT5iFwJOiFIIRcYf4yCEQCcfiW350IaV0+PmcQqViaKD0Vg9SEavzeKYiijVDVkoHDStqTKYo1bsYAQ==",
+          "signature": "CAQSlAcKEAgTGAI4AUIIdGhpbmtpbmcSDGnGJMPdAORHGP4L1BoMcAs6yfrM5YN5R/1nIjAD9J69mLn5lQ0l1sfuuZ5sgb//Tt98hSxQn9LtSaeX2F0m2FCA4dT5LgRirtUu+joqsQaE0uxK8heewA4gEYcTASkczsrfjKiRuSa87qfeDRZkcTOTJIRhLhestNYrPcyDq5zHo7so8NG7gGQCGGVy6lL6Rh9HVH5S9N7UatggvjwmpO9h7JQLrmcWvuAE4uaBPR6KrtiiYaKq1QFObsfUONxBw5qrdHKkfW3Z0hs/wUvae6XVhmjtMYXGbsCGXbt4uJoFyiEuBVpkiS9NZqIAczje1ulKPRlLadoQF4JWu9tCBethqNOIdUflVNYqdNjxWXTZBaeNoZBWhDCi90lyM4cEj56zUHTf4OKZ5jPKc9lUrpmx9e7o6QWzcllUJpE/1amGIQ7EQzL6rk931dmNYoa0cS1qCA5MLGpK1G2Vh/uUSWGVrx3VRlud/MmGHEig3D9YavoxYSU8gdIM4ttL+OP10uXrYPqqXA1r2F7zQkiPwLiyFhAuF6oSiyM8fO7o45UHwJqRmAsCthgdtErRUArua0wZJAq27JEaP1YTcHZ4zYXVGOekUKiuXd0MtuqD/k2Mpkwotse5bxqs1dA/xKIFMrO8EEzHH6ey04bstiaV+52cTEk/LzKg5KNgeWTtkOLBOgS/xTzmEzrU1qtazsW8r1Yn6vog3qPs4SVFCPW9m46A69bCXMnIwcG3wdBW/dJ7BggrNNMrMNzzVE1n1IxUtZnnvb9TMxwioc6oJWkcL6HvOYpRFXE+8jlr4zn44cbBZtODYTK5Ln5x1v6mFZe0w+ckyM8OHWrfgI57A1cS/cU6Jf3XbF9KTGLlIBa2y594TI2R3qmuWoEp1ccfItttSHnFrJR7sL+Ofq2h3C0/GDqSl7+m4qhvMoXAjADAwKCMS60QZC9REj/d4toQxSr5XxgdNLB7wUpyZK7fgBkFLqWDDJD1Qo2OGwyUTsZ7T6V1E53qp2Bkx8k0HnYq5Lrfxv7LObyU0ITA1C1FkUj/XucT6O2lAGoVA/HbYYVA5+0LMR2Jdp+oBZUGdhthae+Ic2utUS1yiSicVp8bqrZSVewDyQVmqlSVhlK2NBq1QmeGhf0L9lsD/dtdOX/tp6RaZfm30Ni2r5By1zXl4rRC/binK2ThzlRQNojtOhNVyLQlGAE=",
           "thinking": "",
           "type": "thinking"
         },
         {
-          "id": "toolu_01KHfGrRh8Z3SuDtPhdLZV3V",
+          "id": "toolu_019AV14cwPm9tg5FutNCXFn6",
           "caller": {
             "type": "direct"
           },
@@ -161,7 +161,7 @@
             "dataset": "card_sector",
             "series": [
               {
-                "name": "처치_도민_가능",
+                "name": "treated_도민_가능",
                 "groups": [
                   "제주도민"
                 ],
@@ -169,7 +169,7 @@
                 "units_list": []
               },
               {
-                "name": "대조_내국인_가능",
+                "name": "ref_내국인_가능",
                 "groups": [
                   "내국인"
                 ],
@@ -177,7 +177,7 @@
                 "units_list": []
               },
               {
-                "name": "대조_법인_가능",
+                "name": "ref_법인_가능",
                 "groups": [
                   "법인"
                 ],
@@ -185,7 +185,7 @@
                 "units_list": []
               },
               {
-                "name": "대조_도민_불가",
+                "name": "ref_도민_불가",
                 "groups": [
                   "제주도민"
                 ],
@@ -193,11 +193,11 @@
                 "units_list": []
               }
             ],
-            "target": "처치_도민_가능",
+            "target": "treated_도민_가능",
             "reference": [
-              "대조_내국인_가능",
-              "대조_법인_가능",
-              "대조_도민_불가"
+              "ref_내국인_가능",
+              "ref_법인_가능",
+              "ref_도민_불가"
             ],
             "official_stats": []
           },
@@ -218,12 +218,12 @@
           "ephemeral_5m_input_tokens": 1321
         },
         "cache_creation_input_tokens": 1321,
-        "cache_read_input_tokens": 3445,
+        "cache_read_input_tokens": 3365,
         "inference_geo": "global",
         "input_tokens": 2,
-        "output_tokens": 435,
+        "output_tokens": 461,
         "output_tokens_details": {
-          "thinking_tokens": 81
+          "thinking_tokens": 107
         },
         "service_tier": "standard",
         "speed": "standard"
@@ -235,29 +235,29 @@
         "ephemeral_5m_input_tokens": 1321
       },
       "cache_creation_input_tokens": 1321,
-      "cache_read_input_tokens": 3445,
+      "cache_read_input_tokens": 3365,
       "inference_geo": "global",
       "input_tokens": 2,
-      "output_tokens": 435,
+      "output_tokens": 461,
       "output_tokens_details": {
-        "thinking_tokens": 81
+        "thinking_tokens": 107
       },
       "service_tier": "standard",
       "speed": "standard"
     },
-    "cost_usd": 0.0083455
+    "cost_usd": 0.0085895
   },
   {
     "role": "scout",
-    "key": "3653a90f6b662a0d97ea2b25f40d8bfebd1d778d642b91ad5e4f7ef09709947b",
-    "key_norm": "3653a90f6b662a0d97ea2b25f40d8bfebd1d778d642b91ad5e4f7ef09709947b",
+    "key": "d81bd1e736d4102a549027c2531f5f17905dbb4241e9e6e639ca4fdb2ca389a1",
+    "key_norm": "d81bd1e736d4102a549027c2531f5f17905dbb4241e9e6e639ca4fdb2ca389a1",
     "model": "claude-sonnet-5-5",
     "response": {
-      "id": "msg_011Cgo4gSZMEh3JePMURe9V5",
+      "id": "msg_011Cgrv753DCv26UKoB2UpbZ",
       "container": null,
       "content": [
         {
-          "text": "{\"dataset\":\"card_sector\",\"series\":[{\"name\":\"처치_도민_가능\",\"groups\":[\"제주도민\"],\"units_tier\":\"tier:가능\",\"units_list\":[]},{\"name\":\"대조_내국인_가능\",\"groups\":[\"내국인\"],\"units_tier\":\"tier:가능\",\"units_list\":[]},{\"name\":\"대조_법인_가능\",\"groups\":[\"법인\"],\"units_tier\":\"tier:가능\",\"units_list\":[]},{\"name\":\"대조_도민_불가\",\"groups\":[\"제주도민\"],\"units_tier\":\"tier:불가\",\"units_list\":[]}],\"target\":\"처치_도민_가능\",\"reference_candidates\":[\"대조_내국인_가능\",\"대조_법인_가능\",\"대조_도민_불가\"],\"official_stats\":[],\"notes\":[\"결과지표는 업종별 월 카드 이용 금액(원)입니다. 데이터는 card_sector(2018-01~2025-06, 월 단위, 비씨카드 실적)입니다. 정책 시행일 이전 프로파일은 2018-01~2020-04입니다.\",\"quality_check 판정은 '확인 필요'이고 판정 상한은 '조건부'입니다. E2 방향 모순이 충족(보통)으로 나왔습니다. 방향 모순이 의심되며, 상세는 후속 단계에서 확인해야 합니다.\",\"E5 분류 변경은 충족되지 않았습니다. 이번 점검에서는 업종 분류 변경 징후가 없었습니다. E3 비현실적 크기도 충족되지 않았습니다.\",\"E4 외부 통계 불일치는 판단하지 못했습니다(met: null). 등록된 공식 수치(youth_free_483)는 2025-08~2026-02 기간의 청소년·어린이 무료 이용 건수입니다. 정의가 다르고 기간도 달라 대조에 쓰지 않았습니다. 같은 기간의 공식 집계(행정 통계·보도자료)가 필요합니다.\",\"커버리지: 2023-05~2023-06에 외국인 4개 집단(기타외국, 동남아, 일본, 중국)의 행이 없습니다. 이 구간은 분석에서 자동 제외됩니다. 이 외국인 집단은 이번 대조 후보에 넣지 않았고, 정책 시점(2020-05)과도 떨어져 있습니다.\",\"대조 후보는 정책 대상이 아니고 규모가 큰 집단을 우선했습니다. 내국인과 법인은 규모가 큽니다. 다만 두 집단이 지원금 수령 대상이 아닌지, 같은 업종 묶음의 소비가 도민 소비와 같은 방향으로 움직이는지는 확인 필요입니다. 내국인 중 제주 거주자 포함 여부도 확인 필요입니다.\",\"도민의 tier:불가 업종은 2개뿐입니다. 규모가 작을 수 있고, 지원금이 지급되면 불가 업종으로 가는 소비가 줄거나 늘 수 있습니다. 이 경우 오염된 대조가 될 수 있다는 의심이 있어 보조 대조로만 씁니다.\",\"tier:불확실 업종(16개)은 처치와 대조 어느 쪽에도 넣지 않고 제외했습니다. 처리 방법은 확인 필요입니다. 민감도 분석에서 포함 여부를 바꿔 보는 방안이 있습니다.\",\"시행일(2020-05-01), 종료일, 지원금 지급일과 실제 사용 시작일은 확인 필요입니다. 비씨카드 실적이 제주도 전체 카드 소비를 대표하는지도 확인 필요입니다.\",\"2020-05은 코로나19 시기와 겹칩니다. 같은 시기 다른 요인이 있었을 수 있어 원인을 단정하지 않습니다. 효과 크기는 설계를 잠근 뒤에 공개됩니다.\"]}",
+          "text": "{\"dataset\":\"card_sector\",\"series\":[{\"name\":\"treated_도민_가능\",\"groups\":[\"제주도민\"],\"units_tier\":\"tier:가능\",\"units_list\":[]},{\"name\":\"ref_내국인_가능\",\"groups\":[\"내국인\"],\"units_tier\":\"tier:가능\",\"units_list\":[]},{\"name\":\"ref_법인_가능\",\"groups\":[\"법인\"],\"units_tier\":\"tier:가능\",\"units_list\":[]},{\"name\":\"ref_도민_불가\",\"groups\":[\"제주도민\"],\"units_tier\":\"tier:불가\",\"units_list\":[]}],\"target\":\"treated_도민_가능\",\"reference_candidates\":[\"ref_내국인_가능\",\"ref_법인_가능\",\"ref_도민_불가\"],\"official_stats\":[],\"notes\":[\"결과지표: 업종별 월 카드 이용 금액(원). 비씨카드 실적이라 전체 카드 소비를 대표하는지는 확인 필요.\",\"정책 이전 기간은 2018-01~2020-04(28개월). 제주도민 평균 월 약 675억 원, 내국인 약 507억 원, 법인 약 433억 원 규모로 대조 후보로 쓸 만한 규모임.\",\"tier:불확실 16개 업종은 사용처 규정이 모호해 주 분석에서 제외함. 민감도 분석에서 다루는 것을 제안하며 확인 필요.\",\"tier:불가 업종은 2개뿐이라 규모와 대표성이 제한적이며, 도민 외 집단과 같은 기간 외부 충격(코로나19 등)을 함께 겪을 수 있음.\",\"내국인 집단은 지원금 수령 대상인 제주도민과 겹치는지 확인 필요. 정의가 불분명해 대조군 적합성은 불확실함.\",\"품질 점검 결과: 종합 판정은 '확인 필요', 판정 상한은 '조건부'. E2(방향 모순)가 충족되어 집계 방식 변경 등 측정 단절이 의심됨. 다만 효과 크기는 설계 확정 전까지 가려져 있음. E5(분류 변경)는 해당 없음.\",\"E4(외부 통계 불일치)는 판단하지 못함. 등록된 공식 수치(어린이·청소년 무료 이용 483만 건)는 기간과 정의가 달라 대조에 쓰지 않았고, 같은 기간의 공식 집계(행정 통계·보도자료)가 추가로 필요함.\",\"커버리지: 2023-05~2023-06 두 달 동안 중국, 일본, 동남아, 기타외국의 행이 없음. 분석에서는 자동 제외되며, 이번 분석 대상인 도민·내국인·법인에는 영향이 없음.\",\"시행일 2020-05-01, 종료일(지원금 사용 기한), 정책 대상은 모두 확인 필요. 같은 시기 코로나19 등 다른 요인이 섞여 있을 수 있어 원인을 단정할 수 없음.\"]}",
           "type": "text"
         }
       ],
@@ -271,13 +271,13 @@
       "usage": {
         "cache_creation": {
           "ephemeral_1h_input_tokens": 0,
-          "ephemeral_5m_input_tokens": 1069
+          "ephemeral_5m_input_tokens": 1052
         },
-        "cache_creation_input_tokens": 1069,
-        "cache_read_input_tokens": 4766,
+        "cache_creation_input_tokens": 1052,
+        "cache_read_input_tokens": 4686,
         "inference_geo": "global",
         "input_tokens": 2,
-        "output_tokens": 1358,
+        "output_tokens": 1030,
         "output_tokens_details": {
           "thinking_tokens": 0
         },
@@ -288,32 +288,32 @@
     "usage": {
       "cache_creation": {
         "ephemeral_1h_input_tokens": 0,
-        "ephemeral_5m_input_tokens": 1069
+        "ephemeral_5m_input_tokens": 1052
       },
-      "cache_creation_input_tokens": 1069,
-      "cache_read_input_tokens": 4766,
+      "cache_creation_input_tokens": 1052,
+      "cache_read_input_tokens": 4686,
       "inference_geo": "global",
       "input_tokens": 2,
-      "output_tokens": 1358,
+      "output_tokens": 1030,
       "output_tokens_details": {
         "thinking_tokens": 0
       },
       "service_tier": "standard",
       "speed": "standard"
     },
-    "cost_usd": 0.0172097
+    "cost_usd": 0.0138712
   },
   {
     "role": "skeptic",
-    "key": "f7cea8969cafa7f91f53d93c0d84ae2db482d329c170e5201f4c86d38967e32c",
-    "key_norm": "ad1f415f419c098dbfbd8f0022ce71750963891280ade5f83bf9882ca8997dea",
+    "key": "4d02824742f65c9c07325de9b8795f1666b98a204b48df82d5b64dc257452f9e",
+    "key_norm": "0529ce1a79f6269aec95eb4a6598dd385654e3e63683f86abda2fe2387458d93",
     "model": "claude-sonnet-5-5",
     "response": {
-      "id": "msg_011Cgo4h7CoQbCzKg4xvRm7r",
+      "id": "msg_011Cgrv7ef2aqXLHJb2jUDt2",
       "container": null,
       "content": [
         {
-          "id": "toolu_01Acyx1GgVdparEKQDvsPXPU",
+          "id": "toolu_01NUyYTPcr3JFsRjGvo8tzeL",
           "caller": {
             "type": "direct"
           },
@@ -325,7 +325,7 @@
           "type": "tool_use"
         },
         {
-          "id": "toolu_014UwFV8ALRtn4KoCmHfVqks",
+          "id": "toolu_012YKL64eyT5W9VJbz6SvskE",
           "caller": {
             "type": "direct"
           },
@@ -336,24 +336,26 @@
             "post": 2,
             "start": null,
             "end": null,
-            "reason": "지급 직후 단기 효과가 이후 코로나 재확산·관광 변화에 희석됐는지 확인"
+            "reason": "지원금 직후 단기 효과가 사후 4개월 평균에 희석됐는지 확인"
           },
           "name": "extra_check",
           "type": "tool_use"
         },
         {
-          "id": "toolu_01PckhveyT9A8Ti5eWW8Mb13",
+          "id": "toolu_01PrTMLmFFyKcMd87nP8gKD6",
           "caller": {
             "type": "direct"
           },
           "input": {
-            "kind": "exclude_period",
-            "reference": [],
+            "kind": "alt_reference",
+            "reference": [
+              "도민_대형종합"
+            ],
             "placebo_target": null,
             "post": null,
-            "start": "2020-02-01",
-            "end": "2020-03-01",
-            "reason": "코로나19 초기 급락기(2~3월)가 사전 기준선을 낮추거나 왜곡했는지 확인"
+            "start": null,
+            "end": null,
+            "reason": "불가 업종 대조군이 코로나19 충격 또는 대체 소비로 오염됐는지 확인"
           },
           "name": "extra_check",
           "type": "tool_use"
@@ -369,13 +371,13 @@
       "usage": {
         "cache_creation": {
           "ephemeral_1h_input_tokens": 0,
-          "ephemeral_5m_input_tokens": 3567
+          "ephemeral_5m_input_tokens": 3508
         },
-        "cache_creation_input_tokens": 3567,
+        "cache_creation_input_tokens": 3508,
         "cache_read_input_tokens": 0,
         "inference_geo": "global",
         "input_tokens": 4,
-        "output_tokens": 536,
+        "output_tokens": 523,
         "output_tokens_details": {
           "thinking_tokens": 0
         },
@@ -386,32 +388,32 @@
     "usage": {
       "cache_creation": {
         "ephemeral_1h_input_tokens": 0,
-        "ephemeral_5m_input_tokens": 3567
+        "ephemeral_5m_input_tokens": 3508
       },
-      "cache_creation_input_tokens": 3567,
+      "cache_creation_input_tokens": 3508,
       "cache_read_input_tokens": 0,
       "inference_geo": "global",
       "input_tokens": 4,
-      "output_tokens": 536,
+      "output_tokens": 523,
       "output_tokens_details": {
         "thinking_tokens": 0
       },
       "service_tier": "standard",
       "speed": "standard"
     },
-    "cost_usd": 0.0142855
+    "cost_usd": 0.014008
   },
   {
     "role": "skeptic",
-    "key": "93cb9fcd77548d6f5e6ec0f6e6179edc146c2e9a34add457123bcf967c54da9a",
-    "key_norm": "556f5d1654421a5415702b02158cfa4641e1f314f6a825dcbfddfb05b2134df4",
+    "key": "2b7d1a57a9a98a054955107071c0469a0b5edc3847758db577327e7c949c9063",
+    "key_norm": "acc146a1a0d11b4036a7e4226c53551988a5c7ac797931c403b0753ecbccbdf0",
     "model": "claude-sonnet-5-5",
     "response": {
-      "id": "msg_011Cgo4hRoETopj81NhjPfQ2",
+      "id": "msg_011Cgrv7xaJ46RBSrFERYNpX",
       "container": null,
       "content": [
         {
-          "text": "{\"hypotheses\":[{\"hypothesis\":\"지급 직후 단기 효과가 있었지만 4개월 창에서 희석되어 보이지 않는다.\",\"why_plausible\":\"지원금은 5월 직후 집중 사용되고 이후 소진될 수 있다. 7~8월에는 여름방학과 코로나19 재확산이 겹친다.\",\"check_ids\":[\"X1\"]},{\"hypothesis\":\"사전 3개월이 코로나19 초기 급락기(2~3월)라 기준선이 왜곡되어 효과가 가려졌다.\",\"why_plausible\":\"2020-02-18 이후 확산으로 소비가 전반적으로 급변했다. 사전 기간이 짧아 사전추세 검정(C1)도 불가능했다.\",\"check_ids\":[\"C1\"]},{\"hypothesis\":\"대조군(도민_불가)이 같은 시기 황금연휴 관광 반등, 유가 급락, 코로나19 충격을 다르게 받아 효과가 상쇄되었다.\",\"why_plausible\":\"4월 말~5월 초 연휴 반등과 3~5월 유가 급락은 업종별로 영향이 다르다. 대조 업종 구성이 달라 효과가 가려질 수 있다.\",\"check_ids\":[\"C2a\",\"C3\"]}],\"summary\":\"주 추정은 -4.9%이고 신뢰구간 [-17.0%, +9.0%]에 0이 포함된다. 시점 위약검정(C2a)은 p=0.317로 실패했다. 사후 2개월로 줄여도 -3.0%(p=0.69)로 유의하지 않았다(X1). 2~3월을 제외하는 검증(exclude_period)은 관측 부족으로 추정하지 못해 반론 성립 여부를 판정할 수 없다. 코로나19, 황금연휴, 유가 급락이 같은 시기에 겹쳐 증가 효과를 확인하지 못했다. 효과가 없다고 단정할 수도 없어 판정 보류가 타당해 보인다.\"}",
+          "text": "{\"hypotheses\":[{\"hypothesis\":\"대조군(불가 업종)도 지원금의 영향을 받았거나 소비가 대체되어, 가능 업종의 상대 효과가 가려졌다. 가능 업종과 불가 업종의 소비가 서로 이동했을 수 있다.\",\"why_plausible\":\"지원금은 현금처럼 쓰이므로, 불가 업종에서 쓰던 돈이 가능 업종으로 옮겨 갔거나 그 반대가 일어났을 수 있다. 그러면 격차 추정이 편향된다. 같은 시기에 코로나19 확산(2020-02-18~12-31)도 있었다. 대형종합 업종을 대조군으로 바꿔 보니 효과가 -6.8%(CI -29.2%~15.1%, p=0.45)였고 유의하지 않았다. 방향은 주 분석(-4.9%)과 같다. 대조군을 바꿔도 결론이 달라지지 않았으므로, 대조군 오염이 주된 원인이라는 근거는 약하다.\",\"check_ids\":[\"X2\",\"C3\"]},{\"hypothesis\":\"효과는 지원금 직후 단기에 나타났다가 사후 4개월 평균에 희석되었다.\",\"why_plausible\":\"지원금은 5월에 집중적으로 쓰였을 가능성이 있다. 그렇다면 4개월 평균은 효과를 과소추정한다. 사후 기간을 2개월로 줄여 보니 효과가 -2.95%(CI -24.8%~18.8%, p=0.69)였고 유의하지 않았다. 단기 급증 가설은 지지되지 않는다.\",\"check_ids\":[\"X1\"]},{\"hypothesis\":\"사전 기간이 3개월뿐이고 그 시기가 코로나19 첫 확산기와 겹쳐, 사전 기준선이 왜곡되었다. 이 때문에 정책 효과가 0 근처로 나온다.\",\"why_plausible\":\"2020-02~04월은 코로나19 확산 시기다. 황금연휴(2020-04-30~05-05)와 유가 급락 같은 충격도 겹쳤다. 사전추세 검정(C1)은 사전 기간이 짧아 하지 못했다. 시점 위약검정(C2a)은 p=0.317이었고, 주 효과가 유의하지 않아 참고로만 썼다. 사전 기준선이 왜곡됐는지는 이번 검증으로 가려내지 못했다. 사전 기간을 늘린 재분석이 필요하다.\",\"check_ids\":[\"C1\",\"C2a\"]},{\"hypothesis\":\"비씨카드 실적이 전체 소비를 대표하지 못해 효과가 작게 보였다. 지원금은 현금·지역화폐·다른 카드사로도 쓰였을 수 있다.\",\"why_plausible\":\"자료는 비씨카드 실적뿐이다. 카드사별 지원금 사용 비중은 확인 필요하다. 가짜 처치(법인_가능)는 +5.6%로 실제(-4.9%)와 달라 공간 위약검정(C2b)은 통과했다. 따라서 가능 업종 전반에 같은 변화가 있었다는 가설은 지지되지 않는다. 다만 대표성 문제는 이 자료로 검증할 수 없다.\",\"check_ids\":[\"C2b\"]}],\"summary\":\"대안 가설 4개를 점검했다. 대조군을 대형종합으로 바꾼 결과(-6.8%)와 사후 기간을 2개월로 줄인 결과(-2.95%)는 모두 유의하지 않았다. 방향은 주 분석(-4.9%, CI -17.0%~9.0%)과 같았다. 따라서 대조군 오염이나 단기 효과 희석으로 '증가'를 설명하기는 어렵다. 반대로 '증가가 없었다'고 단정할 수도 없다. 신뢰구간이 넓어 기준 효과 10%를 배제하지 못한다. 사전 기간이 짧아 사전추세를 검정하지 못했고, 코로나19 충격이 겹쳤다. 비씨카드의 대표성은 확인 필요하다. 그래서 '판정 보류'가 타당하다. 사전 기간을 늘려 재분석하는 것이 다음 과제다.\"}",
           "type": "text"
         }
       ],
@@ -425,13 +427,13 @@
       "usage": {
         "cache_creation": {
           "ephemeral_1h_input_tokens": 0,
-          "ephemeral_5m_input_tokens": 1308
+          "ephemeral_5m_input_tokens": 1446
         },
-        "cache_creation_input_tokens": 1308,
-        "cache_read_input_tokens": 3567,
+        "cache_creation_input_tokens": 1446,
+        "cache_read_input_tokens": 3508,
         "inference_geo": "global",
         "input_tokens": 2,
-        "output_tokens": 707,
+        "output_tokens": 1511,
         "output_tokens_details": {
           "thinking_tokens": 0
         },
@@ -442,32 +444,32 @@
     "usage": {
       "cache_creation": {
         "ephemeral_1h_input_tokens": 0,
-        "ephemeral_5m_input_tokens": 1308
+        "ephemeral_5m_input_tokens": 1446
       },
-      "cache_creation_input_tokens": 1308,
-      "cache_read_input_tokens": 3567,
+      "cache_creation_input_tokens": 1446,
+      "cache_read_input_tokens": 3508,
       "inference_geo": "global",
       "input_tokens": 2,
-      "output_tokens": 707,
+      "output_tokens": 1511,
       "output_tokens_details": {
         "thinking_tokens": 0
       },
       "service_tier": "standard",
       "speed": "standard"
     },
-    "cost_usd": 0.0110574
+    "cost_usd": 0.0194306
   },
   {
     "role": "reporter",
-    "key": "06abaced5811d98b8b5b26ecfe1420673d4ddee956e3c2e0364d2a9e5595a8f3",
-    "key_norm": "06abaced5811d98b8b5b26ecfe1420673d4ddee956e3c2e0364d2a9e5595a8f3",
+    "key": "ffaaba5818b7cb4d32516619b413de1c46d97fe748d7636bffd7fc7b61508ec1",
+    "key_norm": "ffaaba5818b7cb4d32516619b413de1c46d97fe748d7636bffd7fc7b61508ec1",
     "model": "claude-sonnet-5-5",
     "response": {
-      "id": "msg_011Cgo4hru6odT9pXznEzFZF",
+      "id": "msg_011Cgrv8q9bM1jVU5s5ABt5K",
       "container": null,
       "content": [
         {
-          "text": "{\"headline\":\"1차 긴급재난지원금이 사용 가능 업종의 제주도민 카드 소비를 늘렸는지는 현재 자료로 판단할 수 없어 판정을 보류합니다.\",\"summary\":\"사후 4개월 평균 추정치는 -4.9%이고 판정 구간은 -17.0% ~ +9.0%로 넓어, 늘었다는 결론도 줄었다는 결론도 내리기 어렵습니다. 정책 전 기간이 3개월로 짧아 현재 구분 가능한 최소 효과가 ±16.0%이며, 기준 효과 10%를 가려내지 못합니다. 사후 기간을 늘려도 이 문제는 해결되지 않아, 더 긴 정책 전 기간이나 더 세밀한 자료가 필요합니다. 따라서 이번 결과는 효과가 없다는 증거가 아니라 판단 근거가 부족하다는 뜻으로 읽어야 합니다.\",\"evidence\":[\"추정 효과는 -4.9%(판정 구간 -17.0% ~ +9.0%, p=0.389)이며, 분석 기간은 2020-02 ~ 2020-08(사전 3개월, 사후 4개월)입니다.\",\"검정력 부족: 현재 구분 가능한 최소 효과는 ±16.0%로 기준 효과 10%보다 큽니다.\",\"C0 데이터 품질은 통과(단절 없음)했고, C4 이중 계산도 pandas와 SQL 값이 -0.049901242로 일치했습니다.\",\"C2a 시점 위약검정은 실패했습니다. 가짜 시행일 40개 중 순위 p=0.317이라, 계절·시기 요인 반론이 성립합니다.\",\"C2b 공간 위약검정은 통과했습니다. 실제 -4.9%, 가짜 처치(법인_가능) +5.6%입니다.\",\"C3 민감도는 참고 수준입니다. 3개 모두 같은 방향이지만 유의한 것은 0개입니다.\"],\"limits\":[\"C1 사전추세는 사전 기간이 짧아 검정할 수 없어, 정책 전부터 변하던 추세인지 확인하지 못했습니다(미검증).\",\"사전 3개월이 코로나19 초기 급락기(2~3월)와 겹쳐 기준선이 왜곡됐을 가능성이 있으며 이는 검증되지 않았습니다.\",\"대조군(도민_불가)이 같은 시기 황금연휴 관광 반등, 유가 급락, 코로나19 충격을 다르게 받아 효과가 상쇄되었을 가능성이 규칙 검증에서 성립했습니다.\",\"지급 직후 단기 효과가 4개월 창에서 희석되었다는 반론은 사후 2개월 기준 -2.9%로 해당 없음이었습니다.\",\"자료는 업종별 성별 카드 이용 정보 한 종류이며, 일부 카드사 중심 자료일 가능성은 확인 필요합니다.\"],\"cannot_say\":[\"지원금이 카드 소비를 늘렸다거나 줄였다고 말할 수 없습니다.\",\"지원금이 효과가 없었다고 말할 수 없습니다. 현재 자료로는 ±16.0%보다 작은 효과를 구분하지 못합니다.\",\"-4.9%라는 수치를 지원금 때문이라고 원인으로 단정할 수 없습니다.\"],\"needed_data\":[\"더 긴 정책 전 기간의 자료(사후 기간만 늘려서는 해결 불가)\",\"더 세밀한 단위의 자료(일 단위, 전체 카드사 등)\",\"코로나19 초기 급락기 이전 기간을 포함한 기준선 자료\"]}",
+          "text": "{\"headline\":\"1차 긴급재난지원금이 사용 가능 업종의 제주도민 카드 소비를 늘렸는지는 현재 자료로 판단을 보류합니다.\",\"summary\":\"사후 4개월 평균 추정 효과는 -4.9%이지만 판정 구간이 -17.0%에서 +9.0%로 넓어 늘었다고도 줄었다고도 말할 수 없습니다. 현재 자료로 구분 가능한 최소 효과는 ±16.0%여서 기준 효과 10%를 가려내기 어렵습니다. 정책 전 기간이 3개월뿐이라 사후 기간을 늘려도 이 문제는 풀리지 않습니다. 따라서 더 긴 정책 전 기간이나 더 세밀한 자료가 확보될 때까지 판정을 보류합니다.\",\"evidence\":[\"추정 효과는 -4.9%이며 판정 구간은 -17.0% ~ +9.0%, p=0.389입니다(분석 기간 2020-02 ~ 2020-08, 사전 3개월·사후 4개월).\",\"검정력 부족: 현재 구분 가능한 최소 효과는 ±16.0%로 기준 효과 10%보다 큽니다.\",\"데이터 품질 검증(C0)은 통과했고 측정 방식 변경으로 숫자만 달라졌다는 반론은 기각되었습니다.\",\"공간 위약검정(C2b)은 통과했습니다. 실제 -4.9%, 가짜 처치 법인_가능은 +5.6%였습니다.\",\"이중 계산 검증(C4)은 통과했습니다. pandas와 SQL 결과가 모두 -0.049901242로 일치했습니다.\",\"민감도(C3)는 3개 중 0개가 같은 방향·유의였고(같은 방향은 3개), 시점 위약검정(C2a)은 순위 p=0.317로 참고용입니다.\"],\"limits\":[\"사전 기간이 3개월로 짧아 사전추세(C1)를 검정할 수 없고, 기존 추세 반론은 미검증입니다.\",\"사전 기간이 코로나19 첫 확산기와 겹쳐 기준선이 왜곡되었을 가능성이 있으나 검증되지 않았습니다(의심).\",\"계절 요인과 분석 기간·대조 선택에 따른 우연 가능성도 미검증으로 남아 있습니다.\",\"자료가 업종별 성별 카드 이용 정보이며, 비씨카드 실적이 전체 소비를 대표하는지는 확인 필요입니다.\",\"대조 집단을 바꾼 결과(-6.8%)와 사후 2개월 기준(-2.9%)은 해당 없음으로 처리되어 결론을 뒷받침하지 못합니다.\"],\"cannot_say\":[\"지원금이 소비를 늘렸다 또는 늘리지 않았다고 단정할 수 없습니다.\",\"-4.9%라는 숫자를 지원금이 소비를 줄인 증거로 읽을 수 없습니다.\",\"현금·지역화폐·다른 카드사 등 카드 외 소비에 미친 효과는 이 분석으로 말할 수 없습니다.\"],\"needed_data\":[\"더 긴 정책 전 기간의 자료(사후 기간만 늘려서는 해결 불가)\",\"더 세밀한 단위의 자료(일 단위, 전체 카드사 등)\"]}",
           "type": "text"
         }
       ],
@@ -481,13 +483,13 @@
       "usage": {
         "cache_creation": {
           "ephemeral_1h_input_tokens": 0,
-          "ephemeral_5m_input_tokens": 2278
+          "ephemeral_5m_input_tokens": 2484
         },
-        "cache_creation_input_tokens": 2278,
+        "cache_creation_input_tokens": 2484,
         "cache_read_input_tokens": 0,
         "inference_geo": "global",
         "input_tokens": 4,
-        "output_tokens": 1306,
+        "output_tokens": 1188,
         "output_tokens_details": {
           "thinking_tokens": 0
         },
@@ -498,19 +500,19 @@
     "usage": {
       "cache_creation": {
         "ephemeral_1h_input_tokens": 0,
-        "ephemeral_5m_input_tokens": 2278
+        "ephemeral_5m_input_tokens": 2484
       },
-      "cache_creation_input_tokens": 2278,
+      "cache_creation_input_tokens": 2484,
       "cache_read_input_tokens": 0,
       "inference_geo": "global",
       "input_tokens": 4,
-      "output_tokens": 1306,
+      "output_tokens": 1188,
       "output_tokens_details": {
         "thinking_tokens": 0
       },
       "service_tier": "standard",
       "speed": "standard"
     },
-    "cost_usd": 0.018763
+    "cost_usd": 0.018098
   }
 ]

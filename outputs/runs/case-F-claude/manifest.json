@@ -1,0 +1,115 @@
+{
+  "run_id": "case-F-claude",
+  "created": "2026-11-09T15:48:45+0900",
+  "calendar_as_of": "2026-11-09",
+  "mode": "claude",
+  "rules_version": "v2",
+  "seed": 20261104,
+  "question_input": "(시연) 2024-09-02 청소년 야간 버스 증편으로 청소년 버스 이용이 늘었는가?",
+  "question": "2024-09-02 청소년 야간 버스 증편으로 청소년 버스 이용이 늘었는가?",
+  "card": {
+    "policy": "(시연) 청소년 야간 버스 증편 — 합성데이터 2",
+    "question": "2024-09-02 청소년 야간 버스 증편으로 청소년 버스 이용이 늘었는가?",
+    "start_date": "2024-09-02",
+    "end_date": null,
+    "treated": "청소년",
+    "outcome": "이용자 유형별 일 단위 버스 이용 인원",
+    "expected": "increase",
+    "region": "제주도",
+    "source": "합성데이터 2(정답 공개는 판정 뒤)",
+    "reference_effect": 0.1,
+    "assumptions": [
+      "등록된 사례 A(2025-08-01 청소년 버스 무료)·C(2024-03-04 청소년 버스 요금 할인)와는 다른 정책으로 보아 질문에 적힌 시행일 2024-09-02를 사용함",
+      "사례 C와 시행일이 다르므로 같은 정책으로 취급하지 않음. 다만 시연용 합성 데이터 사용 여부는 확인 필요",
+      "실제 야간 증편 노선, 시간대, 대상 범위는 확인 필요",
+      "일 단위 데이터에서는 야간 시간대만 분리할 수 없을 수 있어 청소년 전체 이용 인원으로 대체함(확인 필요)",
+      "종료일은 질문에 없어 null로 둠",
+      "의미 있는 최소 효과 비율은 기본값 0.10을 적용함",
+      "같은 시기 다른 정책이나 행사가 섞였을 가능성은 확인 필요",
+      "등록 사례 F와 같은 정책으로 보고 시행일·대상을 등록본으로 맞춤"
+    ],
+    "library_case": "F",
+    "prereg": null,
+    "needed_hint": []
+  },
+  "data": {
+    "dataset": "synthetic_bus_event",
+    "source": "jverdict.synth 생성기"
+  },
+  "prereg": {
+    "sha256": "8a2c9d159e96d3b8bd47f64215c47e5e3ca83fc5802c1e9f0dad896ce47d976a",
+    "locked_at": "2026-11-09T15:48:22+0900",
+    "existing": null,
+    "amendments": []
+  },
+  "code_sha256": "ce45b448c48054c95e0ec1d0f992e5795f7b04e0e41e0b8694a5986ee9752bb4",
+  "versions": {
+    "python": "3.14.3",
+    "platform": "Darwin arm64",
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "scipy": "1.18.1",
+    "duckdb": "2.0.0",
+    "statsmodels": "0.15.0",
+    "anthropic": "2.3.0"
+  },
+  "numbers": {
+    "verdict": "효과 있음(증가)",
+    "effect": 0.127381,
+    "se": 0.055556,
+    "ci_lo": 0.005535,
+    "ci_hi": 0.249227,
+    "p": 0.040463,
+    "mde_pct": 0.168411
+  },
+  "final_verdict": "판정 보류",
+  "llm": {
+    "calls": 10,
+    "input_tokens": 30,
+    "output_tokens": 6465,
+    "cache_read_input_tokens": 20301,
+    "cache_creation_input_tokens": 22071,
+    "cost_usd": 0.12395,
+    "by_role": {
+      "parser": {
+        "calls": 1,
+        "cost_usd": 0.01153
+      },
+      "scout": {
+        "calls": 4,
+        "cost_usd": 0.02716
+      },
+      "design": {
+        "calls": 2,
+        "cost_usd": 0.03556
+      },
+      "skeptic": {
+        "calls": 2,
+        "cost_usd": 0.03142
+      },
+      "reporter": {
+        "calls": 1,
+        "cost_usd": 0.01828
+      }
+    },
+    "model": "claude-sonnet-5-5",
+    "effort": "medium",
+    "mode": "claude"
+  },
+  "fallbacks": [],
+  "files": [
+    "analysis.json",
+    "card.json",
+    "design.json",
+    "events.jsonl",
+    "facts.txt",
+    "llm_cache.json",
+    "naive.json",
+    "prereg.lock.json",
+    "prereg.md",
+    "report.json",
+    "report.md",
+    "scout.json",
+    "skeptic.json"
+  ]
+}

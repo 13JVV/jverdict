@@ -1,0 +1,10 @@
+{
+  "sha256": "721743c0a5a4de0222d09068fed69e87cc73fd27b8ce9c985d202b42df0cf3ba",
+  "locked_at": "2026-11-09T15:47:13+0900",
+  "existing_prereg": {
+    "file": "docs/prereg/case_distancing_2022.md",
+    "sha256": "f1dc11cb8ed78b6ec1d82b4c5b65b6f14c2dac1115a0e44f8054c07e65fbcf66",
+    "locked_at": "2026-11-06T00:30:25+0900"
+  },
+  "amendments": []
+}

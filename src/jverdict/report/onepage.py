@@ -167,6 +167,10 @@ h1 { font-size: 1.55rem; margin: 0 0 1pt; line-height: 1.25; }
 dl.pts { display: grid; grid-template-columns: 2.6em 1fr; gap: 1pt 5pt; margin: 3pt 0 0; font-size: .95em; }
 dl.pts dt { font-weight: 700; color: #0b3d5c; }
 dl.pts dd { margin: 0; }
+.say { margin: 0 0 5pt; font-size: .92em; }
+.say > div { border: 1px solid #d6d5cc; border-radius: 4pt; padding: 3pt 6pt; }
+.say p { margin: 1pt 0; }
+.say b.ok { color: #1f7a3a; } .say b.bad { color: #a32525; }
 .naive { display: flex; gap: 6pt; align-items: stretch; margin: 2pt 0 5pt; font-size: .95em; }
 .naive > div { flex: 1; border: 1px solid #d6d5cc; border-radius: 4pt; padding: 3pt 6pt; }
 .naive .nv { background: #f6f6f3; }
@@ -244,34 +248,36 @@ def build_html(v: RunView, font_pt: float = 9.0, compact: bool = False) -> str:
     pre = man["prereg"]
     ex = pre.get("existing")
     llm = man.get("llm", {})
-    mode_ko = {"template": "오프라인(템플릿)", "claude": "Claude", "replay": "재실행"}.get(man["mode"], man["mode"])
+    mode_ko = {"template": "규칙 Agent(오프라인)", "claude": "Claude 판단", "replay": "재실행"}.get(man["mode"], man["mode"])
+    from jverdict.report.actions import source_line
+    sp = bf["speech"]
+    # 1쪽에 맞추려고 대표 문장 하나씩만(전체는 화면 '다음 할 일' 탭)
+    say_html = ('<div class="cols say"><div><b class="ok">보고에 써도 되는 말</b> ' + E(sp["ok"][-1] if sp["ok"] else "")
+                + '</div><div><b class="bad">쓰면 안 되는 말</b> ' + E(sp["no"][0] if sp["no"] else "") + "</div></div>")
     rc = v.replay_check
     rep_txt = ("재실행 일치 확인됨" if rc and rc.get("reproduced") else
                "재실행 불일치" if rc else "재실행 대조 전")
-    foot = (f"재현 정보 · 실행 <code>{E(v.run_id)}</code> · 모드 {E(mode_ko)} · 판정 규칙 {E(man['rules_version'])} · "
-            f"{E(rep_txt)} · 생성 {E(man['created'][:16].replace('T', ' '))}<br>"
-            f"사전 등록 지문 <code>{E(pre['sha256'][:24])}…</code> (잠금 {E(pre['locked_at'][:16].replace('T', ' '))})"
-            + (f" · 기존 등록 문서 {E(ex['file'])} 지문 확인" if ex else "")
-            + f" · 데이터 <code>{E(man['data'].get('source', ''))}</code>"
-            + (f" 지문 <code>{E(man['data']['sha256'][:16])}…</code>" if man['data'].get('sha256') else f" 씨앗 {man.get('seed')}")
-            + f" · 코드 지문 <code>{E(man['code_sha256'][:16])}…</code>"
-            + (f" · LLM 호출 {llm.get('calls', 0)}회 ${llm.get('cost_usd', 0):.3f}" if llm.get("calls") else "")
-            + f"<br>재현 명령: <code>python -m jverdict.agent --replay outputs/runs/{E(v.run_id)}</code>"
-            " · 이 판정서는 판정 규칙에 따라 자동 작성된 참고용 분석 자료이며, 숫자는 모두 분석 결과에서 옮겼습니다. "
-            "정책 판단의 책임은 작성 부서에 있습니다.")
+    foot = (f"재현 · 실행 <code>{E(v.run_id)}</code> · {E(mode_ko)}"
+            + (f"(LLM {llm.get('calls', 0)}회)" if llm.get("calls") else "")
+            + f" · 판정 규칙 {E(man['rules_version'])} · {E(rep_txt)} · 설계 잠금 <code>{E(pre['sha256'][:12])}</code>"
+            + (f" · 등록 문서 {E(ex['file'].split('/')[-1])} 지문 확인" if ex else "")
+            + f" · 코드 <code>{E(man['code_sha256'][:8])}</code>"
+            + f" · <code>python -m jverdict.agent --replay outputs/runs/{E(v.run_id)}</code><br>"
+            "자동 작성된 참고용 분석 자료(공문서 아님)이며 숫자는 모두 분석 결과에서 옮겼습니다. 정책 판단의 책임은 작성 부서에 있습니다.")
     return f"""<!doctype html><html lang="ko" style="--fs:{font_pt}pt"><head><meta charset="utf-8">
 <title>판정서 {E(v.run_id)}</title><style>{CSS}</style></head>
 <body>
 <div class="top"><span class="brand">정책효과 판정서<small>참고용 분석 자료 · 정책 판정관 J-Verdict</small></span>
 <span class="sign">작성일 20&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;. · 작성 부서 ________ · 담당 ________</span></div>
 <h1>{E(card.get('policy', ''))}</h1>
-<p class="q">질문: {E(card.get('question', ''))} · 시행 {E(card.get('start_date', ''))} · 대상 {E(card.get('treated', ''))} · 데이터 {E(v.dataset_title)}</p>
+<p class="q">분석 번호 {E(v.analysis_no)} · 분석일 {E(v.analysis_day)} · 질문: {E(card.get('question', ''))} · 시행 {E(v.policy_date)} · 대상 {E(card.get('treated', ''))} · 데이터 {E(v.dataset_title)}</p>
 <div class="verdict">
  <div class="badge" style="background:#fff;color:{st['bg']};border:2px solid {st['bg']}"><span class="ic">{E(st['icon'])}</span>{E(v.label)}</div>
  <div class="vtext"><b>{E(bf['title'])}</b>{pts_html}</div>
 </div>
 {naive_html}
-{f'<figure>{svg_chart(cd)}<figcaption>{E(cd["note"])}</figcaption></figure>' if cd else ''}
+{say_html}
+{f'<figure>{svg_chart(cd, h=175 if compact else 200)}<figcaption>{E(cd["note"])}</figcaption></figure>' if cd else ''}
 {f'<div class="truth"><b>정답 대조(합성데이터, 판정 뒤 공개)</b> · {E(tl)}</div>' if tl else ''}
 <div class="cols">
  <div><h2>검증 결과</h2><table><tr><th>항목</th><th>결과</th><th>내용</th></tr>{checks}</table></div>
@@ -281,7 +287,7 @@ def build_html(v: RunView, font_pt: float = 9.0, compact: bool = False) -> str:
  <div><h2>이 분석이 말할 수 없는 것</h2>{ul(rep.get('cannot_say', []))}<h2>한계</h2>{ul(rep.get('limits', []))}</div>
  <div><h2>판정에 필요한 데이터</h2>{ul(needed)}{f'<h2>검정력</h2><p>{E(pw_line)}</p>' if pw_line else ''}</div>
 </div>
-<div class="foot">{foot}</div>
+<div class="foot">{E(source_line(v))}<br>{foot}</div>
 </body></html>"""
 
 

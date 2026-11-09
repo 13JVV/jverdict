@@ -73,4 +73,4 @@
 ## 재현 정보
 
 - 실행 번호 `case-A-claude-replay` · 모드 replay · 판정 규칙 v2
-- 사전 등록 지문 `6bfade05f870fb2080e54b807e38b1ee35bb42e924b6acacccb05228e3a0243a` (잠금 2026-11-07T15:05:02+0900)
+- 사전 등록 지문 `6bfade05f870fb2080e54b807e38b1ee35bb42e924b6acacccb05228e3a0243a` (잠금 2026-11-09T15:58:05+0900)

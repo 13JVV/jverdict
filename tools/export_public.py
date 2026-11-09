@@ -96,6 +96,29 @@ outputs/runs/_*/
 outputs/runs/2*/
 """
 
+KEEP_AWAKE = """# 웹 데모가 잠들지 않게 6시간마다 브라우저로 한 번 연다(Streamlit Community Cloud는 접속이 없으면 앱을 재운다).
+name: 웹 데모 깨워 두기
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  open-demo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: 브라우저 준비
+        run: pip install playwright==1.48.0 && python -m playwright install --with-deps chromium
+      - name: 데모 열기(잠들어 있으면 깨우기)
+        run: python tools/keep_awake.py https://jverdict.streamlit.app
+"""
+
 DATA_README = """# 데이터 받는 방법
 
 이 저장소에는 제주데이터허브 원자료와 가공 파일을 싣지 않았습니다(허브의 재배포 조건을 확인하지 못함).
@@ -171,7 +194,10 @@ def collect(out: Path) -> int:
     (out / "requirements.txt").write_text((ROOT / "requirements" / "base.txt").read_text(encoding="utf-8"), encoding="utf-8")
     (out / ".gitignore").write_text(GITIGNORE, encoding="utf-8")
     (out / "data" / "README.md").write_text(DATA_README, encoding="utf-8")
-    return n + 4
+    wf = out / ".github" / "workflows" / "keep-awake.yml"
+    wf.parent.mkdir(parents=True, exist_ok=True)
+    wf.write_text(KEEP_AWAKE, encoding="utf-8")
+    return n + 5
 
 
 def check(out: Path) -> list[str]:

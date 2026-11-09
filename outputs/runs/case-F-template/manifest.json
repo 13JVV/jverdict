@@ -1,7 +1,7 @@
 {
   "run_id": "case-F-template",
-  "created": "2026-11-07T14:22:04+0900",
-  "calendar_as_of": "2026-11-07",
+  "created": "2026-11-09T15:47:49+0900",
+  "calendar_as_of": "2026-11-09",
   "mode": "template",
   "rules_version": "v2",
   "seed": 20261104,
@@ -29,11 +29,11 @@
   },
   "prereg": {
     "sha256": "d0b6f55d3e4ef8b9a1e2766f8bbec132b5882d8ae29b18615d7f2f78d756fa4a",
-    "locked_at": "2026-11-07T14:22:04+0900",
+    "locked_at": "2026-11-09T15:47:49+0900",
     "existing": null,
     "amendments": []
   },
-  "code_sha256": "fd8a39ce9ce89d739de3425c6626a313d66e21559348f3424b103e3e7907e112",
+  "code_sha256": "ce45b448c48054c95e0ec1d0f992e5795f7b04e0e41e0b8694a5986ee9752bb4",
   "versions": {
     "python": "3.14.3",
     "platform": "Darwin arm64",

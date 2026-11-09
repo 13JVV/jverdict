@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import html
 import json
+import re
 import math
 import sys
 from pathlib import Path
@@ -75,7 +76,7 @@ ss.setdefault("page", "main")
 REF_HELP = ("사업계획서의 목표치, 또는 '이 정도는 변해야 성과라 할 수 있다'는 크기를 넣으세요. 모르면 10%. "
             "자료가 이 크기의 변화를 가려낼 수 있어야 '효과 없음'을 말할 수 있고, 결과를 본 뒤에는 바꿀 수 없습니다.")
 EXAMPLES = [("A", "청소년 버스 무료화"), ("B", "1차 재난지원금"), ("D", "중국 단체관광 재개"),
-            ("E", "거리두기 전면 해제"), ("C", "(시연) 정답 있는 합성데이터"), ("F", "(시연) Skeptic 반론")]
+            ("E", "거리두기 전면 해제"), ("C", "(시연) 정답 맞히기"), ("F", "(시연) 반론 하향")]
 
 st.markdown("""
 <style>
@@ -166,6 +167,16 @@ button[role=tab] p{font-weight:600}
 .jv-strip .s{font-size:.8rem;color:var(--muted);line-height:1.45}
 .jv-strip .foot{grid-column:1/-1;border-left:0;border-top:1px solid var(--line);font-size:.9rem;color:var(--ink);background:#fff}
 @media(max-width:720px){.jv-strip>div{border-left:0;border-top:1px solid var(--line)}.jv-strip>div:first-child{border-top:0}}
+.jv-say{border:1px solid var(--line);border-radius:8px;padding:.6rem .85rem;font-size:.9rem;height:100%}
+.jv-say b{display:block;font-size:.82rem;margin-bottom:.3rem}
+.jv-say p{margin:.15rem 0;line-height:1.5}
+.jv-say.ok{border-left:4px solid var(--ok)}.jv-say.ok b{color:var(--ok)}
+.jv-say.no{border-left:4px solid var(--bad)}.jv-say.no b{color:var(--bad)}
+.jv-agent{border:1px solid var(--line);border-radius:8px;padding:.55rem .9rem;margin:.2rem 0 .9rem;background:#fff;font-size:.88rem}
+.jv-agent .h{font-weight:800;color:var(--navy);font-size:.84rem;margin-bottom:.25rem}
+.jv-agent .h span{font-weight:500;color:var(--muted);margin-left:.4rem}
+.jv-agent dl{display:grid;grid-template-columns:4.2rem 1fr;gap:.12rem .6rem;margin:0}
+.jv-agent dt{color:var(--muted);font-weight:700}.jv-agent dd{margin:0;color:var(--ink)}
 .jv-v3{font-size:.86rem;color:var(--ink2);margin:-.4rem 0 .9rem;padding:.4rem .7rem;border-left:3px solid var(--line)}
 .jv-v3 span{color:var(--muted)}
 .jv-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.6rem;margin:0 0 1rem}
@@ -176,7 +187,7 @@ button[role=tab] p{font-weight:600}
 @media(max-width:720px){.jv-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
 /* 첫 화면: 네 사례의 반전 */
 .jv-cases{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.6rem;margin:.2rem 0 .4rem}
-.jv-case-card{border:1px solid var(--line);border-radius:8px;background:#fff;padding:.7rem .85rem;min-height:13.2rem;margin-bottom:.4rem}
+.jv-case-card{border:1px solid var(--line);border-radius:8px;background:#fff;padding:.7rem .85rem;min-height:14.4rem;margin-bottom:.4rem}
 .jv-case-card .k{font-size:.72rem;font-weight:700;color:var(--muted);letter-spacing:.06em;margin-right:.35rem}
 .jv-case-card .p{font-weight:800;font-size:.95rem;color:var(--ink)}
 .jv-case-card .w{font-size:.78rem;color:var(--muted);margin:.05rem 0 .45rem}
@@ -199,12 +210,13 @@ button[role=tab] p{font-weight:600}
 .jv-g-flow b{color:var(--muted);font-weight:400}
 .jv-g-tip{font-size:.86rem;background:var(--navy2);color:var(--navy);border-radius:6px;padding:.55rem .75rem;margin-top:.6rem}
 @media(max-width:720px){.jv-cases{grid-template-columns:1fr 1fr}}
-/* 판정서 꼬리: 직인 */
+/* 판정서 꼬리: 설계 잠금 확인 도장(기관 관인이 아님: 잠근 설계 지문을 확인했다는 표시) */
 .jv-tail{display:flex;justify-content:flex-end;align-items:center;gap:.8rem;margin:1.6rem 0 .4rem;color:var(--ink2);font-size:.85rem}
-.jv-tail .seal{width:58px;height:58px;border:2px solid var(--seal);border-radius:50%;color:var(--seal);display:flex;
-  flex-direction:column;align-items:center;justify-content:center;font-family:var(--serif);font-weight:700;line-height:1.1;
-  font-size:.8rem;transform:rotate(-4deg)}
-.jv-tail .seal i{font-style:normal;font-size:.55rem;font-family:Menlo,Consolas,monospace;font-weight:400;margin-top:.15rem}
+.jv-tail .seal{width:66px;height:66px;border:2px solid var(--seal);outline:1px solid var(--seal);outline-offset:2px;border-radius:50%;
+  color:var(--seal);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--serif);
+  font-weight:700;line-height:1.15;font-size:.74rem;transform:rotate(-4deg);background:#fff}
+.jv-tail .seal b{font-size:.5rem;letter-spacing:.04em;font-family:inherit;font-weight:700}
+.jv-tail .seal i{font-style:normal;font-size:.55rem;font-family:Menlo,Consolas,monospace;font-weight:400;margin-top:.1rem}
 /* 공통 조각 */
 .jv-badge{display:inline-flex;align-items:center;gap:.4rem;border:1.5px solid currentColor;border-radius:6px;padding:.15rem .6rem;
   font-weight:800;font-size:.95rem;white-space:nowrap;background:#fff}
@@ -236,7 +248,7 @@ def badge(level: str, label: str) -> str:
 
 def status_cls(s: str) -> str:
     return ("jv-ok" if s in ("통과", "반론 기각", "규칙 검증: 기각") else
-            "jv-bad" if s in ("실패", "반론 성립", "규칙 검증: 성립") else "jv-open" if s in ("미검증", "해당 없음") else "")
+            "jv-bad" if s in ("실패", "반론 성립", "규칙 검증: 성립") else "jv-open" if s in ("미검증", "해당 없음", "판단 불가", "참고") else "")
 
 
 def stepper(done: list[str], now: str | None, waiting: bool = False) -> str:
@@ -280,7 +292,8 @@ with st.sidebar:
                 '<div class="en">J-VERDICT</div></div></div><div class="jv-brand-sub">공공데이터로 정책 효과를 판정하는 AI Agent</div>',
                 unsafe_allow_html=True)
     busy = ss.job is not None and ss.job.alive
-    st.button("＋ 새 판정", type="primary", width="stretch", on_click=go_home, disabled=busy)
+    on_start = ss.job is None and not ss.view_dir and ss.get("page", "main") == "main"
+    st.button("＋ 새 판정", type="secondary" if on_start else "primary", width="stretch", on_click=go_home, disabled=busy)
     if st.button("사용 안내", icon=":material/help_outline:", width="stretch", key="guide_btn"):
         ss.guide_step, ss.guide_open = 0, True
 
@@ -298,7 +311,7 @@ with st.sidebar:
             except Exception:  # noqa: BLE001
                 return d.name
         st.selectbox("실행 기록", [None] + runs, format_func=_lbl, label_visibility="collapsed", key="pick_run",
-                     on_change=_open_picked, disabled=busy)
+                     on_change=_open_picked, disabled=busy, placeholder="판정서 고르기…")
     else:
         st.caption("아직 실행 기록이 없습니다.")
 
@@ -327,7 +340,7 @@ def _case_summary(run_dir: str, mtime: float) -> dict | None:
     try:
         v = load_run(run_dir)
         b = BR.brief(v)
-        return {"policy": v.card.get("policy", ""), "when": v.card.get("start_date", ""), "level": v.level,
+        return {"policy": v.card.get("policy", ""), "when": v.policy_date, "level": v.level,
                 "label": v.label, "tag": b["tag"], "title": b["title"],
                 "naive": (f"{v.naive['pct'] * 100:+.0f}% → '" + {"역효과": "정책 실패"}.get(v.naive.get("naive_level"),
                           v.naive.get("naive_level", "")) + "'") if v.naive else ""}
@@ -384,7 +397,7 @@ def _guide_html(i: int) -> str:
                 '<p class="jv-g-p">맨 위 <b>도장</b>이 결론이고, 옆의 <b>요지</b> 한 줄이 이유입니다. '
                 '그 아래 숫자 줄에서 <b>단순 비교였다면</b>과 <b>판정관 추정</b>이 얼마나 다른지 보세요.</p>'
                 + lv
-                + '<div class="jv-g-tip"><b>판정 보류는 실패가 아닙니다.</b> 틀린 결론을 막는 판정이며, '
+                + '<div class="jv-g-tip"><b>판정 보류는 실패가 아닙니다.</b> 근거 없는 결론을 막는 판정이며, '
                   "‘다음 할 일’ 탭에 필요한 자료와 공문 초안을 함께 냅니다.</div>")
     return dots + body + '<div style="height:.5rem"></div>'
 
@@ -427,6 +440,12 @@ def show_guide():
             if st.button("▶ 첫 사례 재생해 보기", type="primary", width="stretch", key="g_try", disabled=busy_):
                 _guide_try_first()
                 st.rerun()
+    if i < GUIDE_STEPS - 1:
+        busy_ = ss.job is not None and ss.job.alive
+        if st.button("▶ 설명 건너뛰고 첫 사례(청소년 버스 무료화) 30초 재생", key="g_try0", type="tertiary", width="stretch",
+                     disabled=busy_):
+            _guide_try_first()
+            st.rerun()
     if i == GUIDE_STEPS - 1:
         if st.button("닫기", key="g_close", type="tertiary", width="stretch"):
             ss.guide_open = False
@@ -445,9 +464,9 @@ def render_start():
     cases = [(k, d, _case_summary(str(d), (d / "manifest.json").stat().st_mtime)) for k, d in cases if d is not None]
     cases = [c for c in cases if c[2]]
     if cases:
-        st.markdown("**실제 제주 정책 4건: 단순 비교였다면 → 정책 판정관**")
+        st.markdown("**실제 제주 정책 4건: 단순 비교의 결론 → 정책 판정관**")
         cols = st.columns(len(cases))
-        for col, (k, d, c) in zip(cols, cases):
+        for i_, (col, (k, d, c)) in enumerate(zip(cols, cases)):
             with col:
                 st.markdown(
                     f'<div class="jv-case-card"><div class="p">{E(c["policy"])}</div><div class="w">시행 {E(c["when"])}</div>'
@@ -456,15 +475,51 @@ def render_start():
                     + (f' <span style="font-size:.8rem;color:{LEVEL_LINE.get(c["level"])};font-weight:700">{E(c["tag"])}</span>'
                        if c["tag"] else "")
                     + f'</div><div class="why">{E(c["title"])}</div></div>', unsafe_allow_html=True)
-                if st.button("▶ 진행 재생 · 판정서", key=f"case_{k}", width="stretch"):
+                if st.button("▶ 진행 재생 · 판정서", key=f"case_{k}", width="stretch",
+                             type="primary" if i_ == 0 else "secondary"):
                     ss.view_dir, ss.page = str(d), "replay"
                     st.rerun()
-        st.caption("판정 보류는 실패 판정이 아닙니다. 틀린 결론을 막고, 결론에 필요한 자료와 공문 초안을 함께 냅니다.")
+        st.caption("4건 모두 '판정 보류'입니다. 공개 자료만으로는 단순 비교의 결론을 확정할 수 없다는 뜻이며, "
+                   "판정관은 그 이유와 결론에 필요한 자료·공문 초안을 함께 냅니다. '효과 있음'을 낼 줄 아는지는 아래 정답을 아는 시연으로 확인하세요.")
+        render_demo_row()
     t1, t2 = st.tabs(["질문으로 시작", "직접 만들기(새 정책)"])
     with t1:
         render_question()
     with t2:
         render_builder()
+
+
+def render_demo_row():
+    """정답을 아는 합성 시연 2건(C·F)과 정확도 한 줄: 판정관이 '효과 있음'을 내고, 반론으로 낮추는 장면."""
+    demos = [(k, _recorded(k)) for k in ("C", "F")]
+    demos = [(k, d, _case_summary(str(d), (d / "manifest.json").stat().st_mtime)) for k, d in demos if d is not None]
+    demos = [x for x in demos if x[2]]
+    if not demos:
+        return
+    st.markdown("**정답을 아는 시연(합성데이터) · 정확도**")
+    cols = st.columns(3)
+    notes = {"C": "정답 +22.1%를 심어 둔 데이터. 판정관 추정 +19.6%, 판정 구간이 정답을 포함",
+             "F": "정책 효과 0, 같은 시기 행사만 있음. 검증은 모두 통과했지만 Agent가 행사를 반론으로 세워 검증하고 판정을 낮춤"}
+    for col, (k, d, c) in zip(cols, demos):
+        with col:
+            st.markdown(
+                f'<div class="jv-case-card" style="min-height:9.5rem"><div class="p">{E(c["policy"])}</div>'
+                f'<div style="margin-top:.3rem"><span class="k">판정관</span>{badge(c["level"], c["level"])}'
+                + (f' <span style="font-size:.8rem;color:{LEVEL_LINE.get(c["level"])};font-weight:700">{E(c["tag"])}</span>'
+                   if c["tag"] else "")
+                + f'</div><div class="why">{E(notes.get(k, c["title"]))}</div></div>', unsafe_allow_html=True)
+            if st.button("▶ 진행 재생 · 판정서", key=f"demo_{k}", width="stretch"):
+                ss.view_dir, ss.page = str(d), "replay"
+                st.rerun()
+    with cols[2]:
+        st.markdown(
+            '<div class="jv-case-card" style="min-height:9.5rem"><div class="p">합성 시험 2,400회 정확도</div>'
+            '<div class="why" style="font-size:.86rem">없는 효과를 \'효과 있음\'이라 함 <b>2.4%</b><br>'
+            '실제 효과에 \'효과 있음\' <b>83%</b>(시계열)·<b>74.5%</b>(패널)<br>판정 보류 <b>37.6%</b> · 방향 반대 <b>0%</b></div></div>',
+            unsafe_allow_html=True)
+        if st.button("정확도 리포트 보기", key="demo_acc", width="stretch"):
+            ss.page, ss.view_dir = "accuracy", None
+            st.rerun()
 
 
 def _recorded(k: str) -> Path | None:
@@ -658,26 +713,26 @@ def render_verdict(run_dir: str):
         return
     man, rep, a = v.manifest, v.report, v.analysis
     llm = man.get("llm", {})
-    how = (f"Claude 판단 {llm['calls']}회(${llm.get('cost_usd', 0):.3f})" if llm.get("calls")
-           else "오프라인(규칙·템플릿)") + f" · 판정 규칙 {man.get('rules_version', '')}"
+    how = (f"Claude 판단 기록(LLM 호출 {llm['calls']}회)" if llm.get("calls")
+           else "규칙 Agent(오프라인)") + f" · 판정 규칙 {man.get('rules_version', '')}"
     pre = man.get("prereg") or {}
-    day = (pre.get("locked_at") or "")[:10]
-    case = v.card.get("library_case") or "N"
-    doc_no = f"JV-{day.replace('-', '')}-{case}{'C' if llm.get('calls') else 'T'}"
+    day, doc_no = v.analysis_day, v.analysis_no
     top_l, top_r = st.columns([5, 1.25])
     with top_l:
         st.markdown(
             f'<div class="jv-doc"><div class="jv-doc-top"><span class="kind">정 책 효 과 판 정 서</span>'
-            f'<span>문서번호 {E(doc_no)} · 판정일 {E(day)}</span></div>'
+            f'<span>분석 번호 {E(doc_no)} · 분석일 {E(day)}</span></div>'
             f'<h1>{E(v.card.get("policy", ""))}</h1><dl class="jv-case">'
             f'<dt>질 문</dt><dd>{E(v.card.get("question", ""))}</dd>'
-            f'<dt>사건 정보</dt><dd>시행 {E(v.card.get("start_date", ""))} · 대상 {E(v.card.get("treated", ""))} · '
+            f'<dt>사건 정보</dt><dd>시행 {E(v.policy_date)} · 대상 {E(v.card.get("treated", ""))} · '
             f'자료 {E(v.dataset_title)}</dd>'
             f'<dt>판정 방식</dt><dd>{E(how)} · 설계 잠금 {E((pre.get("sha256") or "")[:8])}</dd></dl></div>',
             unsafe_allow_html=True)
     with top_r:
         pdf_button(v, key="pdf_top")
         st.button("새 판정", on_click=go_home, width="stretch", key="new_top")
+        with st.popover("판정서 읽는 법", width="stretch"):
+            st.markdown(READ_HOW)
 
     b = BR.brief(v)
     lv = LEVEL_LINE.get(v.level, "var(--ink)")
@@ -694,19 +749,15 @@ def render_verdict(run_dir: str):
         f'<div class="body"><div class="t">{E(b["title"])}</div><dl>{pts}</dl></div></div>',
         unsafe_allow_html=True)
 
+    from jverdict.agent.library import prereg_report
+    pr = prereg_report(v.card.get("library_case"), v.level)
+    if pr:
+        st.markdown(f'<div class="jv-v3"><b>사전 등록에 따른 보고</b> · {E(pr)}</div>', unsafe_allow_html=True)
     v3 = a.get("verdict_v3")
-    if v3:
-        r2 = a["verdict"]["label"]                     # 규칙끼리 비교(Skeptic 반론은 두 규칙에 똑같이 적용)
-        dg = v.skeptic.get("downgraded")
-        if v3["label"] == r2:
-            msg = f'판정 규칙 <b>v3(개정안)</b>로 다시 판정해도 규칙 결과는 v2와 같은 <b>{E(r2)}</b>입니다.'
-        else:
-            msg = (f'판정 규칙 <b>v3(개정안)</b>의 결과는 <b style="color:{LEVEL_LINE.get(v3["level"])}">{E(v3["label"])}</b>로, '
-                   f'v2 규칙 결과 {E(r2)}와 다릅니다({E(v3["reasons"][0] if v3.get("reasons") else "")}).')
-        if dg:
-            msg += f' Skeptic 반론은 두 규칙에 똑같이 적용되어 최종 판정은 {E(v.label)}입니다.'
-        st.markdown(f'<div class="jv-v3">{msg} <span>v3는 외부 검토를 반영한 개정안이고, 공식 판정은 사전에 정한 v2를 따릅니다. '
-                    "차이는 '검증·반론' 탭에.</span></div>", unsafe_allow_html=True)
+    if v3 and v3["label"] != a["verdict"]["label"]:   # 같으면 '검증·반론' 탭에만 둔다(도장 아래에서 결론을 흐리지 않게)
+        st.markdown(f'<div class="jv-v3">참고: 판정 규칙 개정안(v3)으로는 규칙 결과가 {E(v3["label"])}입니다. '
+                    "공식 판정은 미리 정한 v2를 따릅니다. 차이는 '검증·반론' 탭에.</div>", unsafe_allow_html=True)
+    render_agent_box(v)
 
     m, pw, pt = a.get("main") or {}, a.get("power") or {}, a.get("placebo_time") or {}
     held = v.level == "판정 보류"
@@ -719,34 +770,29 @@ def render_verdict(run_dir: str):
         lo, hi = a["verdict"]["ci_used"]
         big = math.expm1(hi) > 3 or math.expm1(hi) - math.expm1(lo) > 2       # +300% 초과나 폭 200%p 초과
         rng = ("범위가 매우 넓음" if big else f"구간 {math.expm1(lo) * 100:+.1f}% ~ {math.expm1(hi) * 100:+.1f}%")
-        cells.append(("ref" if held else "", "판정관 추정" + (" (참고치)" if held else ""), f"{m['pct'] * 100:+.1f}%",
-                      ("보류라 인용하지 않음 · " if held else "대조 대비 · ") + rng))
+        if held:     # 보류 판정서에서는 인용하면 안 되는 숫자를 크게 쓰지 않는다
+            cells.append(("ref", "판정관 추정", "인용 불가",
+                          f"참고 계산 {m['pct'] * 100:+.1f}% · " + rng + " · 보류라 효과 크기로 쓰지 않음"))
+        else:
+            cells.append(("", "판정관 추정", f"{m['pct'] * 100:+.1f}%", "대조 대비 · " + rng))
     if pw.get("mde_log") is not None:
         big = pw["mde_log"] > 0.7
-        cells.append(("", "구분 가능한 최소 변화", PW.mde_short(pw["mde_log"]),
-                      ("사실상 구분 불가 · " if big else "") + f"의미 있다고 본 기준 {pw['reference_pct'] * 100:.0f}%"
-                      + ("" if pw.get("enough") else " → 자료 부족")))
-    if pt.get("n"):
-        rank = "통과" if pt["p_two"] < 0.05 else "통과 못 함"
+        cells.append(("", "구분 가능한 최소 변화", "구분 불가" if big else PW.mde_short(pw["mde_log"]),
+                      (f"{PW.mde_short(pw['mde_log'])} · " if big else "") + f"의미 있다고 본 기준 {pw['reference_pct'] * 100:.0f}%"
+                      + ("" if pw.get("enough") else " → 검정력 부족")))
+    c2a = next((c for c in v.checks if c["code"] == "C2a"), {})
+    if pt.get("n") and c2a.get("status") in ("통과", "실패", "참고"):
+        rank = {"통과": "통과", "실패": "통과 못 함", "참고": "참고"}[c2a["status"]]
         cells.append(("", "가짜 시행일 시험", rank,
-                      f"정책이 없던 날 {pt['n']}개로 같은 계산 · 순위 {BR._p(pt['p_two'])}"))
+                      f"정책이 없던 날 {pt['n']}개로 같은 계산"
+                      + (" · 효과가 유의하지 않아 참고만" if c2a["status"] == "참고" else
+                         f" · 실제보다 크게 튄 가짜 {pt['p_two'] * 100:.0f}%")))
     if cells:
         html_cells = "".join(f'<div class="{c}"><div class="l">{E(l)}</div><div class="v">{E(val)}</div>'
                              f'<div class="s">{E(sv)}</div></div>' for c, l, val, sv in cells)
         if b["foot"]:
             html_cells += f'<div class="foot">{E(b["foot"])}</div>'
         st.markdown(f'<div class="jv-strip">{html_cells}</div>', unsafe_allow_html=True)
-    with st.expander("이 판정서 읽는 법"):
-        st.markdown(
-            "- **도장**: 판정 결과입니다. 효과 있음·조건부·효과 없음·판정 보류 네 가지이며, 도장 아래 작은 글씨가 그 이유의 종류입니다.\n"
-            "- **요지 · 근거 · 검증 · 반론 · 다음**: 도장 옆 다섯 줄입니다. 요지 한 줄만 읽어도 결론과 이유를 알 수 있습니다.\n"
-            "- **숫자 줄**: '단순 전후 비교였다면'은 대조와 검증 없이 시행 전후만 비교한 값입니다. '판정관 추정'과 차이가 클수록 "
-            "단순 비교가 틀렸을 가능성이 큽니다. '구분 가능한 최소 변화'가 기준보다 크면 자료가 부족해 판단할 수 없다는 뜻입니다.\n"
-            "- **그래프**: 정책 대상과 비교 대상의 차이가 시간에 따라 어떻게 변했는지 보여 줍니다. 세로 점선이 시행일이고, "
-            "시행 뒤 굵은 선이 0%(정책이 없었다면)에서 멀어질수록 효과가 큽니다.\n"
-            "- **탭**: '다음 할 일'(보고 요약·공문 초안), '검증·반론'(시험별 통과 여부), 'Agent의 판단'(단계별 기록), "
-            "'설계 문서(잠금)'(결과를 보기 전에 확정한 계획), '재현·내려받기'(같은 결과가 다시 나오는지 확인)."
-        )
 
     cd = chart_data(a, v.design)
     fig = figure(cd)
@@ -826,9 +872,55 @@ def render_verdict(run_dir: str):
     with tabs[4]:
         render_repro(v)
     st.markdown(
-        f'<div class="jv-tail"><div>이 판정서는 결과를 보기 전 잠근 설계({E((pre.get("sha256") or "")[:8])})에 따라 작성되었습니다. 끝.'
-        f'<br><span style="color:var(--muted)">정책 판정관 J-Verdict · 참고용 분석 자료</span></div>'
-        f'<div class="seal">판정관<i>{E((pre.get("sha256") or "")[:6])}</i></div></div>', unsafe_allow_html=True)
+        f'<div class="jv-tail"><div>이 판정서는 결과를 보기 전 잠근 설계({E((pre.get("sha256") or "")[:8])})에 따라 작성되었습니다.'
+        f'<br><span style="color:var(--muted)">정책 판정관 J-Verdict · 참고용 분석 자료(공문서 아님)</span></div>'
+        f'<div class="seal" title="결과를 보기 전 잠근 설계의 지문을 확인했다는 표시"><b>J-VERDICT</b>설계잠금'
+        f'<i>{E((pre.get("sha256") or "")[:6])}</i></div></div>', unsafe_allow_html=True)
+
+
+READ_HOW = (
+    "- **도장**: 판정 결과입니다. 효과 있음·조건부·효과 없음·판정 보류 네 가지이며, 도장 아래 작은 글씨가 그 이유의 종류입니다.\n"
+    "- **요지 · 원인 · 검증 · 반론 · 다음**: 도장 옆 줄입니다. 요지 한 줄만 읽어도 결론과 이유를 알 수 있습니다.\n"
+    "- **Agent가 정한 것**: 이번 판정에서 Agent(Claude 또는 규칙)가 스스로 고른 비교 대상과 반론입니다. 숫자는 통계 도구가 계산합니다.\n"
+    "- **숫자 줄**: '단순 전후 비교였다면'은 대조와 검증 없이 시행 전후만 비교한 값입니다. 판정 보류이면 판정관 추정은 "
+    "'인용 불가'로 표시합니다. '구분 가능한 최소 변화'가 기준보다 크면 자료가 부족해 판단할 수 없다는 뜻입니다.\n"
+    "- **그래프**: 정책 대상과 비교 대상의 차이가 시간에 따라 어떻게 변했는지 보여 줍니다. 세로 점선이 시행일이고, "
+    "시행 뒤 굵은 선이 0%(정책이 없었다면)에서 멀어질수록 효과가 큽니다.\n"
+    "- **탭**: '다음 할 일'(말해도 되는 문장·보고 요약·공문 초안), '검증·반론'(시험별 결과), 'Agent의 판단'(단계별 기록), "
+    "'설계 문서(잠금)'(결과를 보기 전에 확정한 계획), '재현·내려받기'(같은 결과가 다시 나오는지 확인)."
+)
+
+
+def render_agent_box(v):
+    """이번 판정에서 Agent가 스스로 정한 것(기록에서 그대로): 비교 설계, 반론, 판정 하향."""
+    llm = (v.manifest.get("llm") or {}).get("calls")
+    who = "Claude 판단 기록" if llm else "규칙 Agent(오프라인)"
+    tools = sum(1 for e in v.events if str(e.get("msg", "")).startswith("툴 "))
+    ch = v.design.get("choices") or []
+    rows = []
+    if ch and "사전 등록" in ch[0].get("decision", ""):
+        rows.append(("비교 설계", "결과를 보기 전에 사람이 잠근 사전 등록 설계를 그대로 사용(Agent는 바꿀 수 없음)"))
+    elif ch:
+        c = ch[0]
+        why = re.split(r"(?<=[^0-9])\.\s|\. |。", c["reason"].strip())[0].rstrip(".")
+        why = why if len(why) <= 70 else why[:68].rstrip() + "…"
+        rows.append(("비교 설계", f"{c['decision'].rstrip('.')}: {why}" + (f" (그 밖의 선택 {len(ch) - 1}건은 'Agent의 판단' 탭)" if len(ch) > 1 else "")))
+    hs = [h for h in v.skeptic.get("hypotheses", [])]
+    if hs:
+        n_x = sum(len(h.get("results", [])) for h in hs)
+        cnt = {}
+        for h in hs:
+            cnt[h["status"]] = cnt.get(h["status"], 0) + 1
+        dist = " · ".join(f"{k} {n}" for k, n in cnt.items())
+        rows.append(("반론", f"이 사례에 맞는 반론 {len(hs)}개를 세워 {n_x}건을 다시 추정({dist})"))
+    else:
+        rows.append(("반론", "판정 규칙의 기본 반론 5개만 검사(같은 시기 사건 달력에 해당 사건 없음)"))
+    dg = v.skeptic.get("downgraded")
+    rows.append(("판정", f"반론이 성립해 '{dg[0]}' → '{dg[1]}'로 낮춤" if dg
+                 else "등급은 코드의 판정 규칙(v2)이 정함. 반론으로 바뀐 것 없음"))
+    st.markdown(f'<div class="jv-agent"><div class="h">이번 판정에서 Agent가 정한 것<span>{E(who)}'
+                + (f" · 툴 호출 {tools}회" if tools else "") + '</span></div><dl>'
+                + "".join(f"<dt>{E(k)}</dt><dd>{E(t)}</dd>" for k, t in rows) + "</dl></div>", unsafe_allow_html=True)
 
 
 def pdf_button(v, key: str):
@@ -851,6 +943,15 @@ def pdf_button(v, key: str):
 
 
 def render_actions(v):
+    sp = BR.brief(v)["speech"]
+    st.markdown("**보고·답변에 쓸 문장**")
+    x_, y_ = st.columns(2)
+    with x_:
+        st.markdown('<div class="jv-say ok"><b>말해도 되는 것</b>' + "".join(f"<p>{E(t)}</p>" for t in sp["ok"])
+                    + "</div>", unsafe_allow_html=True)
+    with y_:
+        st.markdown('<div class="jv-say no"><b>말하면 안 되는 것</b>' + "".join(f"<p>{E(t)}</p>" for t in sp["no"])
+                    + "</div>", unsafe_allow_html=True)
     rj = AC.rejudge(v)
     st.markdown("**다시 판정할 때**")
     st.info(rj["text"])
@@ -864,7 +965,8 @@ def render_actions(v):
         st.caption("판정에 필요한 자료를 제공 기관에 요청하는 공문 초안입니다. 관련 문서 번호·회신 기한은 비워 두었습니다.")
         with st.container(key="letter"):
             st.code(letter, language=None, wrap_lines=True)
-        st.download_button("공문 초안 내려받기(.txt)", letter.encode("utf-8"), f"자료요청_{v.run_id}.txt", "text/plain")
+        st.download_button("공문 초안 내려받기(.txt)", ("\ufeff" + letter).encode("utf-8"), f"자료요청_{v.analysis_no}.txt",
+                           "text/plain")   # BOM: Windows 메모장·한글에서 글자가 깨지지 않게
 
 
 def render_trace(v):
@@ -952,12 +1054,19 @@ def render_accuracy():
     j = json.loads(p.read_text(encoding="utf-8"))
     h = j["headline"]
     st.markdown(f"**인과 판정 정확도** · {h['runs']:,}회 · 판정 규칙 {j['rules_version']} · 생성 {j['generated']}")
+    v2h = h.get("v2") or {}
     k = st.columns(4)
-    k[0].metric("받아들일 만한 판정", f"{h['acceptable_all'] * 100:.1f}%",
-                help="정답에 비추어 틀리지 않은 판정(맞는 판정 + 조건부·보류로 물러선 판정)의 비율")
-    k[1].metric("효과 없는데 '효과 있음'", f"{h['false_effect_rate_no_effect_scenarios'] * 100:.2f}%")
-    k[2].metric("효과 있는데 '효과 없음'", f"{h['false_null_rate_effect_scenarios'] * 100:.2f}%")
-    k[3].metric("방향을 반대로", f"{h['wrong_sign_rate'] * 100:.1f}%")
+    k[0].metric("효과 없는데 '효과 있음'", f"{h['false_effect_rate_no_effect_scenarios'] * 100:.1f}%",
+                help="효과를 심지 않은 시나리오에서 '효과 있음'이라고 한 비율(시나리오별 최악 9.0%)")
+    k[1].metric("실제 효과에 '효과 있음'", f"{h['effect_detect_series'] * 100:.0f}% / {h['effect_detect_panel'] * 100:.1f}%",
+                help="시계열 / 패널")
+    k[2].metric("판정 보류 비율", f"{v2h.get('hold_rate', 0) * 100:.1f}%")
+    k[3].metric("효과 없는데 방향 주장", f"{v2h.get('direction_claim_no_effect', 0) * 100:.1f}%",
+                help="효과가 없는 시나리오에서 '효과 있음'이나 '조건부'로 방향을 말한 비율. '조건부'를 성과 근거로 단독 인용하지 않는 이유")
+    st.caption(f"방향을 반대로 판정 {h['wrong_sign_rate'] * 100:.1f}% · 효과 있는데 '효과 없음' {h['false_null_rate_effect_scenarios'] * 100:.1f}% · "
+               f"받아들일 만한 판정 {h['acceptable_all'] * 100:.1f}%(보류 포함이라 보조 지표) · "
+               "한계: 합성데이터는 잡음 크기를 실데이터에 맞췄지만 이상 시점·구조 변화는 흉내 내지 못해 낙관적일 수 있음. "
+               "반론 단계의 성능은 이 시험에 들어 있지 않음")
     rows = ["| 시나리오 | 정답 | 받아들일 만함 | 이상적 판정 | 잘못된 '효과 있음' | 판정 분포 |", "|---|---|---|---|---|---|"]
     for key, sc in j["scenarios"].items():
         truth = ("효과 있음(감소)" if "역효과" in sc["title"] else "효과 있음") if "실제" in sc["title"] else "효과 없음"

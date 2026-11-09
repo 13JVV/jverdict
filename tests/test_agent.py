@@ -2,6 +2,7 @@
 import json
 import shutil
 
+import numpy as np
 import pandas as pd
 import pytest
 
@@ -206,4 +207,68 @@ def test_extra_check_supports_panel_design(tmp_path, monkeypatch):
         args = {"reference": [], "placebo_target": None, "post": None, "start": None, "end": None, "reason": "시험", **kw}
         out = _T.t_extra_check(r, kind, **args)
         assert "error" not in out, (kind, out)
-        assert out["status"] in ("반론 기각", "반론 성립", "해당 없음")
+        assert out["status"] in ("반론 기각", "반론 성립", "해당 없음", "판단 불가")
+
+
+# ------------------------------------------------------------------ 외부 검토 반영(2026-11-09, 규칙 이력 v2.2)
+def _fake_run(main_eff, main_sig, case="C"):
+    class A:  # noqa: D401
+        pass
+    r = type("R", (), {})()
+    r.extra_checks, r.card = [], {"library_case": case}
+    r.analysis = A()
+    r.analysis.main = type("M", (), {"effect": main_eff, "significant": main_sig})()
+    return r
+
+
+def _est(eff, sig):
+    return type("E", (), {"effect": eff, "pct": float(np.expm1(eff)), "ci": (eff - 1, eff + 1), "p": 0.01 if sig else 0.4,
+                          "significant": sig})()
+
+
+def test_skeptic_power_loss_is_not_objection():
+    """크기는 유지됐는데 유의성만 사라지면 '반론 성립'이 아니라 '판단 불가'. 절반 넘게 줄면 '반론 성립'."""
+    r = _fake_run(1.0, True)
+    assert T._record(r, "alt_window", "x", "", _est(1.03, False))["status"] == "판단 불가"   # 사례 D 크루즈 제외(+181%)와 같은 모양
+    assert T._record(r, "alt_window", "x", "", _est(0.9, True))["status"] == "반론 기각"
+    assert T._record(r, "exclude_period", "x", "", _est(0.3, True))["status"] == "반론 성립"
+    assert T._record(r, "exclude_period", "x", "", _est(-0.1, False))["status"] == "반론 성립"   # 사례 F 행사 제외
+
+
+def test_estimand_event_is_not_objection():
+    """사전 등록에서 추정 대상에 포함한 사건(사례 D 크루즈 재입항)을 빼는 반론은 판정에 쓰지 않는다."""
+    r = _fake_run(1.0, True, case="D")
+    note = T._estimand_note(r, "exclude_period", "2023-08-31", "2023-09-30")
+    assert "추정 대상" in note
+    assert T._record(r, "exclude_period", "x", "", _est(0.2, True), note=note)["status"] == "해당 없음"
+    assert T._estimand_note(_fake_run(1.0, True, case="B"), "exclude_period", "2023-08-31", "2023-09-30") == ""
+    ev = [e for e in events_between("2023-08-01", "2023-10-01", "card_sector") if "크루즈" in e["name"]]
+    assert ev and T.t_event_calendar(type("X", (), {"design": {"dataset": "card_sector"}, "scout": None, "as_of": None})(),
+                                     "2023-08-01", "2023-10-01")["events"][0].get("in_estimand") is None
+
+
+def test_c2a_is_reference_when_effect_not_significant():
+    """효과가 유의하지 않으면 시점 위약검정은 '실패'가 아니라 '참고'(계절 반론이 맞았다고 읽히지 않게)."""
+    from jverdict.causal.estimate import Estimate  # noqa: F401
+    from jverdict.causal.verdict import judge
+    main = type("M", (), {"ci": (-0.2, 0.15), "p": 0.6, "effect": -0.03, "se": 0.09, "significant": False})()
+    pl = type("P", (), {"available": True, "n": 40, "ci": None, "p_two": 0.32, "sd": 0.1})()
+    v = judge(main, pretrend_p=0.5, trend_adjusted=None, placebo_time=pl, placebo_space=None, sens=None, double=None,
+              power=None)
+    c2a = next(c for c in v.checks if c.code == "C2a")
+    assert c2a.status == "참고" and "유의하지 않아" in c2a.detail
+
+
+def test_excluded_estimate_keeps_season_setting():
+    """반론 재계산(기간 제외)은 잠긴 설계의 계절 처리 설정을 따른다(사례 E: 계절 차분 없음)."""
+    import inspect
+    src = inspect.getsource(T._excluded_estimate)
+    assert 'season=d.get("season"' in src
+
+
+@pytest.mark.skipif(not HAS_CARD, reason="카드 데이터 없음")
+def test_case_e_exclusion_uses_locked_season(runs_tmp):
+    """사례 E의 오미크론 기간 제외 재추정은 +200% 안팎(계절 차분을 잘못 하면 +1496%가 나왔다)."""
+    r = O.run(CARDS["E"]["card"]["question"], mode="template", run_id="e")
+    xs = [x for x in r.extra_checks if x["kind"] == "exclude_period"]
+    assert xs and all(x["pct"] < 5 for x in xs), [x["pct"] for x in xs]

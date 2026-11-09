@@ -20,7 +20,8 @@ def test_brief_for_effect_case(tmp_path, monkeypatch):
     b = brief(load_run(tmp_path / "c"))
     assert b["cause"] == "effect" and b["title"].startswith("정책 이후 +")
     labels = [k for k, _ in b["points"]]
-    assert labels == ["근거", "검증"] and b["tag"] == "" and "효과를 인정" in b["foot"]
+    assert labels == ["요지", "근거", "검증"] and b["tag"] == "" and "효과를 인정" in b["foot"]
+    assert "인용할 수 있음" in b["say"] and b["speech"]["ok"] and b["speech"]["no"]
     assert all(len(t) < 140 for _, t in b["points"])
 
 

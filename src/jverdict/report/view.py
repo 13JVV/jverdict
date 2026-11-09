@@ -79,6 +79,33 @@ class RunView:
         return LEVEL_STYLE.get(self.level, LEVEL_STYLE["판정 없음"])
 
     @property
+    def analysis_day(self) -> str:
+        """분석일: 설계를 잠근 날(판정이 확정된 날)."""
+        return ((self.manifest.get("prereg") or {}).get("locked_at") or "")[:10]
+
+    @property
+    def analysis_no(self) -> str:
+        """분석 번호(공문서 번호가 아님): JV-분석일-사례-모드. 파일·폴더 이름 대신 문서에 쓴다."""
+        case = self.card.get("library_case") or "N"
+        llm = (self.manifest.get("llm") or {}).get("calls")
+        return f"JV-{self.analysis_day.replace('-', '')}-{case}{'C' if llm else 'T'}"
+
+    @property
+    def synthetic(self) -> bool:
+        """정답을 심어 둔 합성데이터 사례(시연용). 공문 초안 같은 대외 문서는 만들지 않는다."""
+        return bool(self.truth) or str(self.design.get("dataset", "")).startswith("synthetic")
+
+    @property
+    def policy_date(self) -> str:
+        """화면 표시용 시행일. 월 자료라 분석 기준월(1일)과 실제 시행일이 다르면 둘 다 적는다(예: 사례 D 2023-08-10)."""
+        from jverdict.agent.library import EVENTS
+        sd, case = self.card.get("start_date", ""), self.card.get("library_case")
+        real = next((e["start"] for e in EVENTS if case and e.get("case") == case), None)
+        if real and real != sd:
+            return f"{real} (월 자료: {int(sd[5:7])}월부터 비교)"
+        return sd
+
+    @property
     def meaning(self) -> str:
         return LEVEL_MEANING.get(self.level, "")
 
@@ -91,13 +118,14 @@ class RunView:
         rows = [{"hypothesis": h["hypothesis"], "how": h["check"], "status": h["status"], "source": "판정 규칙"}
                 for h in self.skeptic.get("rule_hypotheses", [])]
         for h in self.skeptic.get("hypotheses", []):
-            how = "; ".join([f"{r['label']} → {r['pct'] * 100:+.1f}%" for r in h.get("results", [])]
+            how = "; ".join([f"{r['label']} → {r['pct'] * 100:+.1f}%" + (f" ({_xnote(r)})" if r.get("note") else "")
+                             for r in h.get("results", [])]
                             + h.get("rule_results", [])) or "-"
             rows.append({"hypothesis": h["hypothesis"], "how": how, "status": h["status"],
                          "source": h.get("source", "Skeptic")})
         return rows
 
-    def truth_line(self) -> str | None:
+    def truth_line(self) -> str | None:  # noqa: D401
         if not self.truth:
             return None
         t, v, m = self.truth, self.analysis["verdict"], self.analysis["main"]
@@ -224,3 +252,10 @@ def chart_data(a: dict, design: dict | None = None) -> dict | None:
                 "note": f"점은 월별 추정치, 세로 막대는 95% 구간. 정책 전 점들이 0%에서 멀면 정책 전부터 달랐다는 뜻"
                         f"(사전추세 p={es['pretrend_p']:.2g})."}
     return None
+
+
+def _xnote(r: dict) -> str:
+    """반론 결과 메모. '판단 불가'는 바꾼 조건과 상관없이 같은 뜻이라 화면에서는 일반 문장으로 보여 준다."""
+    if r.get("status") == "판단 불가":
+        return "효과 크기는 유지됐지만 유의하지 않음(검정력 부족). 반론의 증거로 보지 않음"
+    return r.get("note", "")

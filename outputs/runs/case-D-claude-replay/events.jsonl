@@ -1,25 +1,26 @@
-{"t": "15:06:47", "stage": "parse", "msg": "실행 시작: 모드 replay, 판정 규칙 v2"}
-{"t": "15:06:47", "stage": "parse", "msg": "단계 시작: parse"}
-{"t": "15:06:47", "stage": "confirm", "msg": "단계 시작: confirm"}
-{"t": "15:06:47", "stage": "confirm", "msg": "정책 카드 확인 완료", "data": {"policy": "중국 단체관광 재개", "start_date": "2023-08-01", "treated": "중국인 방문객(카드 이용자 구분: 중국)", "outcome": "업종별 월 카드 이용 금액(card_sector, 이용자 구분별). 비교집단은 일본·동남아·기타외국"}}
-{"t": "15:06:47", "stage": "scout", "msg": "단계 시작: scout"}
-{"t": "15:06:47", "stage": "scout", "msg": "툴 catalog_search", "data": {"args": {"query": "card_sector"}, "error": false}}
-{"t": "15:06:47", "stage": "scout", "msg": "툴 dataset_profile", "data": {"args": {"dataset": "card_sector"}, "error": false}}
-{"t": "15:06:47", "stage": "scout", "msg": "툴 official_stats", "data": {"args": {}, "error": false}}
-{"t": "15:06:47", "stage": "scout", "msg": "툴 quality_check", "data": {"args": {"dataset": "card_sector", "series": [{"name": "중국", "groups": ["중국"], "units_tier": null, "units_list": []}, {"name": "일본", "groups": ["일본"], "units_tier": null, "units_list": []}, {"name": "동남아", "groups": ["동남아"], "units_tier": null, "units_list": []}, {"name": "기타외국", "groups": ["기타외국"], "units_tier": null, "units_list": []}], "target": "중국", "reference": ["기타외국", "동남아", "일본"], "official_stats": []}, "error": false}}
-{"t": "15:06:47", "stage": "scout", "msg": "데이터 점검: 점검 불가", "data": {"dataset": "card_sector", "cap": null, "coverage": "[집단 결측] 2023-05 ~ 2023-06 2개월 동안 기타외국, 동남아, 일본, 중국의 행이 없음 (같은 기간 내국인, 법인, 제주도민은 있음) (결측·부분 집계일은 분석에서 자동 제외)"}}
-{"t": "15:06:47", "stage": "design", "msg": "단계 시작: design"}
-{"t": "15:06:47", "stage": "design", "msg": "기존 사전 등록 문서 사용: docs/prereg/case_china_group_tour_2023.md (지문 확인)"}
-{"t": "15:06:47", "stage": "lock", "msg": "단계 시작: lock"}
-{"t": "15:06:47", "stage": "lock", "msg": "설계 잠금 SHA-256 16b90b811ded6959…"}
-{"t": "15:06:47", "stage": "execute", "msg": "단계 시작: execute"}
-{"t": "15:06:48", "stage": "execute", "msg": "판정 규칙 결과: 판정 보류", "data": {"verdict": "판정 보류", "effect": 0.996504, "se": 0.413072, "ci_lo": 0.019743, "ci_hi": 1.973264, "p": 0.046608, "mde_pct": 2.181194}}
-{"t": "15:06:48", "stage": "skeptic", "msg": "단계 시작: skeptic"}
-{"t": "15:06:48", "stage": "skeptic", "msg": "툴 event_calendar", "data": {"args": {"start": "2022-01-01", "end": "2024-12-31"}, "error": false}}
-{"t": "15:06:48", "stage": "skeptic", "msg": "툴 extra_check", "data": {"args": {"kind": "exclude_period", "reference": [], "placebo_target": null, "post": null, "start": "2022-01-01", "end": "2023-03-31", "reason": "코로나19 방역 완화·국경 재개 시기의 회복 추세가 중국 사전추세를 왜곡했는지 확인"}, "error": false}}
-{"t": "15:06:48", "stage": "skeptic", "msg": "툴 extra_check", "data": {"args": {"kind": "alt_reference", "reference": ["일본"], "placebo_target": null, "post": null, "start": null, "end": null, "reason": "동남아·기타외국이 회복 중이라 비교집단 오염 가능성; 일본만으로 재추정"}, "error": false}}
-{"t": "15:06:48", "stage": "skeptic", "msg": "반론 8개 검증: 판정 규칙이 이미 반영한 성립 2개, 추가 반론 성립 2개 → 최종 판정 보류"}
-{"t": "15:06:48", "stage": "report", "msg": "단계 시작: report"}
-{"t": "15:06:48", "stage": "report", "msg": "판정서 작성 완료"}
-{"t": "15:06:48", "stage": "manifest", "msg": "단계 시작: manifest"}
-{"t": "15:06:48", "stage": "manifest", "msg": "재실행 기록 저장"}
+{"t": "15:56:43", "stage": "parse", "msg": "실행 시작: 모드 replay, 판정 규칙 v2"}
+{"t": "15:56:43", "stage": "parse", "msg": "단계 시작: parse"}
+{"t": "15:56:43", "stage": "confirm", "msg": "단계 시작: confirm"}
+{"t": "15:56:43", "stage": "confirm", "msg": "정책 카드 확인 완료", "data": {"policy": "중국 단체관광 재개", "start_date": "2023-08-01", "treated": "중국인 방문객(카드 이용자 구분: 중국)", "outcome": "업종별 월 카드 이용 금액(원)"}}
+{"t": "15:56:43", "stage": "scout", "msg": "단계 시작: scout"}
+{"t": "15:56:43", "stage": "scout", "msg": "툴 catalog_search", "data": {"args": {"query": "카드"}, "error": false}}
+{"t": "15:56:43", "stage": "scout", "msg": "툴 dataset_profile", "data": {"args": {"dataset": "card_sector"}, "error": false}}
+{"t": "15:56:43", "stage": "scout", "msg": "툴 official_stats", "data": {"args": {}, "error": false}}
+{"t": "15:56:43", "stage": "scout", "msg": "툴 quality_check", "data": {"args": {"dataset": "card_sector", "series": [{"name": "중국", "groups": ["중국"], "units_tier": null, "units_list": []}, {"name": "기타외국", "groups": ["기타외국"], "units_tier": null, "units_list": []}, {"name": "동남아", "groups": ["동남아"], "units_tier": null, "units_list": []}, {"name": "일본", "groups": ["일본"], "units_tier": null, "units_list": []}, {"name": "대조_외국인", "groups": ["일본", "동남아", "기타외국"], "units_tier": null, "units_list": []}], "target": "중국", "reference": ["대조_외국인", "기타외국", "동남아", "일본"], "official_stats": []}, "error": false}}
+{"t": "15:56:43", "stage": "scout", "msg": "데이터 점검: 점검 불가", "data": {"dataset": "card_sector", "cap": null, "coverage": "[집단 결측] 2023-05 ~ 2023-06 2개월 동안 기타외국, 동남아, 일본, 중국의 행이 없음 (같은 기간 내국인, 법인, 제주도민은 있음) (결측·부분 집계일은 분석에서 자동 제외)"}}
+{"t": "15:56:43", "stage": "design", "msg": "단계 시작: design"}
+{"t": "15:56:43", "stage": "design", "msg": "기존 사전 등록 문서 사용: docs/prereg/case_china_group_tour_2023.md (지문 확인)"}
+{"t": "15:56:43", "stage": "lock", "msg": "단계 시작: lock"}
+{"t": "15:56:43", "stage": "lock", "msg": "설계 잠금 SHA-256 36f7da90b790c99e…"}
+{"t": "15:56:43", "stage": "execute", "msg": "단계 시작: execute"}
+{"t": "15:56:44", "stage": "execute", "msg": "판정 규칙 결과: 판정 보류", "data": {"verdict": "판정 보류", "effect": 0.996504, "se": 0.413072, "ci_lo": 0.019743, "ci_hi": 1.973264, "p": 0.046608, "mde_pct": 2.181194}}
+{"t": "15:56:44", "stage": "skeptic", "msg": "단계 시작: skeptic"}
+{"t": "15:56:44", "stage": "skeptic", "msg": "툴 event_calendar", "data": {"args": {"start": "2022-06-01", "end": "2024-12-31"}, "error": false}}
+{"t": "15:56:44", "stage": "skeptic", "msg": "툴 extra_check", "data": {"args": {"kind": "exclude_period", "reference": [], "placebo_target": null, "post": null, "start": "2023-01-02", "end": "2023-02-10", "reason": "비자 발급 중단 해제 및 회복 국면이 사전 구간에 섞였는지 확인"}, "error": false}}
+{"t": "15:56:44", "stage": "skeptic", "msg": "툴 extra_check", "data": {"args": {"kind": "alt_window", "reference": [], "placebo_target": null, "post": 3, "start": null, "end": null, "reason": "짧은 사후 기간에서 효과 유지 여부, 크루즈·추석 영향 축소 확인"}, "error": false}}
+{"t": "15:56:44", "stage": "skeptic", "msg": "툴 extra_check", "data": {"args": {"kind": "alt_reference", "reference": ["일본"], "placebo_target": null, "post": null, "start": null, "end": null, "reason": "동남아·기타외국이 회복 추세가 달라 비교집단으로 부적절할 가능성, 일본만 대조"}, "error": false}}
+{"t": "15:56:44", "stage": "skeptic", "msg": "반론 8개 검증: 판정 규칙이 이미 반영한 성립 2개, 추가 반론 성립 0개 → 최종 판정 보류"}
+{"t": "15:56:44", "stage": "report", "msg": "단계 시작: report"}
+{"t": "15:56:44", "stage": "report", "msg": "판정서 작성 완료"}
+{"t": "15:56:44", "stage": "manifest", "msg": "단계 시작: manifest"}
+{"t": "15:56:44", "stage": "manifest", "msg": "재실행 기록 저장"}

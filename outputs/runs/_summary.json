@@ -27,11 +27,11 @@
     ],
     "llm_calls": 0,
     "cost_usd": 0.0,
-    "seconds": 15.0,
+    "seconds": 14.0,
     "reproduced": true,
     "replay_error": null,
     "fallbacks": 0,
-    "created": "2026-11-07T15:03:12+0900"
+    "created": "2026-11-09T15:46:16+0900"
   },
   {
     "run": "case-B-claude",
@@ -43,12 +43,12 @@
       "도민_불가"
     ],
     "llm_calls": 7,
-    "cost_usd": 0.09283,
-    "seconds": 39.0,
+    "cost_usd": 0.09623,
+    "seconds": 45.0,
     "reproduced": true,
     "replay_error": null,
     "fallbacks": 0,
-    "created": "2026-11-07T15:05:56+0900"
+    "created": "2026-11-09T15:55:55+0900"
   },
   {
     "run": "case-B-template",
@@ -65,7 +65,7 @@
     "reproduced": true,
     "replay_error": null,
     "fallbacks": 0,
-    "created": "2026-11-07T15:05:15+0900"
+    "created": "2026-11-09T15:55:06+0900"
   },
   {
     "run": "case-C-claude-apifail",
@@ -99,7 +99,7 @@
     "reproduced": true,
     "replay_error": null,
     "fallbacks": 0,
-    "created": "2026-11-07T14:22:00+0900"
+    "created": "2026-11-09T15:46:30+0900"
   },
   {
     "run": "case-D-claude",
@@ -110,13 +110,13 @@
     "reference": [
       "패널"
     ],
-    "llm_calls": 7,
-    "cost_usd": 0.09912,
-    "seconds": 45.0,
+    "llm_calls": 8,
+    "cost_usd": 0.09735,
+    "seconds": 42.0,
     "reproduced": true,
     "replay_error": null,
     "fallbacks": 0,
-    "created": "2026-11-07T15:06:47+0900"
+    "created": "2026-11-09T15:56:43+0900"
   },
   {
     "run": "case-D-template",
@@ -133,7 +133,24 @@
     "reproduced": true,
     "replay_error": null,
     "fallbacks": 0,
-    "created": "2026-11-07T15:06:01+0900"
+    "created": "2026-11-09T15:56:00+0900"
+  },
+  {
+    "run": "case-E-claude",
+    "mode": "claude",
+    "verdict": "판정 보류",
+    "rule_verdict": "판정 보류",
+    "effect": 1.102712,
+    "reference": [
+      "도민_식료품"
+    ],
+    "llm_calls": 9,
+    "cost_usd": 0.10679,
+    "seconds": 59.0,
+    "reproduced": true,
+    "replay_error": null,
+    "fallbacks": 0,
+    "created": "2026-11-09T15:47:44+0900"
   },
   {
     "run": "case-E-template",
@@ -150,7 +167,24 @@
     "reproduced": true,
     "replay_error": null,
     "fallbacks": 0,
-    "created": "2026-11-07T14:22:03+0900"
+    "created": "2026-11-09T15:46:44+0900"
+  },
+  {
+    "run": "case-F-claude",
+    "mode": "claude",
+    "verdict": "판정 보류",
+    "rule_verdict": "효과 있음(증가)",
+    "effect": 0.127381,
+    "reference": [
+      "일반"
+    ],
+    "llm_calls": 10,
+    "cost_usd": 0.12395,
+    "seconds": 54.0,
+    "reproduced": true,
+    "replay_error": null,
+    "fallbacks": 0,
+    "created": "2026-11-09T15:48:45+0900"
   },
   {
     "run": "case-F-template",
@@ -167,6 +201,6 @@
     "reproduced": true,
     "replay_error": null,
     "fallbacks": 0,
-    "created": "2026-11-07T14:22:04+0900"
+    "created": "2026-11-09T15:47:49+0900"
   }
 ]

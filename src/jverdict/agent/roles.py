@@ -18,7 +18,7 @@ from . import catalog
 from . import design as DZ
 from . import tools as T
 from .cardbuilder import _josa
-from .library import CARDS, OFFICIAL_STATS, events_between, match_card
+from .library import CARDS, EVENTS, OFFICIAL_STATS, events_between, match_card, prereg_report
 
 _S, _SL = {"type": "string"}, {"type": "array", "items": {"type": "string"}}
 _NS = {"anyOf": [{"type": "string"}, {"type": "null"}]}
@@ -305,6 +305,8 @@ def skeptic_template(run) -> list[dict]:
             continue          # 방학·명절은 계절 차분과 시점 위약이 다룬다
         if ev.get("case") == run.card.get("library_case") or ev["start"] == run.card["start_date"] or "(데이터)" in ev["name"]:
             continue          # 정책 자체, 데이터 결측은 품질 점검이 다룬다
+        if run.card.get("library_case") in ev.get("in_estimand", ()):
+            continue          # 사전 등록에서 추정 대상에 포함한 사건은 반론이 아니다
         seen.add(ev["name"])
         h = {"hypothesis": f"같은 시기의 다른 사건 때문이다: {ev['name']}", "why_plausible": f"영향: {ev['affects']} (출처: {ev['source']})",
              "check_ids": [], "source": "사건 달력"}
@@ -322,11 +324,16 @@ def skeptic_llm(run) -> list[dict]:
     sys = (COMMON + " 역할: ⑤ Skeptic. 판정 결과를 반박합니다. 정책 맥락(방학, 연휴, 관광 회복, 유가, 다른 지원금·정책, 코로나19, 데이터 결측)을 보고 "
            "그럴듯한 대안 가설을 2~4개 세우고, event_calendar로 사실을 확인한 뒤 extra_check로 검증합니다. "
            "판정 규칙이 이미 본 검증(C0~C4)과 같은 것은 다시 하지 말고 check_ids에 C코드를 적습니다. 반론의 성립 여부는 툴 결과의 status를 따릅니다.")
+    est = [ev["name"] for ev in EVENTS if run.card.get("library_case") in ev.get("in_estimand", ())]
+    if est:   # 사전 등록에서 추정 대상에 포함한 사건이 있는 사례에만 덧붙인다(다른 사례의 기록 입력은 그대로)
+        sys += " estimand_events에 있는 사건은 사전 등록에서 추정 대상에 포함한 것이라 반론으로 세우지 않습니다."
     facts = {"card": run.card, "design": {k: run.design[k] for k in ("dataset", "method", "target", "reference", "placebo",
                                                                      "alt_references", "pre", "post", "exclude")},
              "verdict": a.verdict.label, "checks": [c.to_dict() for c in a.verdict.checks],
              "main": None if a.main is None else {"effect_pct": a.main.pct, "ci_pct": a.main.ci_pct, "window": a.main.window},
              "series": [s["name"] for s in run.design.get("series", [])]}
+    if est:
+        facts["estimand_events"] = est
     out = run.llm.agent_call("skeptic", sys, json.dumps(facts, ensure_ascii=False, indent=1, default=str),
                              SKEPTIC_SCHEMA, T.specs("skeptic"), lambda n, x: T.call(run, "skeptic", n, x))
     hs = []
@@ -356,6 +363,8 @@ def resolve_skeptic(run, hs: list[dict]) -> dict:
             h["status"] = "반론 성립"
         elif any(r["status"] == "반론 기각" for r in res):
             h["status"] = "반론 기각"
+        elif any(r["status"] == "판단 불가" for r in res):
+            h["status"] = "판단 불가"
         elif res:
             h["status"] = "해당 없음"
         elif rule:
@@ -524,6 +533,9 @@ def render_markdown(run, rep: dict, facts: str) -> str:
         L.append(f"| {h['hypothesis']} | {res} | {h['status']} |")
     if sk.get("downgraded"):
         L += ["", f"> Skeptic 하향: {sk['downgraded'][0]} → {sk['downgraded'][1]}"]
+    pr = prereg_report(run.card.get("library_case"), sk["final_level"])
+    if pr:
+        L += ["", "## 사전 등록에 따른 보고", "", f"- {pr}"]
     if a.power is not None:
         L += ["", "## 검정력", "", f"- {a.power.sentence_ko()}"]
     L += ["", "## 한계", ""] + ([f"- {x}" for x in rep["limits"]] or ["- (없음)"])

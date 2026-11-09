@@ -46,8 +46,9 @@ def test_naive_is_written_and_differs_from_engine(runs):
 def test_memo_and_rejudge_use_recorded_numbers(runs):
     v = load_run(runs / "case-C-template")
     m = AC.memo(v)
-    assert m[0].startswith("□ (분석 결과) 효과 있음") and all(x.startswith("  ○ ") for x in m[1:])
-    assert f"{v.analysis['main']['pct'] * 100:+.1f}%" in m[1] and "(향후 조치)" in m[-1]
+    assert m[0].startswith("□ 「") and "효과 분석 결과: 효과 있음" in m[0] and all(x.startswith("  ○ ") for x in m[1:-1])
+    assert f"{v.analysis['main']['pct'] * 100:+.1f}%" in m[1] and "(향후 조치)" in m[-2] and m[-1].startswith("  ※ 출처:")
+    assert not any("하세요" in x for x in m) and v.analysis_no in m[-1]          # 결재 문체(명사형), 출처 줄
     assert AC.rejudge(v)["kind"] == "none" and AC.data_request(v) is None
 
 
@@ -81,9 +82,13 @@ def test_data_request_letter_lists_needed_data(runs):
     v = load_run(runs / "case-C-template")
     v.report = dict(v.report, needed_data=["교통복지카드 승차 기록"])
     v.skeptic = dict(v.skeptic, final_level="판정 보류")
+    assert AC.data_request(v) is None                                    # 합성데이터 시연에는 공문을 만들지 않음
+    v.truth, v.design = None, dict(v.design, dataset="bus_station")
     txt = AC.data_request(v)
-    assert "1) 교통복지카드 승차 기록" in txt and "(작성자 기입)" in txt and v.run_id in txt and txt.rstrip().endswith("끝.")
-    assert "J-Verdict" not in txt and "지문" not in txt                 # 외부 기관이 받는 문서에 내부 용어를 쓰지 않음
+    assert "1) 교통복지카드 승차 기록" in txt and v.analysis_no in txt and txt.rstrip().endswith("끝.")
+    assert txt.startswith("수신  ") and "(경유)" in txt
+    for bad in ("J-Verdict", "지문", ".csv", "작성자 기입", v.run_id, "판정 보류"):  # 외부 기관이 받는 문서에 내부 용어·파일 이름을 쓰지 않음
+        assert bad not in txt, bad
 
 
 def test_trace_marks_who_decided(runs):

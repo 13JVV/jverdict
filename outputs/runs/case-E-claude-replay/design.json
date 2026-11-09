@@ -1,0 +1,125 @@
+{
+  "dataset": "card_sector",
+  "method": "its",
+  "season": "none",
+  "series": [
+    {
+      "name": "도민_주점",
+      "groups": [
+        "제주도민"
+      ],
+      "units_tier": null,
+      "units_list": [
+        "일반유흥 주점업",
+        "기타 주점업"
+      ]
+    },
+    {
+      "name": "도민_식료품",
+      "groups": [
+        "제주도민"
+      ],
+      "units_tier": null,
+      "units_list": [
+        "슈퍼마켓",
+        "기타음식료품위주종합소매업",
+        "과실 및 채소 소매업",
+        "수산물 소매업",
+        "육류 소매업"
+      ]
+    },
+    {
+      "name": "도민_대형종합",
+      "groups": [
+        "제주도민"
+      ],
+      "units_tier": null,
+      "units_list": [
+        "기타 대형 종합 소매업"
+      ]
+    },
+    {
+      "name": "도민_편의점",
+      "groups": [
+        "제주도민"
+      ],
+      "units_tier": null,
+      "units_list": [
+        "체인화 편의점"
+      ]
+    },
+    {
+      "name": "도민_화장품건강",
+      "groups": [
+        "제주도민"
+      ],
+      "units_tier": null,
+      "units_list": [
+        "화장품 및 방향제 소매업",
+        "건강보조식품 소매업"
+      ]
+    },
+    {
+      "name": "도민_잡화",
+      "groups": [
+        "제주도민"
+      ],
+      "units_tier": null,
+      "units_list": [
+        "그외 기타 종합 소매업"
+      ]
+    }
+  ],
+  "target": "도민_주점",
+  "reference": [
+    "도민_식료품"
+  ],
+  "placebo": [
+    {
+      "target": "도민_화장품건강",
+      "reference": [
+        "도민_식료품"
+      ]
+    },
+    {
+      "target": "도민_잡화",
+      "reference": [
+        "도민_식료품"
+      ]
+    }
+  ],
+  "alt_references": [
+    {
+      "label": "대형종합만",
+      "reference": [
+        "도민_대형종합"
+      ]
+    },
+    {
+      "label": "편의점만",
+      "reference": [
+        "도민_편의점"
+      ]
+    }
+  ],
+  "pre": 12,
+  "post": 6,
+  "season_years": 1,
+  "exclude": [
+    {
+      "start": "2020-02-01",
+      "end": "2022-04-30",
+      "reason": "코로나19 방역 기간: 같은 종류의 조치(영업시간·모임 제한)가 계속 바뀌어 '정책 없는' 가짜 시행일이 될 수 없음"
+    }
+  ],
+  "reference_effect": 0.1,
+  "expected": "increase",
+  "official_stats": [],
+  "panel": null,
+  "choices": [
+    {
+      "decision": "사전 등록 문서 사용",
+      "reason": "docs/prereg/case_distancing_2022.md (잠금 해시 확인)"
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "run_id": "case-E-claude-replay",
+  "created": "2026-11-09T15:47:44+0900",
+  "calendar_as_of": "2026-11-09",
+  "mode": "replay",
+  "rules_version": "v2",
+  "seed": 20261104,
+  "question_input": "사회적 거리두기 전면 해제(2022-04-18)로 제주도민의 주점 소비가 늘었는가?",
+  "question": "사회적 거리두기 전면 해제(2022-04-18)로 제주도민의 주점 소비가 늘었는가?",
+  "card": {
+    "policy": "사회적 거리두기 전면 해제",
+    "question": "사회적 거리두기 전면 해제(2022-04-18)로 제주도민의 주점 소비가 늘었는가?",
+    "start_date": "2022-04-01",
+    "end_date": null,
+    "treated": "영업시간·모임 제한을 받던 주점(일반유흥 주점업, 기타 주점업). 시행 4-18이라 4월은 절반만 처치(월 단위)",
+    "outcome": "업종별 월 카드 이용 금액(제주도민)",
+    "expected": "increase",
+    "region": "제주도",
+    "source": "중앙재난안전대책본부 발표(2022-04-15)",
+    "reference_effect": 0.1,
+    "assumptions": [
+      "등록된 정책 사례(A~D)에 해당하지 않는 새 정책이므로 질문에 적힌 시행일 2022-04-18을 그대로 사용함",
+      "질문의 시행일은 일 단위로 주어졌으므로 월 1일로 바꾸지 않았으나, 분석 데이터(card_sector)는 월 단위라 2022-04가 부분 처리월(18일부터 적용)이 되는 점은 확인 필요",
+      "주점 업종이 card_sector의 어느 업종 항목에 해당하는지 확인 필요",
+      "거리두기 전면 해제 시점 전후로 영업시간·인원 제한이 단계적으로 완화되었는지 확인 필요(단계적 완화라면 처리 시점이 불분명해질 수 있음)",
+      "비교집단(예: 거리두기 영향이 적은 업종 또는 다른 이용자 구분)은 선정 필요하며, 같은 시기 관광객 회복 등 다른 요인이 섞일 수 있어 원인을 단정하지 않음",
+      "card_sector는 비씨카드 실적만 포함하므로 전체 소비를 대표하는지는 확인 필요",
+      "효과 판단 기준은 기본값인 10% 변화로 둠",
+      "정책 종료일은 없음(전면 해제 이후 지속)",
+      "등록 사례 E와 같은 정책으로 보고 시행일·대상을 등록본으로 맞춤"
+    ],
+    "library_case": "E",
+    "prereg": "docs/prereg/case_distancing_2022.md",
+    "needed_hint": []
+  },
+  "data": {
+    "dataset": "card_sector",
+    "source": "업종별성별카드이용정보.csv",
+    "bytes": 1998040,
+    "sha256": "518cd18e78141ede90cc5ee7639099282eae4c1557236e4eda6bd295b66e368d"
+  },
+  "prereg": {
+    "sha256": "721743c0a5a4de0222d09068fed69e87cc73fd27b8ce9c985d202b42df0cf3ba",
+    "locked_at": "2026-11-09T15:47:44+0900",
+    "existing": {
+      "file": "docs/prereg/case_distancing_2022.md",
+      "sha256": "f1dc11cb8ed78b6ec1d82b4c5b65b6f14c2dac1115a0e44f8054c07e65fbcf66",
+      "locked_at": "2026-11-06T00:30:25+0900"
+    },
+    "amendments": []
+  },
+  "code_sha256": "ce45b448c48054c95e0ec1d0f992e5795f7b04e0e41e0b8694a5986ee9752bb4",
+  "versions": {
+    "python": "3.14.3",
+    "platform": "Darwin arm64",
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "scipy": "1.18.1",
+    "duckdb": "2.0.0",
+    "statsmodels": "0.15.0",
+    "anthropic": "2.3.0"
+  },
+  "numbers": {
+    "verdict": "판정 보류",
+    "effect": 1.102712,
+    "se": 1.032165,
+    "ci_lo": -1.08538,
+    "ci_hi": 3.290804,
+    "p": 0.301218,
+    "mde_pct": 17.023881
+  },
+  "final_verdict": "판정 보류",
+  "llm": {
+    "calls": 9,
+    "input_tokens": 26,
+    "output_tokens": 5952,
+    "cache_read_input_tokens": 21983,
+    "cache_creation_input_tokens": 17129,
+    "cost_usd": 0.10679,
+    "by_role": {
+      "parser": {
+        "calls": 1,
+        "cost_usd": 0.01309
+      },
+      "scout": {
+        "calls": 4,
+        "cost_usd": 0.03735
+      },
+      "skeptic": {
+        "calls": 3,
+        "cost_usd": 0.03587
+      },
+      "reporter": {
+        "calls": 1,
+        "cost_usd": 0.02049
+      }
+    },
+    "model": "claude-sonnet-5-5",
+    "effort": "medium",
+    "mode": "replay"
+  },
+  "fallbacks": [],
+  "files": [
+    "analysis.json",
+    "card.json",
+    "design.json",
+    "events.jsonl",
+    "facts.txt",
+    "llm_cache.json",
+    "naive.json",
+    "prereg.lock.json",
+    "prereg.md",
+    "report.json",
+    "report.md",
+    "scout.json",
+    "skeptic.json"
+  ]
+}

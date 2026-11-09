@@ -20,7 +20,7 @@ from jverdict.quality.breaks import diagnose
 
 from . import catalog
 from . import design as DZ
-from .library import OFFICIAL_STATS, events_between
+from .library import EVENTS, OFFICIAL_STATS, events_between
 from .prereg import GuardError
 
 _S = {"type": "string"}
@@ -139,7 +139,7 @@ def t_pick_controls(run, dataset: str, series: list[dict], target: str, candidat
 
 def t_event_calendar(run, start: str, end: str) -> dict:
     ds = (run.design or run.scout or {}).get("dataset")
-    return {"dataset": ds, "events": [{k: v for k, v in ev.items() if k != "added"}
+    return {"dataset": ds, "events": [{k: v for k, v in ev.items() if k not in ("added", "in_estimand")}
                                       for ev in events_between(start, end, ds, as_of=run.as_of)],
             "note": "데이터 결측·부분 집계는 품질 점검이 자동으로 제외하므로 설계의 exclude에 넣지 않는다"}
 
@@ -192,22 +192,47 @@ def t_extra_check(run, kind: str, reference: list[str], placebo_target: str | No
         return {"error": f"추정 실패: {e}"}
     if a is None:
         return {"error": "관측이 부족해 추정할 수 없음"}
-    rec = _record(run, kind, label, reason, a)
-    return rec
+    return _record(run, kind, label, reason, a, note=_estimand_note(run, kind, start, end))
 
 
-def _record(run, kind, label, reason, a) -> dict:
+def _estimand_note(run, kind, start, end) -> str:
+    """사전 등록에서 '추정 대상에 포함'한 사건을 빼는 반론은 질문 자체를 바꾸므로 판정에 쓰지 않는다."""
+    if kind != "exclude_period" or not start or not end:
+        return ""
+    case = run.card.get("library_case")
+    for ev in EVENTS:
+        if case and case in ev.get("in_estimand", ()) and ev["start"] <= end and ev["end"] >= start:
+            return f"'{ev['name']}'은(는) 사전 등록에서 추정 대상에 포함한 사건이라 판정에 쓰지 않음(참고 계산)"
+    return ""
+
+
+def _record(run, kind, label, reason, a, note: str = "") -> dict:
+    """반론 결과 판정(코드).
+
+    주분석이 유의할 때: 다시 추정한 점추정이 절반 넘게 줄거나 방향이 바뀌면 '반론 성립'.
+    크기는 유지됐는데 관측이 줄어 유의성만 사라진 경우는 반론이 맞았다는 증거가 아니므로 '판단 불가(검정력 부족)'.
+    (2026-11-09 보완: 이전에는 이 경우도 '반론 성립'으로 적었다. 규칙 이력 v2.2)
+    """
     main = run.analysis.main
     same = np.sign(a.effect) == np.sign(main.effect)
+    kept = same and abs(a.effect) >= 0.5 * abs(main.effect)
     if kind == "placebo_group":
-        status = "반론 성립" if (a.significant and same and abs(a.effect) >= 0.5 * abs(main.effect)) else "반론 기각"
+        status = "반론 성립" if (a.significant and kept) else "반론 기각"
     elif not main.significant:
         status = "반론 성립" if a.significant else "해당 없음"
+    elif not kept:
+        status = "반론 성립"
     else:
-        status = "반론 기각" if (same and a.significant and abs(a.effect) >= 0.5 * abs(main.effect)) else "반론 성립"
+        status = "반론 기각" if a.significant else "판단 불가"
+    if note:
+        status = "해당 없음"
     rec = {"id": f"X{len(run.extra_checks) + 1}", "kind": kind, "label": label, "reason": reason,
            "effect": a.effect, "pct": a.pct, "ci": list(a.ci), "p": a.p, "significant": a.significant,
            "main_effect": main.effect, "status": status}
+    if note:
+        rec["note"] = note
+    elif status == "판단 불가":
+        rec["note"] = "효과 크기는 유지됐지만 기간을 빼 관측이 줄어 유의하지 않음(검정력 부족). 반론의 증거로 보지 않음"
     run.extra_checks.append(rec)
     return rec
 
@@ -267,7 +292,9 @@ def _excluded_estimate(run, d, start, end):
     from jverdict.quality.coverage import exclusion_mask
     mask = exclusion_mask(DZ.coverage(d["dataset"], run.seed), wide.index)
     mask = mask | ((wide.index >= pd.Timestamp(start)) & (wide.index <= pd.Timestamp(end)))
-    gs = gap_series(wide, d["target"], d["reference"], freq, season_years=int(d["season_years"]), mask=mask)
+    # 계절 처리는 잠긴 설계 그대로(주분석과 같은 조건). 빠뜨리면 '계절 차분 없음' 설계도 차분해 버린다
+    gs = gap_series(wide, d["target"], d["reference"], freq, season=d.get("season", "sdiff"),
+                    season_years=int(d["season_years"]), mask=mask)
     from jverdict.causal.estimate import DEFAULTS
     i0 = gs.pos(run.card["start_date"])
     fin = np.flatnonzero(np.isfinite(gs.g_adj[:i0]))
