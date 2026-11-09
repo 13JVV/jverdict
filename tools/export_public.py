@@ -74,6 +74,9 @@ def _changed(m) -> bool:
 if _first or any(_changed(m) for m in _ours.values()):
     for _name in _ours:
         del sys.modules[_name]
+    if not _first:                       # 옛 코드로 만든 화면 캐시도 버린다
+        import streamlit as _st
+        _st.cache_data.clear()
 
 
 def _mark():

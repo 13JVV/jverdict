@@ -334,9 +334,15 @@ with st.sidebar:
 
 
 # ============================================================================ ① 질문
+def _code_ver() -> float:
+    """첫 화면 카드 요약을 만드는 코드의 버전(파일 수정 시각). 코드가 바뀌면 캐시를 새로 만든다."""
+    from jverdict.report import view as _V
+    return max(Path(m.__file__).stat().st_mtime for m in (BR, _V))
+
+
 @st.cache_data(show_spinner=False)
-def _case_summary(run_dir: str, mtime: float) -> dict | None:
-    """첫 화면 사례 카드: 단순 비교 대 판정관(기록된 판정서에서 그대로)."""
+def _case_summary(run_dir: str, mtime: float, code_ver: float = 0.0) -> dict | None:
+    """첫 화면 사례 카드: 단순 비교 대 판정관(기록된 판정서에서 그대로). code_ver는 캐시 키로만 쓴다."""
     try:
         v = load_run(run_dir)
         b = BR.brief(v)
@@ -461,7 +467,7 @@ def render_start():
         '근거가 부족하면 결론을 미루고, 무엇이 있으면 판정할 수 있는지 알려 줍니다.</p></div>',
         unsafe_allow_html=True)
     cases = [(k, _recorded(k)) for k in ("A", "B", "D", "E")]
-    cases = [(k, d, _case_summary(str(d), (d / "manifest.json").stat().st_mtime)) for k, d in cases if d is not None]
+    cases = [(k, d, _case_summary(str(d), (d / "manifest.json").stat().st_mtime, _code_ver())) for k, d in cases if d is not None]
     cases = [c for c in cases if c[2]]
     if cases:
         st.markdown("**실제 제주 정책 4건: 단순 비교의 결론 → 정책 판정관**")
@@ -492,7 +498,7 @@ def render_start():
 def render_demo_row():
     """정답을 아는 합성 시연 2건(C·F)과 정확도 한 줄: 판정관이 '효과 있음'을 내고, 반론으로 낮추는 장면."""
     demos = [(k, _recorded(k)) for k in ("C", "F")]
-    demos = [(k, d, _case_summary(str(d), (d / "manifest.json").stat().st_mtime)) for k, d in demos if d is not None]
+    demos = [(k, d, _case_summary(str(d), (d / "manifest.json").stat().st_mtime, _code_ver())) for k, d in demos if d is not None]
     demos = [x for x in demos if x[2]]
     if not demos:
         return
